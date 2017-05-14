@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false">
+
+	<diskStore path="java.io.tmpdir/framework/hibernate" />
+
+	<!-- DefaultCache setting. -->
+	<defaultCache 
+	    maxEntriesLocalHeap="10000" 
+	    eternal="false"
+		timeToIdleSeconds="300" 
+		timeToLiveSeconds="600" 
+		overflowToDisk="true"
+		maxEntriesLocalDisk="100000" 
+		memoryStoreEvictionPolicy="LFU" />
+
+	<!-- security entity -->
+	<cache name="com.framework.entity.User"
+		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+	<cache name="com.framework.entity.UserRole"
+		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+	<cache name="com.framework.entity.RolePermission"
+		maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true"
+		maxEntriesLocalDisk="1000000" />
+	<cache name="com.framework.entity.Role"
+		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+	<cache name="com.framework.entity.Permission"
+		maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true"
+		maxEntriesLocalDisk="100000" />
+	<cache name="com.framework.entity.Organization"
+		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+	<cache name="com.framework.entity.DataControl"
+		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+	<cache name="com.framework.entity.LogInfo"
+		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+	<cache name="com.framework.entity.RolePermissionDataControl"
+		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
+		maxEntriesLocalDisk="10000" />
+</ehcache>

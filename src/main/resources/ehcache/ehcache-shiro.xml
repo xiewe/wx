@@ -1,0 +1,24 @@
+<ehcache updateCheck="false" name="shiroCache">
+
+	<defaultCache 
+	    maxElementsInMemory="100000" 
+	    eternal="false"
+		timeToIdleSeconds="300" 
+		timeToLiveSeconds="600" 
+		overflowToDisk="false"
+		diskPersistent="false" 
+		diskExpiryThreadIntervalSeconds="300" />
+	
+	<!--
+	maxElementsInMemory：内存允许的最大存储缓存数，如果超过，在开启磁盘存储的情况下，会存入磁盘
+	eternal：对象是否永久有效
+	timeToIdleSeconds：对象允许空闲时间（秒），当且仅当eternal=fasle时起效，如果值为0，表示可闲置时间无穷大
+	timeToLiveSeconds：对象允许存活时间（秒），当且仅当eternal=fasle时起效，如果值为0，表示可闲置时间无穷大，配置值应该大于空闲时间值，否则没有意义
+	overflowToDisk：内存中缓存数超过最大值之后是否允许存入磁盘
+	diskSpoolBufferSizeMB：磁盘缓存的缓存区大小
+	diskPersistent：是否在磁盘上持久化。指重启jvm后，数据是否有效。默认为false 
+	memoryStoreEvictionPolicy：缓存满了之后的淘汰算法。LRU和FIFO算法这里就不做介绍。LFU算法直接淘汰使用比较少的对象，在内存保留的都是一些经常访问的对象。对于大部分网站项目，该算法比较适用。
+	如果应用需要配置多个不同命名并采用不同参数的Cache，可以相应修改配置文件，增加需要的Cache配置即可。
+	-->
+	
+</ehcache>
