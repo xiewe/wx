@@ -148,11 +148,8 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_log` (
 
 
 -- data initalization
-START TRANSACTION;
 USE `wx`;
-INSERT INTO `wx`.`sys_user` (`id`, `uid`, `username`, `password`, `phone`, `country_code`, `email`, `status`, `create_time`, `organization_id`, `salt`, `category`, `address_id`, `summary_zh`, `summary_en`, `nationality`, `name_en`, `name`, `main_product_en`, `main_product_zh`, `photo`, `reg_gps`, `longitude`, `is_complete`, `daren_seq`, `sex`, `birthday`, `latitude`, `company_name`, `full_address`, `company_phone`, `company_site`, `company_remark`, `office_situation`, `daren_remark`, `daren_remark_en`, `daren_name`, `daren_name_en`, `user_type`, `is_vip`, `reg_location`, `last_time`, `terminal_id`, `invitation_code`) 
-VALUES (1, NULL, 'admin', 'f0850817aee6fcd981ec4578314ee3bc8afdc61c', '13800138000', NULL, 'admin@your.company.com', 0, '2014-01-01 14:58:38', 2, 'f40eaf1c6ec3efaf', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.0, 0, 99999999, 0, NULL, 0.0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL);
-
+insert into `sys_user` (`id`, `uid`, `username`, `password`, `salt`, `realname`, `gender`, `photo`, `phone`, `country_code`, `nationality`, `individual_id`, `email`, `address`, `self_intro`, `is_vip`, `status`, `utype`, `org_id`, `role_id`, `gps`, `longitude`, `latitude`, `user_agent`, `last_login`, `create_time`, `modify_time`) values('1','10001','admin','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'xiewe9@163.com',NULL,'创建者','1','0','0',NULL,NULL,NULL,'0','0',NULL,NULL,NULL,NULL);
 COMMIT;
 
 
