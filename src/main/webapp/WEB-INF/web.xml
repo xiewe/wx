@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0">
   <display-name>wx</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
@@ -20,9 +23,11 @@
     <param-name>spring.profiles.default</param-name>
     <param-value>production</param-value>
   </context-param>
+
   <listener>
     <listener-class>com.framework.spring.ContextUtil</listener-class>
   </listener>
+
   <context-param>
     <param-name>logbackConfigLocation</param-name>
     <param-value>classpath:logback.xml</param-value>
@@ -30,9 +35,11 @@
   <listener>
     <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
   </listener>
+
   <listener>
     <listener-class>com.framework.spring.OnlineSessionListener</listener-class>
   </listener>
+
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -49,6 +56,7 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
   <filter>
     <filter-name>openEntityManagerInViewFilter</filter-name>
     <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
@@ -57,6 +65,7 @@
     <filter-name>openEntityManagerInViewFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
   <filter>
     <filter-name>shiroFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -69,6 +78,7 @@
     <filter-name>shiroFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
   <servlet>
     <servlet-name>springServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -82,6 +92,7 @@
     <servlet-name>springServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>Captcha</servlet-name>
     <servlet-class>com.framework.shiro.PatchcaServlet</servlet-class>
@@ -90,9 +101,11 @@
     <servlet-name>Captcha</servlet-name>
     <url-pattern>/Captcha.jpg</url-pattern>
   </servlet-mapping>
+  
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
+  
   <error-page>
     <exception-type>java.lang.Throwable</exception-type>
     <location>/WEB-INF/pages/error/500.jsp</location>
