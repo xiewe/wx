@@ -46,11 +46,6 @@
         <property name="log4JDBCService" ref="log4JDBCServiceImpl" />
       </bean>
     </mvc:interceptor>
-    <!-- 数据权限验证 -->
-    <mvc:interceptor>
-      <mvc:mapping path="/**" />
-      <bean class="com.framework.spring.DataControlInterceptor" />
-    </mvc:interceptor>
     <!-- H5页面权限验证 -->
     <mvc:interceptor>
       <mvc:mapping path="/m/**" />

@@ -1,8 +1,6 @@
 package com.framework.shiro;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -30,17 +28,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.framework.AppConstants;
-import com.framework.entity.DataControl;
 import com.framework.entity.RolePermission;
 import com.framework.entity.RolePermissionDataControl;
 import com.framework.entity.User;
 import com.framework.entity.UserRole;
 import com.framework.exception.IncorrectCaptchaException;
-import com.framework.service.DataControlService;
 import com.framework.service.RoleService;
 import com.framework.service.UserRoleService;
 import com.framework.service.UserService;
-import com.framework.spring.DataControlCache;
 import com.framework.utils.Digests;
 import com.framework.utils.Encodes;
 
@@ -57,8 +52,6 @@ public class ShiroRealm extends AuthorizingRealm {
 	protected RoleService roleService;
 
 	protected UserRoleService userRoleService;
-
-	protected DataControlService dataControlService;
 
 	@Autowired
 	private HttpServletRequest request;
@@ -98,26 +91,11 @@ public class ShiroRealm extends AuthorizingRealm {
 			}
 			// 获取操作权限
 			Collection<String> permissions = new HashSet<String>();
-			// 检查用户数据权限缓存
-			if (null == DataControlCache.get(user.getUsername())) {
-				DataControlCache.add(user.getUsername(),
-						new HashMap<String, List<DataControl>>());
-			}
 			for (RolePermission o : userRole.getRole().getRolePermissions()) {
 				permissions.add(o.getPermission().getSn());
 				// 获取数据级权限 begin
 				List<RolePermissionDataControl> lstRolePermissionDataControls = o
 						.getRolePermissionDataControls();
-				List<DataControl> lstDataControls = new ArrayList();
-				for (RolePermissionDataControl rolePermissionDataControl : lstRolePermissionDataControls) {
-					lstDataControls.add(dataControlService
-							.get(rolePermissionDataControl.getDataControl()
-									.getId()));
-				}
-				// 保存用户数据权限信息
-				DataControlCache.get(user.getUsername()).put(
-						o.getPermission().getSn(), lstDataControls);
-				// 获取数据级权限 end
 			}
 
 			info.addStringPermissions(permissions);
@@ -125,8 +103,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
 		log.info(user.getUsername() + "拥有的角色:" + info.getRoles());
 		log.info(user.getUsername() + "拥有的权限:" + info.getStringPermissions());
-		log.info(user.getUsername() + "拥有的数据权限:"
-				+ DataControlCache.get(user.getUsername()));
 		return info;
 	}
 
@@ -138,8 +114,10 @@ public class ShiroRealm extends AuthorizingRealm {
 			CaptchaUsernamePasswordToken token = (CaptchaUsernamePasswordToken) arg0;
 			String parm = token.getCaptcha();
 
-			if (StringUtils.isEmpty(parm) || !PatchcaServlet.validate(SecurityUtils.getSubject()
-					.getSession().getId().toString(), parm.toLowerCase())) {
+			if (StringUtils.isEmpty(parm)
+					|| !PatchcaServlet.validate(SecurityUtils.getSubject()
+							.getSession().getId().toString(),
+							parm.toLowerCase())) {
 				throw new IncorrectCaptchaException("验证码错误！");
 			}
 		}
@@ -194,12 +172,10 @@ public class ShiroRealm extends AuthorizingRealm {
 		Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
 		if (cache != null) {
 			for (Object key : cache.keys()) {
-				log.debug("Clear all cached authorization info :"
-						+ key);
+				log.debug("Clear all cached authorization info :" + key);
 				cache.remove(key);
 			}
 		}
-		DataControlCache.clear();
 	}
 
 	/**
@@ -209,8 +185,7 @@ public class ShiroRealm extends AuthorizingRealm {
 		Cache<Object, AuthenticationInfo> cache = getAuthenticationCache();
 		if (cache != null) {
 			for (Object key : cache.keys()) {
-				log.debug("Clear all cached authentication info :"
-						+ key);
+				log.debug("Clear all cached authentication info :" + key);
 				cache.remove(key);
 			}
 		}
@@ -280,10 +255,6 @@ public class ShiroRealm extends AuthorizingRealm {
 	 */
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
-	}
-
-	public void setDataControlService(DataControlService dataControlService) {
-		this.dataControlService = dataControlService;
 	}
 
 }
