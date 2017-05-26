@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.dao.MSysRolePermissionMapper">
+  <resultMap id="BaseResultMap" type="com.framework.entity.MSysRolePermission">
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="menu_class_id" jdbcType="INTEGER" property="menuClassId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.framework.entity.MSysRolePermission">
+    insert into sys_role_permission (role_id, menu_id, menu_class_id
+      )
+    values (#{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}, #{menuClassId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.framework.entity.MSysRolePermission">
+    insert into sys_role_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="menuClassId != null">
+        menu_class_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuClassId != null">
+        #{menuClassId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
