@@ -26,3 +26,7 @@ proguard.cfg
 
 #OSX
 .DS_Store
+
+#log
+logs
+log
