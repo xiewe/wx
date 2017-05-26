@@ -63,23 +63,9 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_role_permission` (
   `role_id` INT NOT NULL,
   `menu_id` INT NOT NULL,
   `menu_class_id` INT NOT NULL,
+  PRIMARY KEY (`role_id`),
   INDEX `idx_sys_role_permission_1` (`role_id` ASC),
-  INDEX `idx_sys_role_permission_2` (`menu_id` ASC),
-  CONSTRAINT `fk_sys_role_permission_1`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `wx`.`sys_role` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_sys_role_permission_2`
-    FOREIGN KEY (`menu_id`)
-    REFERENCES `wx`.`sys_menu` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_sys_role_permission_3`
-    FOREIGN KEY (`menu_class_id`)
-    REFERENCES `wx`.`sys_menu_class` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION
+  INDEX `idx_sys_role_permission_2` (`menu_id` ASC)
 ) ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `wx`.`sys_user` ;
