@@ -106,19 +106,6 @@ public interface AppConstants {
 	public static final int PERMISSION_TYPE_FINAL = 2;
 
 	/**
-	 * 数据极权限类型：OWNS-用户关联的数据；
-	 */
-	public static final String DATACONTROL_CATEGORY_OWNS = "OWNS";
-	/**
-	 * 数据极权限类型：CUSTOM-自定义；
-	 */
-	public static final String DATACONTROL_CATEGORY_CUSTOM = "CUSTOM";
-	/**
-	 * 数据极权限类型：ORGANIZATION-部门关联的数据；;
-	 */
-	public static final String DATACONTROL_CATEGORY_ORGANIZATION = "ORGANIZATION";
-
-	/**
 	 * 下载路径
 	 */
 	public static final String DOWNLOAD_PATH = "download.path";

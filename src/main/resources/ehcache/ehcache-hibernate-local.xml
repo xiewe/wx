@@ -33,13 +33,7 @@
 	<cache name="com.framework.entity.Organization"
 		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
 		maxEntriesLocalDisk="10000" />
-	<cache name="com.framework.entity.DataControl"
-		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
-		maxEntriesLocalDisk="10000" />
 	<cache name="com.framework.entity.LogInfo"
-		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
-		maxEntriesLocalDisk="10000" />
-	<cache name="com.framework.entity.RolePermissionDataControl"
 		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
 		maxEntriesLocalDisk="10000" />
 </ehcache>

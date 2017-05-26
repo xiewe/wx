@@ -14,11 +14,10 @@
 
 	<!-- 項目自定义的Realm -->
 	<bean id="shiroRealm" class="com.framework.shiro.ShiroRealm"
-		depends-on="userDAO,userRoleDAO,roleDAO,dataControlDAO">
+		depends-on="userDAO,userRoleDAO,roleDAO">
 		<property name="userService" ref="userServiceImpl" />
 		<property name="userRoleService" ref="userRoleServiceImpl" />
 		<property name="roleService" ref="roleServiceImpl" />
-		<property name="dataControlService" ref="dataControlServiceImpl" />
 		<!-- 是否使用验证码 -->
 		<property name="useCaptcha" value="true" />
 	</bean>
