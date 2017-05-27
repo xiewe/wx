@@ -85,10 +85,6 @@ public class User {
 	private Date createTime;
 
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
-	@JoinColumn(name = "organizationId")
-	private Organization organization;
-
 	@Transient
 	private String loginIpAddress;
 
@@ -252,24 +248,6 @@ public class User {
 
 	public void setCategory(int category) {
 		this.category = category;
-	}
-
-	/**
-	 * 返回 organization 的值
-	 *
-	 * @return organization
-	 */
-	public Organization getOrganization() {
-		return organization;
-	}
-
-	/**
-	 * 设置 organization 的值
-	 *
-	 * @param organization
-	 */
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
 	}
 
 	public String getLoginIpAddress() {

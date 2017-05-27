@@ -18,7 +18,6 @@ import com.framework.exception.ServiceException;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
 import com.framework.log4jdbc.LogMessageObject;
-import com.framework.service.OrganizationService;
 import com.framework.service.UserService;
 
 @Controller
@@ -27,9 +26,6 @@ public class IndexController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private OrganizationService organizationService;
 
 	@Autowired
 	private HttpServletRequest request;

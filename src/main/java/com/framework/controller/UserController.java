@@ -22,14 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.framework.AppConstants;
-import com.framework.entity.Organization;
 import com.framework.entity.User;
 import com.framework.exception.ExistedException;
 import com.framework.exception.ServiceException;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
 import com.framework.log4jdbc.LogMessageObject;
-import com.framework.service.OrganizationService;
 import com.framework.service.UserService;
 import com.framework.shiro.ShiroRealm;
 import com.framework.utils.page.Page;
@@ -46,8 +44,6 @@ public class UserController extends BaseController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private OrganizationService organizationService;
 
 	@Autowired
 	private HttpServletRequest request;
@@ -68,9 +64,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody String create(@Valid User user) {
 		user.setCreateTime(new Date());
-		if (user.getOrganization().getId() == null) {
-			user.setOrganization(null);
-		}
+
 		try {
 			userService.saveOrUpdate(user);
 		} catch (ExistedException e) {
@@ -86,7 +80,6 @@ public class UserController extends BaseController {
 	public User preload(@RequestParam(value = "id", required = false) Long id) {
 		if (id != null) {
 			User user = userService.get(id);
-			user.setOrganization(null);
 			return user;
 		}
 		return null;
@@ -105,9 +98,6 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody String update(
 			@Valid @ModelAttribute("preloadUser") User user) {
-		if (user.getOrganization().getId() == null) {
-			user.setOrganization(null);
-		}
 		userService.saveOrUpdate(user);
 		// reload permission
 		shiroRealm.clearAllCachedAuthorizationInfo();
@@ -187,11 +177,4 @@ public class UserController extends BaseController {
 		return "";
 	}
 
-	@RequiresPermissions(value = { "User:edit", "User:save" }, logical = Logical.OR)
-	@RequestMapping(value = "/lookup2org", method = { RequestMethod.GET })
-	public String lookup(Map<String, Object> map) {
-		Organization org = organizationService.getTree();
-		map.put("org", org);
-		return LOOK_ORG;
-	}
 }
