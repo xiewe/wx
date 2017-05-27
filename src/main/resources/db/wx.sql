@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_organization` (
   `modify_time` DATETIME,
   PRIMARY KEY (`id`),
   INDEX `idx_sys_organization_1` (`parent_id` ASC)
-) ENGINE = InnoDB;
+) ENGINE = INNODB;
 
 DROP TABLE IF EXISTS `wx`.`sys_role` ;
 CREATE TABLE IF NOT EXISTS `wx`.`sys_role` (
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_role` (
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(256) NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB;
+) ENGINE = INNODB;
 
 DROP TABLE IF EXISTS `wx`.`sys_menu` ;
 CREATE TABLE IF NOT EXISTS `wx`.`sys_menu` (
@@ -34,13 +34,13 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_menu` (
   `name` VARCHAR(100) NULL,
   `url` VARCHAR(45) NULL,
   `parent_id` INT NULL,
-  `flag` INT NULL comment 'ztree open-flag',
-  `target` VARCHAR(32) NULL comment 'ztree target iframe',
+  `flag` INT NULL COMMENT 'ztree open-flag',
+  `target` VARCHAR(32) NULL COMMENT 'ztree target iframe',
   `description` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   INDEX `idx_sys_menu_1` (`category` ASC),
   INDEX `idx_sys_menu_2` (`parent_id` ASC)
-) ENGINE = InnoDB;
+) ENGINE = INNODB;
 
 DROP TABLE IF EXISTS `wx`.`sys_menu_class` ;
 CREATE TABLE IF NOT EXISTS `wx`.`sys_menu_class` (
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_menu_class` (
   `menu_id` INT NOT NULL,
   `name` VARCHAR(100) NULL,
   `class_name` VARCHAR(100) NULL COMMENT '对应的模块全类名',
-  `method` VARCHAR(50) NULL comment '类下的方法名',
+  `method` VARCHAR(50) NULL COMMENT '类下的方法名',
   PRIMARY KEY (`id`),
   INDEX `idx_sys_menu_class_1` (`menu_id` ASC),
   CONSTRAINT `fk_sys_menu_class_1`
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_menu_class` (
     REFERENCES `wx`.`sys_menu` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
-) ENGINE = InnoDB;
+) ENGINE = INNODB;
 
 DROP TABLE IF EXISTS `wx`.`sys_role_permission` ;
 CREATE TABLE IF NOT EXISTS `wx`.`sys_role_permission` (
@@ -66,8 +66,23 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_role_permission` (
   `menu_class_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `idx_sys_role_permission_1` (`role_id` ASC),
-  INDEX `idx_sys_role_permission_2` (`menu_id` ASC)
-) ENGINE = InnoDB;
+  INDEX `idx_sys_role_permission_2` (`menu_id` ASC),
+  CONSTRAINT `fk_sys_role_permission_1`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `wx`.`sys_role` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_sys_role_permission_2`
+    FOREIGN KEY (`menu_id`)
+    REFERENCES `wx`.`sys_menu` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_sys_role_permission_3`
+    FOREIGN KEY (`menu_class_id`)
+    REFERENCES `wx`.`sys_menu_class` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+) ENGINE = INNODB;
 
 DROP TABLE IF EXISTS `wx`.`sys_user` ;
 CREATE TABLE IF NOT EXISTS `wx`.`sys_user` (
@@ -117,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_user` (
     REFERENCES `wx`.`sys_role` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
-) ENGINE = InnoDB
+) ENGINE = INNODB
 COMMENT = '用户表';
 
 DROP TABLE IF EXISTS `wx`.`sys_log` ;
@@ -131,12 +146,12 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_log` (
   PRIMARY KEY (`id`),
   INDEX `idx_sys_log_1` (`username` ASC),
   INDEX `idx_sys_log_2` (`ip` ASC)
-) ENGINE = InnoDB;
+) ENGINE = INNODB;
 
 
 -- data initalization
 USE `wx`;
-insert into `sys_user` (`id`, `uid`, `username`, `password`, `salt`, `realname`, `gender`, `photo`, `phone`, `country_code`, `nationality`, `individual_id`, `email`, `address`, `self_intro`, `is_vip`, `status`, `utype`, `org_id`, `role_id`, `gps`, `longitude`, `latitude`, `user_agent`, `last_login`, `create_time`, `modify_time`) values('1','10001','admin','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'xiewe9@163.com',NULL,'创建者','1','0','0',NULL,NULL,NULL,'0','0',NULL,NULL,NULL,NULL);
+INSERT INTO `sys_user` (`id`, `uid`, `username`, `password`, `salt`, `realname`, `gender`, `photo`, `phone`, `country_code`, `nationality`, `individual_id`, `email`, `address`, `self_intro`, `is_vip`, `status`, `utype`, `org_id`, `role_id`, `gps`, `longitude`, `latitude`, `user_agent`, `last_login`, `create_time`, `modify_time`) VALUES('1','10001','admin','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'xiewe9@163.com',NULL,'创建者','1','0','0',NULL,NULL,NULL,'0','0',NULL,NULL,NULL,NULL);
 COMMIT;
 
 
