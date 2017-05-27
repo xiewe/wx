@@ -3,9 +3,9 @@ package com.framework.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import com.framework.entity.LogInfo;
+import com.framework.entity.SysLog;
 
-public interface LogInfoDAO extends JpaRepository<LogInfo, Long>,
-		JpaSpecificationExecutor<LogInfo> {
+public interface SysLogDAO extends JpaRepository<SysLog, Long>,
+		JpaSpecificationExecutor<SysLog> {
 
 }

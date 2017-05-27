@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 @Table(name = "sys_log", catalog = "wx")
 public class SysLog implements java.io.Serializable {
 
-	private Integer id;
+	private Long id;
 	private String username;
 	private String ip;
 	private String userAgent;
@@ -40,11 +40,11 @@ public class SysLog implements java.io.Serializable {
 	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.framework.entity.LogInfo;
-import com.framework.service.LogInfoService;
+import com.framework.entity.SysLog;
+import com.framework.service.SysLogService;
 import com.framework.utils.page.Page;
 import com.framework.utils.persistence.DynamicSpecifications;
 
 @Controller
-@RequestMapping("/security/logInfo")
-public class LogInfoController {
+@RequestMapping("/security/sysLog")
+public class SysLogController {
 
 	@Autowired
-	private LogInfoService logInfoService;
+	private SysLogService sysLogService;
 
-	private static final String LIST = "security/logInfo/list";
+	private static final String LIST = "security/sysLog/list";
 
 	@InitBinder
 	public void dataBinder(WebDataBinder dataBinder) {
@@ -40,29 +40,28 @@ public class LogInfoController {
 				true));
 	}
 
-	@RequiresPermissions("LogInfo:delete")
+	@RequiresPermissions("SysLog:delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public @ResponseBody
-	String deleteMany(Long[] ids) {
+	public @ResponseBody String deleteMany(Long[] ids) {
 		for (Long id : ids) {
-			logInfoService.delete(id);
+			sysLogService.delete(id);
 		}
 		return "success";
 	}
 
-	@RequiresPermissions("LogInfo:view")
+	@RequiresPermissions("SysLog:view")
 	@RequestMapping(value = "/list", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	public String list(ServletRequest request, Page page,
 			Map<String, Object> map) {
-		Specification<LogInfo> specification = DynamicSpecifications
-				.buildSpecification(request, LogInfo.class);
-		List<LogInfo> logInfos = logInfoService.findByPageable(specification,
-				page);
+		Specification<SysLog> specification = DynamicSpecifications
+				.buildSpecification(request, SysLog.class);
+		List<SysLog> sysLogs = sysLogService
+				.findByPageable(specification, page);
 		map.put("logLevels", new String[] { "TRACE", "DEBUG", "INFO", "WARN",
 				"ERROR" });
 		map.put("page", page);
-		map.put("logInfos", logInfos);
+		map.put("sysLogs", sysLogs);
 
 		return LIST;
 	}

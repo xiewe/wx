@@ -137,7 +137,7 @@ COMMENT = '用户表';
 
 DROP TABLE IF EXISTS `wx`.`sys_log` ;
 CREATE TABLE IF NOT EXISTS `wx`.`sys_log` (
-  `id` INT NULL AUTO_INCREMENT COMMENT '主键，自动增长',
+  `id` BIGINT NULL AUTO_INCREMENT COMMENT '主键，自动增长',
   `username` VARCHAR(32) NULL COMMENT '操作用户名',
   `ip` VARCHAR(45) NULL COMMENT '操作的IP',
   `user_agent` VARCHAR(200) NULL COMMENT '终端设备信息',

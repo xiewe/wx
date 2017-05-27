@@ -8,26 +8,26 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.framework.dao.LogInfoDAO;
-import com.framework.entity.LogInfo;
-import com.framework.service.LogInfoService;
+import com.framework.dao.SysLogDAO;
+import com.framework.entity.SysLog;
+import com.framework.service.SysLogService;
 import com.framework.utils.page.Page;
 import com.framework.utils.page.PageUtils;
 
 @Service
 @Transactional
-public class LogInfoServiceImpl implements LogInfoService {
+public class SysLogServiceImpl implements SysLogService {
 
 	@Autowired
-	private LogInfoDAO logInfoDAO;
+	private SysLogDAO logInfoDAO;
 
 	@Override
-	public LogInfo get(Long id) {
+	public SysLog get(Long id) {
 		return logInfoDAO.findOne(id);
 	}
 
 	@Override
-	public void saveOrUpdate(LogInfo logInfo) {
+	public void saveOrUpdate(SysLog logInfo) {
 		logInfoDAO.save(logInfo);
 	}
 
@@ -37,21 +37,21 @@ public class LogInfoServiceImpl implements LogInfoService {
 	}
 
 	@Override
-	public List<LogInfo> findAll(Page page) {
-		org.springframework.data.domain.Page<LogInfo> springDataPage = logInfoDAO
+	public List<SysLog> findAll(Page page) {
+		org.springframework.data.domain.Page<SysLog> springDataPage = logInfoDAO
 				.findAll(PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
 	@Override
-	public List<LogInfo> findByPageable(Specification<LogInfo> specification,
+	public List<SysLog> findByPageable(Specification<SysLog> specification,
 			Page page) {
 		if (null != page && StringUtils.isEmpty(page.getOrderField())) {
 			page.setOrderDirection("desc");
 			page.setOrderField("createTime");
 		}
-		org.springframework.data.domain.Page<LogInfo> springDataPage = logInfoDAO
+		org.springframework.data.domain.Page<SysLog> springDataPage = logInfoDAO
 				.findAll(specification, PageUtils.createPageable(page));
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();

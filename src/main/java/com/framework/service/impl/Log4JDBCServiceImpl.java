@@ -7,11 +7,11 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.framework.entity.LogInfo;
+import com.framework.entity.SysLog;
 import com.framework.entity.User;
 import com.framework.log4jdbc.LogLevel;
 import com.framework.service.Log4JDBCService;
-import com.framework.service.LogInfoService;
+import com.framework.service.SysLogService;
 
 /**
  * 全局日志等级<包日志等级<类和方法日志等级
@@ -20,7 +20,7 @@ public class Log4JDBCServiceImpl implements Log4JDBCService {
 
 	private LogLevel rootLogLevel = LogLevel.ERROR;
 
-	private LogInfoService logInfoService;
+	private SysLogService sysLogService;
 
 	private Map<String, LogLevel> customLogLevel = new HashMap<String, LogLevel>();
 
@@ -43,14 +43,14 @@ public class Log4JDBCServiceImpl implements Log4JDBCService {
 		User loginUser = (User) org.apache.shiro.SecurityUtils.getSubject()
 				.getPrincipal();
 
-		LogInfo logInfo = new LogInfo();
-		logInfo.setCreateTime(new Date());
-		logInfo.setIpAddress(loginUser.getLoginIpAddress());
-		logInfo.setUsername(loginUser.getUsername());
-		logInfo.setMessage(result);
-		logInfo.setLogLevel(logLevel);
+		SysLog sysLog = new SysLog();
+		sysLog.setUsername(loginUser.getUsername());
+		sysLog.setIp(loginUser.getLoginIpAddress());
+		sysLog.setUserAgent(null);
+		sysLog.setMessage(result);
+		sysLog.setCreateTime(new Date());
 
-		logInfoService.saveOrUpdate(logInfo);
+		sysLogService.saveOrUpdate(sysLog);
 	}
 
 	public void setRootLogLevel(LogLevel rootLogLevel) {
@@ -71,8 +71,8 @@ public class Log4JDBCServiceImpl implements Log4JDBCService {
 		return customLogLevel;
 	}
 
-	public void setLogInfoService(LogInfoService logInfoService) {
-		this.logInfoService = logInfoService;
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
 	}
 
 	@Override
