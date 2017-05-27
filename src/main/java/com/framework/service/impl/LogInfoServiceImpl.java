@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.framework.dao.LogInfoDAO;
 import com.framework.entity.LogInfo;
 import com.framework.service.LogInfoService;
-import com.framework.utils.dwz.Page;
-import com.framework.utils.dwz.PageUtils;
+import com.framework.utils.page.Page;
+import com.framework.utils.page.PageUtils;
 
 @Service
 @Transactional

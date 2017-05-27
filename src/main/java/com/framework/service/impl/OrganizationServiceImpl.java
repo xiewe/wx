@@ -15,8 +15,8 @@ import com.framework.entity.User;
 import com.framework.exception.NotDeletedException;
 import com.framework.exception.NotExistedException;
 import com.framework.service.OrganizationService;
-import com.framework.utils.dwz.Page;
-import com.framework.utils.dwz.PageUtils;
+import com.framework.utils.page.Page;
+import com.framework.utils.page.PageUtils;
 
 @Service
 @Transactional

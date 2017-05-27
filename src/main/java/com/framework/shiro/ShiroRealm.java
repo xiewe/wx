@@ -1,9 +1,5 @@
 package com.framework.shiro;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
@@ -28,13 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.framework.AppConstants;
-import com.framework.entity.RolePermission;
-import com.framework.entity.RolePermissionDataControl;
 import com.framework.entity.User;
-import com.framework.entity.UserRole;
 import com.framework.exception.IncorrectCaptchaException;
-import com.framework.service.RoleService;
-import com.framework.service.UserRoleService;
 import com.framework.service.UserService;
 import com.framework.utils.Digests;
 import com.framework.utils.Encodes;
@@ -47,11 +38,8 @@ public class ShiroRealm extends AuthorizingRealm {
 	private static final String ALGORITHM = "SHA-1";
 	protected boolean useCaptcha = false;// 是否使用验证码
 
+	@Autowired
 	protected UserService userService;
-
-	protected RoleService roleService;
-
-	protected UserRoleService userRoleService;
 
 	@Autowired
 	private HttpServletRequest request;
@@ -80,26 +68,24 @@ public class ShiroRealm extends AuthorizingRealm {
 
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-		for (UserRole userRole : user.getUserRoles()) {
-			// 获取角色: 对非系统角色需要获取原生的角色，以匹配java类shiro注解角色的拦截
-			if (userRole.getRole().getCategory() == AppConstants.ROLE_TYPE_GENERAL) {
-				for (RolePermission o : userRole.getRole().getRolePermissions()) {
-					info.addRole(o.getPermission().getSn().split(":")[0]);
-				}
-			} else {
-				info.addRole(userRole.getRole().getName());
-			}
-			// 获取操作权限
-			Collection<String> permissions = new HashSet<String>();
-			for (RolePermission o : userRole.getRole().getRolePermissions()) {
-				permissions.add(o.getPermission().getSn());
-				// 获取数据级权限 begin
-				List<RolePermissionDataControl> lstRolePermissionDataControls = o
-						.getRolePermissionDataControls();
-			}
-
-			info.addStringPermissions(permissions);
-		}
+//		for (UserRole userRole : user.getUserRoles()) {
+//			// 获取角色: 对非系统角色需要获取原生的角色，以匹配java类shiro注解角色的拦截
+//			if (userRole.getRole().getCategory() == AppConstants.ROLE_TYPE_GENERAL) {
+//				for (RolePermission o : userRole.getRole().getRolePermissions()) {
+//					info.addRole(o.getPermission().getSn().split(":")[0]);
+//				}
+//			} else {
+//				info.addRole(userRole.getRole().getName());
+//			}
+//			// 获取操作权限
+//			Collection<String> permissions = new HashSet<String>();
+//			for (RolePermission o : userRole.getRole().getRolePermissions()) {
+//				permissions.add(o.getPermission().getSn());
+//
+//			}
+//
+//			info.addStringPermissions(permissions);
+//		}
 
 		log.info(user.getUsername() + "拥有的角色:" + info.getRoles());
 		log.info(user.getUsername() + "拥有的权限:" + info.getStringPermissions());
@@ -234,27 +220,6 @@ public class ShiroRealm extends AuthorizingRealm {
 	 */
 	public void setUseCaptcha(boolean useCaptcha) {
 		this.useCaptcha = useCaptcha;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
-	 * 设置 userRoleService 的值
-	 * 
-	 * @param userRoleService
-	 */
-	public void setUserRoleService(UserRoleService userRoleService) {
-		this.userRoleService = userRoleService;
-	}
-
-	/**
-	 * @param roleService
-	 *            the roleService to set
-	 */
-	public void setRoleService(RoleService roleService) {
-		this.roleService = roleService;
 	}
 
 }

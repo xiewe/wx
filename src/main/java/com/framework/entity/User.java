@@ -84,9 +84,6 @@ public class User {
 	@Column(updatable = false)
 	private Date createTime;
 
-	@OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST,
-			CascadeType.REMOVE }, orphanRemoval = true)
-	private Set<UserRole> userRoles = new HashSet<UserRole>();
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "organizationId")
@@ -229,23 +226,7 @@ public class User {
 		this.salt = salt;
 	}
 
-	/**
-	 * 返回 userRoles 的值
-	 *
-	 * @return userRoles
-	 */
-	public Set<UserRole> getUserRoles() {
-		return userRoles;
-	}
 
-	/**
-	 * 设置 userRoles 的值
-	 *
-	 * @param userRoles
-	 */
-	public void setUserRoles(Set<UserRole> userRoles) {
-		this.userRoles = userRoles;
-	}
 
 	/**
 	 * 返回 phone 的值

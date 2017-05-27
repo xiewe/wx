@@ -18,8 +18,9 @@ import com.framework.exception.ServiceException;
 import com.framework.service.UserService;
 import com.framework.shiro.ShiroRealm;
 import com.framework.shiro.ShiroRealm.HashPassword;
-import com.framework.utils.dwz.Page;
-import com.framework.utils.dwz.PageUtils;
+import com.framework.utils.page.Page;
+import com.framework.utils.page.PageUtils;
+
 
 @Service
 @Transactional
@@ -146,4 +147,6 @@ public class UserServiceImpl implements UserService {
 		}
 		return ids;
 	}
+
+
 }

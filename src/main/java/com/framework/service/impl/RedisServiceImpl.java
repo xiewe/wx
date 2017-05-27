@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.tradeehome.Constants;
-import com.tradeehome.service.RedisService;
+import com.framework.AppConstants;
+import com.framework.service.RedisService;
 
 @Service
 public class RedisServiceImpl implements RedisService {
@@ -18,7 +18,7 @@ public class RedisServiceImpl implements RedisService {
 	@Override
 	public String generateToken(String uid) {
 		String token = UUID.randomUUID().toString();
-		stringRedisTemplate.boundValueOps(uid).set(token, Constants.TOKEN_EXPIRES, TimeUnit.MILLISECONDS);
+		stringRedisTemplate.boundValueOps(uid).set(token, AppConstants.TOKEN_EXPIRES, TimeUnit.MILLISECONDS);
 		return token;
 	}
 

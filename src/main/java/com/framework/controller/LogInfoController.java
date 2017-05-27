@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.framework.entity.LogInfo;
 import com.framework.service.LogInfoService;
-import com.framework.utils.dwz.AjaxObject;
-import com.framework.utils.dwz.Page;
+import com.framework.utils.page.Page;
 import com.framework.utils.persistence.DynamicSpecifications;
 
 @Controller

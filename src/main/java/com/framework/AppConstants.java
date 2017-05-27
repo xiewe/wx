@@ -34,6 +34,12 @@ public interface AppConstants {
 	/** xmpp服务器端口 ***/
 	public final static String XMPP_SERVER_PORT = PropertiesUtil.getInstance().getKeyValue("xmpp.server.port");
 
+	public final static Integer PAGE_SIZE_DEFAULT = 15;
+	/**
+	 * token 有效期7*24小时，转换毫秒7*24*3600*1000,单位毫秒
+	 */
+	public static final int TOKEN_EXPIRES = 604800000;
+	
 	/**
 	 * 登录用户
 	 */

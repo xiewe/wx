@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.framework.entity.User;
-import com.framework.utils.dwz.Page;
+import com.framework.utils.page.Page;
 
 public interface UserService {
 	User get(Long id);
