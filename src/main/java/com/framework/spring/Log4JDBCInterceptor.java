@@ -79,10 +79,6 @@ public class Log4JDBCInterceptor extends HandlerInterceptorAdapter {
 							}
 
 							LogMessageObject defaultLogMessageObject = logMessageObject;
-							if (defaultLogMessageObject == null) {
-								defaultLogMessageObject = LogMessageObject
-										.newWrite();
-							}
 
 							if (defaultLogMessageObject.isWritten()) { // 判断是否写入log
 								// 覆盖，直接写入日志

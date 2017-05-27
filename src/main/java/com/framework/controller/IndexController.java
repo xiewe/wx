@@ -22,7 +22,7 @@ import com.framework.service.UserService;
 
 @Controller
 @RequestMapping("/index")
-public class IndexController {
+public class IndexController extends BaseController {
 
 	@Autowired
 	private UserService userService;
@@ -65,10 +65,7 @@ public class IndexController {
 			} catch (ServiceException e) {
 				return "error";
 			}
-			request.setAttribute(
-					AppConstants.LOG_ARGUMENTS,
-					LogMessageObject.newWrite().setObjects(
-							new Object[] { loginUser.getUsername() }));
+			setLogObject(loginUser.getUsername());
 			return "success";
 		}
 
@@ -94,9 +91,7 @@ public class IndexController {
 		loginUser.setEmail(user.getEmail());
 
 		userService.saveOrUpdate(loginUser);
-		request.setAttribute(AppConstants.LOG_ARGUMENTS, LogMessageObject
-				.newWrite()
-				.setObjects(new Object[] { loginUser.getUsername() }));
+		setLogObject(loginUser.getUsername());
 		return "success";
 	}
 }

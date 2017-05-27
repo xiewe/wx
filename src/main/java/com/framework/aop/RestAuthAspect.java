@@ -47,11 +47,10 @@ public class RestAuthAspect {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
-	@Pointcut("execution(* com.bizv2.controller.rest..*.*(..))")
+	@Pointcut("execution(* com.wx.controller.rest..*.*(..))")
 	private void pointCutMethod() {
 	}
 
-	@SuppressWarnings("unused")
 	@Around("pointCutMethod()")
 	public Object doAuthentication(ProceedingJoinPoint point) throws Throwable {
 

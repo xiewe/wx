@@ -20,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.framework.AppConstants;
+import com.framework.log4jdbc.LogMessageObject;
 import com.framework.service.RedisService;
 
 /**
@@ -146,5 +148,10 @@ public abstract class BaseController {
 			Locale locale = new Locale(language[0], language[1]);
 			localeResolver.setLocale(request, response, locale);
 		}
+	}
+
+	public void setLogObject(Object o) {
+		request.setAttribute(AppConstants.LOG_ARGUMENTS, LogMessageObject
+				.newWrite().setObjects(new Object[] { o }));
 	}
 }

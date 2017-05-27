@@ -27,7 +27,7 @@
     <property name="customLogLevel">
       <map>
         <entry key="com.framework" value="DEBUG" />
-        <entry key="com.bizv2" value="DEBUG" />
+        <entry key="com.wx" value="DEBUG" />
       </map>
     </property>
   </bean>

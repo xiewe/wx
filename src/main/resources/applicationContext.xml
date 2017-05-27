@@ -77,7 +77,7 @@
 		depends-on="dataSource">
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
-		<property name="packagesToScan" value="com.framework,com.bizv2" />
+		<property name="packagesToScan" value="com.framework,com.wx" />
 		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.current_session_context_class">thread</prop>

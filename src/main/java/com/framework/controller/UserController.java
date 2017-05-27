@@ -44,14 +44,12 @@ public class UserController extends BaseController {
 	@Autowired
 	private UserService userService;
 
-
 	@Autowired
 	private HttpServletRequest request;
 
 	private static final String CREATE = "security/user/create";
 	private static final String UPDATE = "security/user/update";
 	private static final String LIST = "security/user/list";
-	private static final String LOOK_ORG = "security/user/lookup_org";
 
 	@RequiresPermissions("User:save")
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -70,8 +68,7 @@ public class UserController extends BaseController {
 		} catch (ExistedException e) {
 			return "添加用户失败：" + e.getMessage();
 		}
-		request.setAttribute(AppConstants.LOG_ARGUMENTS, LogMessageObject
-				.newWrite().setObjects(new Object[] { user.getUsername() }));
+		setLogObject(user.getUsername());
 
 		return "msg.operation.success";
 	}
@@ -101,8 +98,7 @@ public class UserController extends BaseController {
 		userService.saveOrUpdate(user);
 		// reload permission
 		shiroRealm.clearAllCachedAuthorizationInfo();
-		request.setAttribute(AppConstants.LOG_ARGUMENTS, LogMessageObject
-				.newWrite().setObjects(new Object[] { user.getUsername() }));
+		setLogObject(user.getUsername());
 
 		return "msg.operation.success";
 	}
@@ -119,8 +115,7 @@ public class UserController extends BaseController {
 			}
 			// reload permission
 			shiroRealm.clearAllCachedAuthorizationInfo();
-			request.setAttribute(AppConstants.LOG_ARGUMENTS, LogMessageObject
-					.newWrite().setObjects(new Object[] { user.getUsername() }));
+			setLogObject(user.getUsername());
 			userService.delete(user.getId());
 
 		} catch (ServiceException e) {
@@ -145,10 +140,7 @@ public class UserController extends BaseController {
 			}
 			// reload permission
 			shiroRealm.clearAllCachedAuthorizationInfo();
-			request.setAttribute(
-					AppConstants.LOG_ARGUMENTS,
-					LogMessageObject.newWrite().setObjects(
-							new Object[] { Arrays.toString(usernames) }));
+			setLogObject(Arrays.toString(usernames));
 		} catch (ServiceException e) {
 			return "删除用户失败：" + e.getMessage();
 		}
