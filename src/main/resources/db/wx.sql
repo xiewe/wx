@@ -60,10 +60,11 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_menu_class` (
 
 DROP TABLE IF EXISTS `wx`.`sys_role_permission` ;
 CREATE TABLE IF NOT EXISTS `wx`.`sys_role_permission` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `role_id` INT NOT NULL,
   `menu_id` INT NOT NULL,
   `menu_class_id` INT NOT NULL,
-  PRIMARY KEY (`role_id`),
+  PRIMARY KEY (`id`),
   INDEX `idx_sys_role_permission_1` (`role_id` ASC),
   INDEX `idx_sys_role_permission_2` (`menu_id` ASC)
 ) ENGINE = InnoDB;

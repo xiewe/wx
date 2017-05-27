@@ -8,13 +8,13 @@
 
   <description>Spring redis配置 </description>
 
-  <context:property-placeholder location="classpath:redis.properties" />
+  <context:property-placeholder location="classpath:/redis.properties" />
   <!-- <context:component-scan base-package="com.wx.redis.dao"> </context:component-scan> -->
 
   <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
     <property name="maxIdle" value="${redis.maxIdle}" />
-    <property name="maxActive" value="${redis.maxActive}" />
-    <property name="maxWait" value="${redis.maxWait}" />
+    <property name="maxTotal" value="${redis.maxTotal}" />
+    <property name="MaxWaitMillis" value="${redis.MaxWaitMillis}" />
     <property name="testOnBorrow" value="${redis.testOnBorrow}" />
   </bean>
 

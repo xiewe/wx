@@ -1,4 +1,5 @@
 package com.framework.entity;
+
 // Generated 2017-5-26 22:41:39 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ public class SysRolePermission implements java.io.Serializable {
 	private int menuId;
 	private int menuClassId;
 
+	@Id
 	@Column(name = "role_id", unique = true, nullable = false)
 	public int getRoleId() {
 		return this.roleId;
