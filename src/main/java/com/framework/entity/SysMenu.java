@@ -1,5 +1,5 @@
 package com.framework.entity;
-// Generated 2017-5-26 22:41:39 by Hibernate Tools 4.3.1.Final
+// Generated 2017-5-27 22:17:08 by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +26,7 @@ public class SysMenu implements java.io.Serializable {
 	private String target;
 	private String description;
 	private Set<SysMenuClass> sysMenuClasses = new HashSet<SysMenuClass>(0);
+	private Set<SysRolePermission> sysRolePermissions = new HashSet<SysRolePermission>(0);
 
 	public SysMenu() {
 	}
@@ -35,7 +36,7 @@ public class SysMenu implements java.io.Serializable {
 	}
 
 	public SysMenu(int id, String category, String name, String url, Integer parentId, Integer flag, String target,
-			String description, Set<SysMenuClass> sysMenuClasses) {
+			String description, Set<SysMenuClass> sysMenuClasses, Set<SysRolePermission> sysRolePermissions) {
 		this.id = id;
 		this.category = category;
 		this.name = name;
@@ -45,6 +46,7 @@ public class SysMenu implements java.io.Serializable {
 		this.target = target;
 		this.description = description;
 		this.sysMenuClasses = sysMenuClasses;
+		this.sysRolePermissions = sysRolePermissions;
 	}
 
 	@Id
@@ -128,6 +130,15 @@ public class SysMenu implements java.io.Serializable {
 
 	public void setSysMenuClasses(Set<SysMenuClass> sysMenuClasses) {
 		this.sysMenuClasses = sysMenuClasses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysMenu")
+	public Set<SysRolePermission> getSysRolePermissions() {
+		return this.sysRolePermissions;
+	}
+
+	public void setSysRolePermissions(Set<SysRolePermission> sysRolePermissions) {
+		this.sysRolePermissions = sysRolePermissions;
 	}
 
 }

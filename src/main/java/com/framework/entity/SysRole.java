@@ -1,5 +1,5 @@
 package com.framework.entity;
-// Generated 2017-5-26 22:41:39 by Hibernate Tools 4.3.1.Final
+// Generated 2017-5-27 22:17:08 by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +23,7 @@ public class SysRole implements java.io.Serializable {
 	private String name;
 	private String description;
 	private Set<SysUser> sysUsers = new HashSet<SysUser>(0);
+	private Set<SysRolePermission> sysRolePermissions = new HashSet<SysRolePermission>(0);
 
 	public SysRole() {
 	}
@@ -31,10 +32,11 @@ public class SysRole implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public SysRole(String name, String description, Set<SysUser> sysUsers) {
+	public SysRole(String name, String description, Set<SysUser> sysUsers, Set<SysRolePermission> sysRolePermissions) {
 		this.name = name;
 		this.description = description;
 		this.sysUsers = sysUsers;
+		this.sysRolePermissions = sysRolePermissions;
 	}
 
 	@Id
@@ -74,6 +76,15 @@ public class SysRole implements java.io.Serializable {
 
 	public void setSysUsers(Set<SysUser> sysUsers) {
 		this.sysUsers = sysUsers;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysRole")
+	public Set<SysRolePermission> getSysRolePermissions() {
+		return this.sysRolePermissions;
+	}
+
+	public void setSysRolePermissions(Set<SysRolePermission> sysRolePermissions) {
+		this.sysRolePermissions = sysRolePermissions;
 	}
 
 }

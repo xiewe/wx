@@ -1,6 +1,8 @@
 package com.framework.entity;
-// Generated 2017-5-26 22:41:39 by Hibernate Tools 4.3.1.Final
+// Generated 2017-5-27 22:17:08 by Hibernate Tools 4.3.1.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,6 +26,7 @@ public class SysMenuClass implements java.io.Serializable {
 	private String name;
 	private String className;
 	private String method;
+	private Set<SysRolePermission> sysRolePermissions = new HashSet<SysRolePermission>(0);
 
 	public SysMenuClass() {
 	}
@@ -31,11 +35,13 @@ public class SysMenuClass implements java.io.Serializable {
 		this.sysMenu = sysMenu;
 	}
 
-	public SysMenuClass(SysMenu sysMenu, String name, String className, String method) {
+	public SysMenuClass(SysMenu sysMenu, String name, String className, String method,
+			Set<SysRolePermission> sysRolePermissions) {
 		this.sysMenu = sysMenu;
 		this.name = name;
 		this.className = className;
 		this.method = method;
+		this.sysRolePermissions = sysRolePermissions;
 	}
 
 	@Id
@@ -85,6 +91,15 @@ public class SysMenuClass implements java.io.Serializable {
 
 	public void setMethod(String method) {
 		this.method = method;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysMenuClass")
+	public Set<SysRolePermission> getSysRolePermissions() {
+		return this.sysRolePermissions;
+	}
+
+	public void setSysRolePermissions(Set<SysRolePermission> sysRolePermissions) {
+		this.sysRolePermissions = sysRolePermissions;
 	}
 
 }
