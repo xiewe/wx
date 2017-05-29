@@ -110,7 +110,7 @@ public class UserController extends BaseController {
 		User user = null;
 		try {
 			user = userService.get(id);
-			if (user.getCategory() == AppConstants.USER_CATEGORY_SYSTEM) {
+			if (user.getCategory() == AppConstants.USER_TYPE_SUPERADMIN) {
 				throw new ServiceException("不能删除系统用户！");
 			}
 			// reload permission
@@ -132,7 +132,7 @@ public class UserController extends BaseController {
 		try {
 			for (int i = 0; i < ids.length; i++) {
 				User user = userService.get(ids[i]);
-				if (user.getCategory() == AppConstants.USER_CATEGORY_SYSTEM) {
+				if (user.getCategory() == AppConstants.USER_TYPE_SUPERADMIN) {
 					throw new ServiceException("不能删除系统用户！");
 				}
 				userService.delete(user.getId());

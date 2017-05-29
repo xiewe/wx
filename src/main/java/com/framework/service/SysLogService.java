@@ -10,7 +10,7 @@ import com.framework.utils.page.Page;
 public interface SysLogService {
 	SysLog get(Long id);
 
-	void saveOrUpdate(SysLog logInfo);
+	void saveOrUpdate(SysLog o);
 
 	void delete(Long id);
 

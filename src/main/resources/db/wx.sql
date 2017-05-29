@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_user` (
   `self_intro` VARCHAR(1000) NULL COMMENT '自我介绍',
   `is_vip` INT NULL DEFAULT 0 COMMENT '是否VIP， 0-否，1-是',
   `status` INT NULL DEFAULT 0 COMMENT '状态：0-enabled; 1-disabled;',
-  `utype` INT NULL DEFAULT 0 COMMENT '用户类型：0-管理后台用户；1-系统用户不能删除；2-终端注册用户',
+  `utype` INT NULL DEFAULT 0 COMMENT '用户类型：0-系统用户不能删除；1-管理后台用户；2-终端注册用户',
   `org_id` INT NULL COMMENT '所属组织',
   `role_id` INT NULL COMMENT '角色',
   `gps` VARCHAR(60) NULL COMMENT '用户注册时的位置(经度，纬度)，经纬度用逗号隔开',

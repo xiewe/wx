@@ -58,7 +58,8 @@ public class FileUtils {
 		return String.valueOf(fileSize) + "B";
 	}
 
-	private static String getHumanReadableFileSize(long fileSize, long unit, String unitName) {
+	private static String getHumanReadableFileSize(long fileSize, long unit,
+			String unitName) {
 		if (fileSize == 0)
 			return "0";
 
@@ -134,62 +135,5 @@ public class FileUtils {
 		}
 		return true;
 	}
-	
-	/**
-	 * 获取文件目录
-	 * @param moduleType 业务模块(在AppConstants取常量)
-	 * @param fileType 文件类型 (在AppConstants取常量)
-	 * @return
-	 */
-	public static String getFileDirByCondition(int moduleType,int fileType)
-	{
-		if(AppConstants.UPLOAD_MODULE_TYPE_CHAT==moduleType)//离线附件
-		{
-			return "chat";
-		}
-		else if(AppConstants.UPLOAD_FILE_TYPE_VOICE==fileType)
-		{
-			return "voice";
-		}
-		else if(AppConstants.UPLOAD_FILE_TYPE_IMAGE==fileType)
-		{
-			if(AppConstants.UPLOAD_MODULE_TYPE_USER==moduleType)//用户图片
-			{
-				return "images/user";
-			}
-			else if(AppConstants.UPLOAD_MODULE_TYPE_BUSINESSTRIP==moduleType)//商旅行程
-			{
-				return "images/businesstrip";
-			}
-			else if(AppConstants.UPLOAD_MODULE_TYPE_PRODUCT==moduleType)//产品信息
-			{
-				return "images/product";
-			}
-			else if(AppConstants.UPLOAD_MODULE_TYPE_SERVICE==moduleType)//服务信息
-			{
-				return "images/service";
-			}
-		}
-		return "temp";
-	}
-	
-	/**
-	 * 获取文件访问路径
-	 * @param request
-	 * @param moduleType
-	 * @param fileType
-	 * @param fileName
-	 * @return
-	 */
-	public static String getFileAccessPathByCondition(HttpServletRequest request,int moduleType,int fileType,String fileName)
-	{
-		if(fileName==null||"".equals(fileName.trim()))
-		{
-			return "";
-		}
-		String basePath = request.getScheme()+"://"+request.getServerName()+":"+ request.getServerPort()+ request.getContextPath()+"/";
-		String fileAccessPath=basePath +AppConstants.UPLOAD_TEMP_PATH  + File.separator
-		+ getFileDirByCondition(moduleType,fileType)+ File.separator+fileName;
-		return fileAccessPath;
-	}
+
 }
