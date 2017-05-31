@@ -64,6 +64,8 @@ public class SysUser implements java.io.Serializable {
 	private Date createTime;
 	private Date modifyTime;
 
+	private String plainPassword;
+
 	public SysUser() {
 	}
 
@@ -366,6 +368,15 @@ public class SysUser implements java.io.Serializable {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
+	}
+
+	@Transient
+	public String getPlainPassword() {
+		return plainPassword;
+	}
+
+	public void setPlainPassword(String plainPassword) {
+		this.plainPassword = plainPassword;
 	}
 
 	@Override

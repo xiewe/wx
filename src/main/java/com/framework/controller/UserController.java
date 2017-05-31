@@ -27,8 +27,7 @@ import com.framework.exception.ExistedException;
 import com.framework.exception.ServiceException;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
-import com.framework.log4jdbc.LogMessageObject;
-import com.framework.service.UserService;
+import com.framework.service.SysUserService;
 import com.framework.shiro.ShiroRealm;
 import com.framework.utils.page.Page;
 import com.framework.utils.persistence.DynamicSpecifications;
@@ -42,10 +41,7 @@ public class UserController extends BaseController {
 	private ShiroRealm shiroRealm;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private HttpServletRequest request;
+	private SysUserService sysUserService;
 
 	private static final String CREATE = "security/user/create";
 	private static final String UPDATE = "security/user/update";

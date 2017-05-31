@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
       <property name="suppressAllComments" value="true"/>
     </commentGenerator>
     <!--数据库链接URL，用户名、密码 -->
-    <!-- <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = pracdv-scan01.edev.elabs.eds.com)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = DESLDEV_ESLAPPL)(FAILOVER_MODE =(TYPE = SELECT)(METHOD = BASIC)(RETRIES = 60)(DELAY = 5))))" userId="esl" password="Ath3nA13">
+    <!-- <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = eds.com)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = DESLDEV_ESLAPPL)(FAILOVER_MODE =(TYPE = SELECT)(METHOD = BASIC)(RETRIES = 60)(DELAY = 5))))" userId="wx" password="123456">
     </jdbcConnection> -->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3307/wx" userId="root" password="123456">
     </jdbcConnection>

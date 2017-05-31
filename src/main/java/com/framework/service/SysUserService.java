@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.framework.entity.SysUser;
+import com.framework.exception.ServiceException;
 import com.framework.utils.page.Page;
 
 public interface SysUserService {
@@ -27,4 +28,8 @@ public interface SysUserService {
 	SysUser findByPhone(String phone);
 
 	SysUser findByU(String s);
+
+	void updatePwd(SysUser user, String newPwd) throws ServiceException;
+
+	void resetPwd(SysUser user, String newPwd);
 }
