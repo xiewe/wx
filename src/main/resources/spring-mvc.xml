@@ -51,7 +51,6 @@
       <mvc:mapping path="/m/**" />
       <bean class="com.framework.aop.H5AuthInterceptor" />
     </mvc:interceptor>
-
   </mvc:interceptors>
 
 

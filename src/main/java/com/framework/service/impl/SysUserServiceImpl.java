@@ -56,4 +56,29 @@ public class SysUserServiceImpl implements SysUserService {
 		page.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
+
+	@Override
+	public SysUser findByUsername(String username) {
+		return oDao.findByUsername(username);
+	}
+
+	@Override
+	public SysUser findByEmail(String email) {
+		return oDao.findByEmail(email);
+	}
+
+	@Override
+	public SysUser findByUid(String uid) {
+		return oDao.findByUid(uid);
+	}
+
+	@Override
+	public SysUser findByPhone(String phone) {
+		return oDao.findByPhone(phone);
+	}
+
+	@Override
+	public SysUser findByU(String s) {
+		return oDao.findByU(s);
+	}
 }

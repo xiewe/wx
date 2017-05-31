@@ -17,11 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -56,6 +58,7 @@ public class SysUser implements java.io.Serializable {
 	private String gps;
 	private Double longitude;
 	private Double latitude;
+	private String ip;
 	private String userAgent;
 	private Date lastLogin;
 	private Date createTime;
@@ -153,6 +156,7 @@ public class SysUser implements java.io.Serializable {
 		this.username = username;
 	}
 
+	@JsonIgnore
 	@Column(name = "password", length = 64)
 	public String getPassword() {
 		return this.password;
@@ -162,6 +166,7 @@ public class SysUser implements java.io.Serializable {
 		this.password = password;
 	}
 
+	@JsonIgnore
 	@Column(name = "salt", length = 45)
 	public String getSalt() {
 		return this.salt;
@@ -313,6 +318,15 @@ public class SysUser implements java.io.Serializable {
 
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
+	}
+
+	@Column(name = "ip", length = 45)
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 	@Column(name = "user_agent", length = 200)

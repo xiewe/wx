@@ -15,25 +15,22 @@
 		memoryStoreEvictionPolicy="LFU" />
 
 	<!-- security entity -->
-	<cache name="com.framework.entity.User"
+	<cache name="com.framework.entity.SysUser"
 		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
 		maxEntriesLocalDisk="10000" />
-	<cache name="com.framework.entity.UserRole"
+	<cache name="com.framework.entity.SysRole"
 		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
 		maxEntriesLocalDisk="10000" />
-	<cache name="com.framework.entity.RolePermission"
+	<cache name="com.framework.entity.SysRolePermission"
 		maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true"
 		maxEntriesLocalDisk="1000000" />
-	<cache name="com.framework.entity.Role"
+	<cache name="com.framework.entity.SysMenu"
 		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
 		maxEntriesLocalDisk="10000" />
-	<cache name="com.framework.entity.Permission"
+	<cache name="com.framework.entity.SysMenuClass"
 		maxEntriesLocalHeap="10000" eternal="false" overflowToDisk="true"
 		maxEntriesLocalDisk="100000" />
-	<cache name="com.framework.entity.Organization"
-		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
-		maxEntriesLocalDisk="10000" />
-	<cache name="com.framework.entity.LogInfo"
+	<cache name="com.framework.entity.SysOrganization"
 		maxEntriesLocalHeap="1000" eternal="false" overflowToDisk="true"
 		maxEntriesLocalDisk="10000" />
 </ehcache>

@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_menu_class` (
   `menu_id` INT NOT NULL,
   `name` VARCHAR(100) NULL,
   `class_name` VARCHAR(100) NULL COMMENT '对应的模块全类名',
-  `method` VARCHAR(50) NULL COMMENT '类下的方法名',
+  `method` VARCHAR(50) NULL COMMENT 'Shiro的权限标识，比如：user:view',
   PRIMARY KEY (`id`),
   INDEX `idx_sys_menu_class_1` (`menu_id` ASC),
   CONSTRAINT `fk_sys_menu_class_1`
@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `wx`.`sys_user` (
   `gps` VARCHAR(60) NULL COMMENT '用户注册时的位置(经度，纬度)，经纬度用逗号隔开',
   `longitude` DOUBLE NULL DEFAULT 0.0 COMMENT '用户最后的经度',
   `latitude` DOUBLE NULL DEFAULT 0.0 COMMENT '用户最后的纬度',
+  `ip` VARCHAR(45) NULL COMMENT '操作的IP',
   `user_agent` VARCHAR(200) NULL COMMENT '终端设备信息',
   `last_login`  DATETIME NULL COMMENT '最后登录时间',
   `create_time` DATETIME,

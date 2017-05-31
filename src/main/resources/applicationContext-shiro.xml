@@ -14,10 +14,8 @@
 
 	<!-- 項目自定义的Realm -->
 	<bean id="shiroRealm" class="com.framework.shiro.ShiroRealm"
-		depends-on="userDAO,userRoleDAO,roleDAO">
-		<property name="userService" ref="userServiceImpl" />
-		<property name="userRoleService" ref="userRoleServiceImpl" />
-		<property name="roleService" ref="roleServiceImpl" />
+		depends-on="sysUserDAO">
+		<property name="sysUserService" ref="sysUserServiceImpl" />
 		<!-- 是否使用验证码 -->
 		<property name="useCaptcha" value="true" />
 	</bean>
@@ -27,6 +25,7 @@
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login" />
 		<property name="successUrl" value="/index" />
+		<property name="unauthorizedUrl" value="/" />
 		<property name="filters">
 			<map>
 				<entry key="authc" value-ref="baseFormAuthenticationFilter" />

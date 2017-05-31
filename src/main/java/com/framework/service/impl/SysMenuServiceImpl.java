@@ -49,7 +49,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 			Page page) {
 		if (null != page && StringUtils.isEmpty(page.getOrderField())) {
 			page.setOrderDirection("desc");
-			page.setOrderField("createTime");
+			page.setOrderField("id");
 		}
 		org.springframework.data.domain.Page<SysMenu> springDataPage = oDao
 				.findAll(specification, PageUtils.createPageable(page));

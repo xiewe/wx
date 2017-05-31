@@ -1,5 +1,8 @@
 package com.framework.shiro;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
@@ -24,9 +27,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.framework.AppConstants;
-import com.framework.entity.User;
+import com.framework.entity.SysRole;
+import com.framework.entity.SysRolePermission;
+import com.framework.entity.SysUser;
 import com.framework.exception.IncorrectCaptchaException;
-import com.framework.service.UserService;
+import com.framework.service.SysUserService;
 import com.framework.utils.Digests;
 import com.framework.utils.Encodes;
 
@@ -39,7 +44,7 @@ public class ShiroRealm extends AuthorizingRealm {
 	protected boolean useCaptcha = false;// 是否使用验证码
 
 	@Autowired
-	protected UserService userService;
+	protected SysUserService sysUserService;
 
 	@Autowired
 	private HttpServletRequest request;
@@ -63,32 +68,27 @@ public class ShiroRealm extends AuthorizingRealm {
 		// return null;
 		// }
 		// User user = (User) collection.iterator().next();
-		User user = (User) SecurityUtils.getSubject().getPrincipal();
-		user = userService.get(user.getId());
+		SysUser sysUser = (SysUser) SecurityUtils.getSubject().getPrincipal();
+		sysUser = sysUserService.get(sysUser.getId());
 
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-//		for (UserRole userRole : user.getUserRoles()) {
-//			// 获取角色: 对非系统角色需要获取原生的角色，以匹配java类shiro注解角色的拦截
-//			if (userRole.getRole().getCategory() == AppConstants.ROLE_TYPE_GENERAL) {
-//				for (RolePermission o : userRole.getRole().getRolePermissions()) {
-//					info.addRole(o.getPermission().getSn().split(":")[0]);
-//				}
-//			} else {
-//				info.addRole(userRole.getRole().getName());
-//			}
-//			// 获取操作权限
-//			Collection<String> permissions = new HashSet<String>();
-//			for (RolePermission o : userRole.getRole().getRolePermissions()) {
-//				permissions.add(o.getPermission().getSn());
-//
-//			}
-//
-//			info.addStringPermissions(permissions);
-//		}
+		SysRole userRole = sysUser.getSysRole();
+		if (userRole != null) {
+			// 获取角色: 对非系统角色需要获取原生的角色，以匹配java类shiro注解角色的拦截
+			info.addRole(userRole.getName());
 
-		log.info(user.getUsername() + "拥有的角色:" + info.getRoles());
-		log.info(user.getUsername() + "拥有的权限:" + info.getStringPermissions());
+			// 获取操作权限
+			Collection<String> permissions = new HashSet<String>();
+			for (SysRolePermission o : userRole.getSysRolePermissions()) {
+				permissions.add(o.getSysMenuClass().getMethod());
+			}
+
+			info.addStringPermissions(permissions);
+		}
+
+		log.info(sysUser.getUsername() + "拥有的角色:" + info.getRoles());
+		log.info(sysUser.getUsername() + "拥有的权限:" + info.getStringPermissions());
 		return info;
 	}
 
@@ -108,23 +108,23 @@ public class ShiroRealm extends AuthorizingRealm {
 			}
 		}
 		UsernamePasswordToken token = (UsernamePasswordToken) arg0;
-		User user = null;
+		SysUser sysUser = null;
 		try {
-			user = userService.getByUsername(token.getUsername());
+			sysUser = sysUserService.findByU(token.getUsername());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (user != null) {
-			if (user.getStatus() == AppConstants.USER_STATUS_DISABLED) {
+		if (sysUser != null) {
+			if (sysUser.getStatus() == AppConstants.USER_STATUS_DISABLED) {
 				throw new DisabledAccountException();
 			}
 
-			byte[] salt = Encodes.decodeHex(user.getSalt());
+			byte[] salt = Encodes.decodeHex(sysUser.getSalt());
 
 			if (null != SecurityUtils.getSubject().getPreviousPrincipals())
 				doGetAuthorizationInfo(SecurityUtils.getSubject()
 						.getPreviousPrincipals());
-			return new SimpleAuthenticationInfo(user, user.getPassword(),
+			return new SimpleAuthenticationInfo(sysUser, sysUser.getPassword(),
 					ByteSource.Util.bytes(salt), getName());
 		} else {
 			return null;

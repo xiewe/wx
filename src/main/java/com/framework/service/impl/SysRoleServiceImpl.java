@@ -49,7 +49,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 			Page page) {
 		if (null != page && StringUtils.isEmpty(page.getOrderField())) {
 			page.setOrderDirection("desc");
-			page.setOrderField("createTime");
+			page.setOrderField("id");
 		}
 		org.springframework.data.domain.Page<SysRole> springDataPage = oDao
 				.findAll(specification, PageUtils.createPageable(page));

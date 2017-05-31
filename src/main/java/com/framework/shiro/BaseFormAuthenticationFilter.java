@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.framework.AppConstants;
-import com.framework.entity.User;
+import com.framework.entity.SysUser;
 import com.framework.utils.Exceptions;
 
 public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
@@ -104,8 +104,9 @@ public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-		((User) subject.getPrincipal()).setLoginIpAddress(request
-				.getRemoteAddr());
+		((SysUser) subject.getPrincipal()).setIp(request.getRemoteAddr());
+		((SysUser) subject.getPrincipal()).setUserAgent(httpServletRequest
+				.getHeader("User-Agent"));
 
 		if (!"XMLHttpRequest".equalsIgnoreCase(httpServletRequest
 				.getHeader("X-Requested-With"))

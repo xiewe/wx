@@ -17,4 +17,14 @@ public interface SysUserService {
 	List<SysUser> findAll(Page page);
 
 	List<SysUser> findByPageable(Specification<SysUser> specification, Page page);
+
+	SysUser findByUsername(String username);
+
+	SysUser findByEmail(String email);
+
+	SysUser findByUid(String uid);
+
+	SysUser findByPhone(String phone);
+
+	SysUser findByU(String s);
 }

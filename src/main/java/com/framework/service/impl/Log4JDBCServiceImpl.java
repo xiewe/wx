@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.framework.entity.SysLog;
-import com.framework.entity.User;
+import com.framework.entity.SysUser;
 import com.framework.log4jdbc.LogLevel;
 import com.framework.service.Log4JDBCService;
 import com.framework.service.SysLogService;
@@ -40,13 +40,13 @@ public class Log4JDBCServiceImpl implements Log4JDBCService {
 			return;
 		}
 
-		User loginUser = (User) org.apache.shiro.SecurityUtils.getSubject()
-				.getPrincipal();
+		SysUser loginUser = (SysUser) org.apache.shiro.SecurityUtils
+				.getSubject().getPrincipal();
 
 		SysLog sysLog = new SysLog();
 		sysLog.setUsername(loginUser.getUsername());
-		sysLog.setIp(loginUser.getLoginIpAddress());
-		sysLog.setUserAgent(null);
+		sysLog.setIp(loginUser.getIp());
+		sysLog.setUserAgent(loginUser.getUserAgent());
 		sysLog.setMessage(result);
 		sysLog.setCreateTime(new Date());
 
