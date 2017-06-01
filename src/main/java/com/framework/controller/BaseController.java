@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.framework.AppConstants;
 import com.framework.log4jdbc.LogMessageObject;
 import com.framework.service.RedisService;
@@ -83,36 +79,6 @@ public abstract class BaseController {
 			e.printStackTrace();
 			logger.error("", e);
 			return code;
-		}
-	}
-
-	@JsonFilter("objectFilter")
-	public interface ObjectFilterMixIn {
-	}
-
-	/**
-	 * 动态过滤JSON
-	 * 
-	 * @param filterName
-	 * @param isOutAllExcept
-	 *            true:想要的字段,false 不想要的字段
-	 * @param propertyes
-	 * @return
-	 */
-	public FilterProvider filter(String filterName, boolean isOutAllExcept,
-			String... propertyes) {
-		if (isOutAllExcept) {
-			// 过滤想要的
-			FilterProvider filter = new SimpleFilterProvider().addFilter(
-					filterName,
-					SimpleBeanPropertyFilter.filterOutAllExcept(propertyes));
-			return filter;
-		} else {
-			// 过滤不想要的
-			FilterProvider filter = new SimpleFilterProvider().addFilter(
-					filterName,
-					SimpleBeanPropertyFilter.serializeAllExcept(propertyes));
-			return filter;
 		}
 	}
 

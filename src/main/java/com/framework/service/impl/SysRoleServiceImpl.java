@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.framework.dao.SysRoleDAO;
 import com.framework.entity.SysRole;
 import com.framework.service.SysRoleService;
+import com.framework.shiro.ShiroRealm;
 import com.framework.utils.page.Page;
 import com.framework.utils.page.PageUtils;
 
@@ -21,6 +22,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Autowired
 	private SysRoleDAO oDao;
 
+	@Autowired
+	private ShiroRealm shiroRealm;
+
 	@Override
 	public SysRole get(Integer id) {
 		return oDao.findOne(id);
@@ -28,12 +32,14 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	@Override
 	public SysRole saveOrUpdate(SysRole o) {
+		shiroRealm.clearAllCachedAuthorizationInfo();
 		return oDao.save(o);
 	}
 
 	@Override
 	public void delete(Integer id) {
 		oDao.delete(id);
+		shiroRealm.clearAllCachedAuthorizationInfo();
 	}
 
 	@Override

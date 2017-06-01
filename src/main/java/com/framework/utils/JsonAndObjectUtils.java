@@ -112,6 +112,15 @@ public class JsonAndObjectUtils {
     public interface ObjectFilterMixIn {
     }
 
+	/**
+	 * 动态过滤JSON
+	 * 
+	 * @param filterName
+	 * @param isOutAllExcept
+	 *            true:想要的字段,false 不想要的字段
+	 * @param propertyes
+	 * @return
+	 */
     public static FilterProvider filter(String filterName, boolean isOutAllExcept, String... propertyes) {
         if (isOutAllExcept) {
             // 过滤想要的

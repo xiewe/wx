@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,18 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.framework.AppConstants;
 import com.framework.entity.User;
-import com.framework.exception.ServiceException;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
-import com.framework.log4jdbc.LogMessageObject;
-import com.framework.service.UserService;
 
 @Controller
 @RequestMapping("/index")
 public class IndexController extends BaseController {
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private HttpServletRequest request;
@@ -37,10 +32,9 @@ public class IndexController extends BaseController {
 	@RequiresUser
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String index(ServletRequest request, Map<String, Object> map) {
-		User loginUser = (User) org.apache.shiro.SecurityUtils.getSubject()
-				.getPrincipal();
 
-		map.put(AppConstants.LOGIN_USER, userService.get(loginUser.getId()));
+		map.put(AppConstants.LOGIN_USER, SecurityUtils.getSubject()
+				.getPrincipal());
 		return INDEX;
 	}
 
@@ -55,19 +49,6 @@ public class IndexController extends BaseController {
 	@RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
 	public @ResponseBody String updatePassword(ServletRequest request,
 			String plainPassword, String newPassword, String rPassword) {
-		User loginUser = (User) org.apache.shiro.SecurityUtils.getSubject()
-				.getPrincipal();
-
-		if (newPassword != null && newPassword.equals(rPassword)) {
-			loginUser.setPlainPassword(plainPassword);
-			try {
-				userService.updatePwd(loginUser, newPassword);
-			} catch (ServiceException e) {
-				return "error";
-			}
-			setLogObject(loginUser.getUsername());
-			return "success";
-		}
 
 		return "failed";
 	}
@@ -84,14 +65,7 @@ public class IndexController extends BaseController {
 	@RequiresUser
 	@RequestMapping(value = "/updateBase", method = RequestMethod.POST)
 	public @ResponseBody String updateBase(User user, ServletRequest request) {
-		User loginUser = (User) org.apache.shiro.SecurityUtils.getSubject()
-				.getPrincipal();
 
-		loginUser.setPhone(user.getPhone());
-		loginUser.setEmail(user.getEmail());
-
-		userService.saveOrUpdate(loginUser);
-		setLogObject(loginUser.getUsername());
 		return "success";
 	}
 }

@@ -109,23 +109,6 @@
 	</tag>
 
 	<tag>
-		<description>menuAccordion左侧菜单</description>
-		<name>menuAccordion</name>
-		<tag-class>com.framework.tag.MenuAccordionTag</tag-class>
-		<body-content>empty</body-content>
-		<attribute>
-			<name>child</name>
-			<required>true</required>
-			<fragment>true</fragment>
-		</attribute>
-		<attribute>
-			<name>urlPrefix</name>
-			<required>true</required>
-			<fragment>true</fragment>
-		</attribute>
-	</tag>
-
-	<tag>
 		<description>i18n国际化属性json</description>
 		<name>i18n</name>
 		<tag-class>com.framework.tag.I18NTag</tag-class>
