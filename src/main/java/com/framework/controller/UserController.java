@@ -1,45 +1,29 @@
 package com.framework.controller;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.framework.AppConstants;
 import com.framework.entity.User;
-import com.framework.exception.ExistedException;
-import com.framework.exception.ServiceException;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
 import com.framework.service.SysUserService;
-import com.framework.shiro.ShiroRealm;
 import com.framework.utils.page.Page;
-import com.framework.utils.persistence.DynamicSpecifications;
-import com.framework.utils.persistence.SearchFilter;
-import com.framework.utils.persistence.SearchFilter.Operator;
 
 @Controller
 @RequestMapping("/security/user")
 public class UserController extends BaseController {
-	@Autowired
-	private ShiroRealm shiroRealm;
-
 	@Autowired
 	private SysUserService sysUserService;
 
@@ -57,32 +41,13 @@ public class UserController extends BaseController {
 	@RequiresPermissions("User:save")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody String create(@Valid User user) {
-		user.setCreateTime(new Date());
 
-		try {
-			userService.saveOrUpdate(user);
-		} catch (ExistedException e) {
-			return "添加用户失败：" + e.getMessage();
-		}
-		setLogObject(user.getUsername());
-
-		return "msg.operation.success";
-	}
-
-	@ModelAttribute("preloadUser")
-	public User preload(@RequestParam(value = "id", required = false) Long id) {
-		if (id != null) {
-			User user = userService.get(id);
-			return user;
-		}
-		return null;
+		return "success";
 	}
 
 	@RequiresPermissions(value = { "User:edit" }, logical = Logical.OR)
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String preUpdate(@PathVariable Long id, Map<String, Object> map) {
-		User user = userService.get(id);
-		map.put("user", user);
 		return UPDATE;
 	}
 
@@ -91,10 +56,6 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody String update(
 			@Valid @ModelAttribute("preloadUser") User user) {
-		userService.saveOrUpdate(user);
-		// reload permission
-		shiroRealm.clearAllCachedAuthorizationInfo();
-		setLogObject(user.getUsername());
 
 		return "msg.operation.success";
 	}
@@ -103,20 +64,6 @@ public class UserController extends BaseController {
 	@RequiresPermissions(value = { "User:delete" }, logical = Logical.OR)
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	public @ResponseBody String delete(@PathVariable Long id) {
-		User user = null;
-		try {
-			user = userService.get(id);
-			if (user.getCategory() == AppConstants.USER_TYPE_SUPERADMIN) {
-				throw new ServiceException("不能删除系统用户！");
-			}
-			// reload permission
-			shiroRealm.clearAllCachedAuthorizationInfo();
-			setLogObject(user.getUsername());
-			userService.delete(user.getId());
-
-		} catch (ServiceException e) {
-			return "删除用户失败：" + e.getMessage();
-		}
 		return "删除用户成功！";
 	}
 
@@ -124,22 +71,6 @@ public class UserController extends BaseController {
 	@RequiresPermissions(value = { "User:delete" }, logical = Logical.OR)
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody String deleteMany(Long[] ids) {
-		String[] usernames = new String[ids.length];
-		try {
-			for (int i = 0; i < ids.length; i++) {
-				User user = userService.get(ids[i]);
-				if (user.getCategory() == AppConstants.USER_TYPE_SUPERADMIN) {
-					throw new ServiceException("不能删除系统用户！");
-				}
-				userService.delete(user.getId());
-				usernames[i] = user.getUsername();
-			}
-			// reload permission
-			shiroRealm.clearAllCachedAuthorizationInfo();
-			setLogObject(Arrays.toString(usernames));
-		} catch (ServiceException e) {
-			return "删除用户失败：" + e.getMessage();
-		}
 		return "删除用户成功！";
 	}
 
@@ -148,12 +79,6 @@ public class UserController extends BaseController {
 			RequestMethod.POST })
 	public String list(ServletRequest request, Page page,
 			Map<String, Object> map) {
-		Specification<User> specification = DynamicSpecifications
-				.buildSpecification(request, User.class, new SearchFilter(
-						"category", Operator.LT, 2));
-		List<User> users = userService.findByPageable(specification, page);
-		map.put("page", page);
-		map.put("users", users);
 		return LIST;
 	}
 
