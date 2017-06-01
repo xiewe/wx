@@ -35,10 +35,9 @@
   </appender>
   <!--指定logger name为包名或类全名 指定级别 additivity设置是否传递到root logger -->
   <logger name="slf4j" level="INFO" additivity="false">
-    <appender-ref ref="STDOUT" />
     <appender-ref ref="DayFile" />
   </logger>
-  <!--slf4j2包下的类在ERROR级别时候传递到root logger中 -->
+  <!--slf4j2包下的类在ERROR级别时候传递到root logger中，本身不打印日志因为没有appender-ref -->
   <logger name="slf4j2" level="ERROR" />
 
   <!-- wx -->
