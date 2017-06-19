@@ -2,7 +2,6 @@ package com.framework.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -12,8 +11,7 @@ import com.framework.dao.SysRoleDAO;
 import com.framework.entity.SysRole;
 import com.framework.service.SysRoleService;
 import com.framework.shiro.ShiroRealm;
-import com.framework.utils.page.Page;
-import com.framework.utils.page.PageUtils;
+import com.framework.utils.pager.Pager;
 
 @Service
 @Transactional
@@ -43,23 +41,19 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Override
-	public List<SysRole> findAll(Page page) {
+	public List<SysRole> findAll(Pager pager) {
 		org.springframework.data.domain.Page<SysRole> springDataPage = oDao
-				.findAll(PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
+				.findAll(pager.parsePageable());
+		pager.setTotalRecords(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
 	@Override
 	public List<SysRole> findByPageable(Specification<SysRole> specification,
-			Page page) {
-		if (null != page && StringUtils.isEmpty(page.getOrderField())) {
-			page.setOrderDirection("desc");
-			page.setOrderField("id");
-		}
+			Pager pager) {
 		org.springframework.data.domain.Page<SysRole> springDataPage = oDao
-				.findAll(specification, PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
+				.findAll(specification, pager.parsePageable());
+		pager.setTotalRecords(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 }

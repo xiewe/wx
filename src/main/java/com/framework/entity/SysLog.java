@@ -24,10 +24,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 @Entity
-@Table(name = "sys_log", catalog = "wx")
+@Table(name = "sys_log", catalog = "uc")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "com.framework.entity.SysLog")
 public class SysLog implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5151544833673465082L;
 	private Long id;
 	private String username;
 	private String ip;

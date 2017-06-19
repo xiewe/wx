@@ -1,4 +1,4 @@
-package com.wx.test;
+package com.uc.test;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -10,11 +10,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 // 告诉junit spring配置文件
-@ContextConfiguration({ "classpath:applicationContext.xml", 
-	"classpath:mybatis-config.xml"})
+@ContextConfiguration({ "classpath:applicationContext.xml" })
 public class BaseTest {
 	@Before
-	//一些公用的“初始化”代码
-	public void before(){
+	// 一些公用的“初始化”代码
+	public void before() {
 	}
 }

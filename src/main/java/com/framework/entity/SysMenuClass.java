@@ -27,10 +27,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 @Entity
-@Table(name = "sys_menu_class", catalog = "wx")
+@Table(name = "sys_menu_class", catalog = "uc")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "com.framework.entity.SysMenuClass")
 public class SysMenuClass implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8443136569999125517L;
 	private Integer id;
 	private SysMenu sysMenu;
 	private String name;

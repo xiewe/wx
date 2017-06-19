@@ -2,7 +2,6 @@ package com.framework.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -11,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.framework.dao.SysMenuClassDAO;
 import com.framework.entity.SysMenuClass;
 import com.framework.service.SysMenuClassService;
-import com.framework.utils.page.Page;
-import com.framework.utils.page.PageUtils;
+import com.framework.utils.pager.Pager;
 
 @Service
 @Transactional
@@ -37,23 +35,19 @@ public class SysMenuClassServiceImpl implements SysMenuClassService {
 	}
 
 	@Override
-	public List<SysMenuClass> findAll(Page page) {
+	public List<SysMenuClass> findAll(Pager pager) {
 		org.springframework.data.domain.Page<SysMenuClass> springDataPage = oDao
-				.findAll(PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
+				.findAll(pager.parsePageable());
+		pager.setTotalRecords(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
 	@Override
 	public List<SysMenuClass> findByPageable(
-			Specification<SysMenuClass> specification, Page page) {
-		if (null != page && StringUtils.isEmpty(page.getOrderField())) {
-			page.setOrderDirection("desc");
-			page.setOrderField("id");
-		}
+			Specification<SysMenuClass> specification, Pager pager) {
 		org.springframework.data.domain.Page<SysMenuClass> springDataPage = oDao
-				.findAll(specification, PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
+				.findAll(specification, pager.parsePageable());
+		pager.setTotalRecords(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 }

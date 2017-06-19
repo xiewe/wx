@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.framework.AppConstants;
-import com.framework.entity.User;
+import com.framework.entity.SysUser;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
 
@@ -56,15 +56,13 @@ public class IndexController extends BaseController {
 	@RequiresUser
 	@RequestMapping(value = "/updateBase", method = RequestMethod.GET)
 	public String preUpdateBase(Map<String, Object> map) {
-		map.put(AppConstants.LOGIN_USER, ((User) org.apache.shiro.SecurityUtils
-				.getSubject().getPrincipal()));
 		return UPDATE_BASE;
 	}
 
 	@Log(message = "{0}修改详细信息成功！", level = LogLevel.DEBUG)
 	@RequiresUser
 	@RequestMapping(value = "/updateBase", method = RequestMethod.POST)
-	public @ResponseBody String updateBase(User user, ServletRequest request) {
+	public @ResponseBody String updateBase(SysUser user, ServletRequest request) {
 
 		return "success";
 	}

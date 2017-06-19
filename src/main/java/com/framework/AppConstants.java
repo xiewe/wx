@@ -34,18 +34,6 @@ public interface AppConstants {
 			+ "/"
 			+ PropertiesUtil.getInstance().getKeyValue("server.project") + "/";
 
-	/** xmpp服务器地址 ***/
-	public final static String XMPP_SERVER_HOST = PropertiesUtil.getInstance()
-			.getKeyValue("xmpp.server.host");
-
-	/** xmpp服务器名称 ***/
-	public final static String XMPP_SERVER_NAME = PropertiesUtil.getInstance()
-			.getKeyValue("xmpp.server.name");
-
-	/** xmpp服务器端口 ***/
-	public final static String XMPP_SERVER_PORT = PropertiesUtil.getInstance()
-			.getKeyValue("xmpp.server.port");
-
 	public final static Integer PAGE_SIZE_DEFAULT = 15;
 
 	/**
@@ -102,11 +90,6 @@ public interface AppConstants {
 	public static final String DOWNLOAD_PATH = "download.path";
 
 	/**
-	 * 系统消息推送URL
-	 */
-	public static final String PUSH_MESSAGE_URL = "push.message.url";
-
-	/**
 	 * 文件类型：语音
 	 */
 	public static final int UPLOAD_FILE_TYPE_VOICE = 1;
@@ -115,14 +98,5 @@ public interface AppConstants {
 	 */
 	public static final int UPLOAD_FILE_TYPE_IMAGE = 2;
 
-	/** APP数据列表每页显示的记录数 ****/
-	public static final int APP_PAGE_NUM = 10;
-	/** APP全文搜索列表每页显示的记录数 ****/
-	public static final int APP_FULL_PAGE_NUM = 3;
-
-	/**
-	 * 新用户注册推送内容
-	 */
-	public static final String PUSH_CONTENT = "register_push_content";
 
 }

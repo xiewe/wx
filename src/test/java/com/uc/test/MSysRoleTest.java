@@ -1,22 +1,22 @@
-package com.wx.test;
+package com.uc.test;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.framework.dao.MSysRoleMapper;
-import com.framework.entity.MSysRole;
+import com.framework.entity.SysRole;
+import com.framework.service.SysRoleService;
 
 @WebAppConfiguration
 public class MSysRoleTest extends BaseTest {
     @Autowired
-    private MSysRoleMapper mSysRoleMapper;
+    private SysRoleService sysRoleService;
 
     @Test
     public void testInsert() throws Exception {
-        MSysRole r = new MSysRole();
+        SysRole r = new SysRole();
         r.setName("asdf");
         r.setDescription("hello");
-        mSysRoleMapper.insert(r);
+        sysRoleService.saveOrUpdate(r);
     }
 }

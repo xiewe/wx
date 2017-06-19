@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.framework.entity.User;
+import com.framework.entity.SysUser;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
 import com.framework.service.SysUserService;
-import com.framework.utils.page.Page;
+import com.framework.utils.pager.Pager;
 
 @Controller
 @RequestMapping("/security/user")
@@ -40,7 +40,7 @@ public class UserController extends BaseController {
 	@Log(message = "添加了{0}用户。", level = LogLevel.INFO)
 	@RequiresPermissions("User:save")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public @ResponseBody String create(@Valid User user) {
+	public @ResponseBody String create(@Valid SysUser user) {
 
 		return "success";
 	}
@@ -55,7 +55,7 @@ public class UserController extends BaseController {
 	@RequiresPermissions(value = { "User:edit" }, logical = Logical.OR)
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody String update(
-			@Valid @ModelAttribute("preloadUser") User user) {
+			@Valid @ModelAttribute("preloadUser") SysUser user) {
 
 		return "msg.operation.success";
 	}
@@ -77,7 +77,7 @@ public class UserController extends BaseController {
 	@RequiresPermissions(value = { "User:view" }, logical = Logical.OR)
 	@RequestMapping(value = "/list", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public String list(ServletRequest request, Page page,
+	public String list(ServletRequest request, Pager pager,
 			Map<String, Object> map) {
 		return LIST;
 	}

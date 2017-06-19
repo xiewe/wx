@@ -23,10 +23,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 @Entity
-@Table(name = "sys_role_permission", catalog = "wx")
+@Table(name = "sys_role_permission", catalog = "uc")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "com.framework.entity.SysRolePermission")
 public class SysRolePermission implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1036127078280969691L;
 	private Integer id;
 	private SysMenu sysMenu;
 	private SysMenuClass sysMenuClass;

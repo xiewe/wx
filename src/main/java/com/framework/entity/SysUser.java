@@ -31,10 +31,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 @Entity
-@Table(name = "sys_user", catalog = "wx")
+@Table(name = "sys_user", catalog = "uc")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "com.framework.entity.SysUser")
 public class SysUser implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1394833813955420963L;
 	private Long id;
 	private SysOrganization sysOrganization;
 	private SysRole sysRole;

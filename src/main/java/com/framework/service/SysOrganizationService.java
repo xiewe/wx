@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.framework.entity.SysOrganization;
-import com.framework.utils.page.Page;
+import com.framework.utils.pager.Pager;
 
 public interface SysOrganizationService {
 	SysOrganization get(Integer id);
@@ -14,8 +14,8 @@ public interface SysOrganizationService {
 
 	void delete(Integer id);
 
-	List<SysOrganization> findAll(Page page);
+	List<SysOrganization> findAll(Pager page);
 
 	List<SysOrganization> findByPageable(
-			Specification<SysOrganization> specification, Page page);
+			Specification<SysOrganization> specification, Pager page);
 }

@@ -7,10 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
-  <!-- 自动扫描且只扫描@Controller -->
-  <!-- 加入定制化包实体路径com.sample -->
-  <context:component-scan
-    base-package="com.framework,com.wx"
+  <context:component-scan base-package="com.framework,com.uc"
     use-default-filters="false">
     <context:include-filter type="annotation"
       expression="org.springframework.stereotype.Controller" />
@@ -27,7 +24,7 @@
     <property name="customLogLevel">
       <map>
         <entry key="com.framework" value="DEBUG" />
-        <entry key="com.wx" value="DEBUG" />
+        <entry key="com.uc" value="DEBUG" />
       </map>
     </property>
   </bean>
@@ -35,9 +32,6 @@
 
   <!-- 监控运行时间 ,日志拦截记录, 数据权限验证 -->
   <mvc:interceptors>
-    <!-- 性能监控:得到该请求的处理时间监控运行时间 -->
-    <!-- <mvc:interceptor> <mvc:mapping path="/**" /> <bean class="com.framework.spring.ExecuteTimeInterceptor" 
-      /> </mvc:interceptor> -->
     <!-- 日志拦截记录 -->
     <mvc:interceptor>
       <mvc:mapping path="/**" />
@@ -46,13 +40,7 @@
         <property name="log4JDBCService" ref="log4JDBCServiceImpl" />
       </bean>
     </mvc:interceptor>
-    <!-- H5页面权限验证 -->
-    <mvc:interceptor>
-      <mvc:mapping path="/m/**" />
-      <bean class="com.framework.aop.H5AuthInterceptor" />
-    </mvc:interceptor>
   </mvc:interceptors>
-
 
   <mvc:annotation-driven validator="validator">
     <mvc:message-converters register-defaults="true">
@@ -65,7 +53,6 @@
 
   <!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL -->
   <mvc:default-servlet-handler />
-  <mvc:resources mapping="/w/**" location="/WEB-INF/pages/wap/" />
 
   <bean id="multipartResolver"
     class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -73,7 +60,7 @@
       <value>UTF-8</value>
     </property>
     <property name="maxUploadSize">
-      <value>1048576</value><!-- 上传文件大小限制为1M，1*1024*1024 -->
+      <value>10485760</value><!-- 上传文件大小限制为10M，1*1024*1024 -->
     </property>
     <property name="maxInMemorySize">
       <value>4096</value>

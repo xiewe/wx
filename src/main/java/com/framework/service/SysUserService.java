@@ -6,7 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.framework.entity.SysUser;
 import com.framework.exception.ServiceException;
-import com.framework.utils.page.Page;
+import com.framework.utils.pager.Pager;
 
 public interface SysUserService {
 	SysUser get(Long id);
@@ -15,9 +15,9 @@ public interface SysUserService {
 
 	void delete(Long id);
 
-	List<SysUser> findAll(Page page);
+	List<SysUser> findAll(Pager page);
 
-	List<SysUser> findByPageable(Specification<SysUser> specification, Page page);
+	List<SysUser> findByPageable(Specification<SysUser> specification, Pager page);
 
 	SysUser findByUsername(String username);
 

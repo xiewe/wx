@@ -16,8 +16,7 @@ import com.framework.exception.ServiceException;
 import com.framework.service.SysUserService;
 import com.framework.shiro.ShiroRealm;
 import com.framework.shiro.ShiroRealm.HashPassword;
-import com.framework.utils.page.Page;
-import com.framework.utils.page.PageUtils;
+import com.framework.utils.pager.Pager;
 
 @Service
 @Transactional
@@ -65,23 +64,19 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	public List<SysUser> findAll(Page page) {
+	public List<SysUser> findAll(Pager pager) {
 		org.springframework.data.domain.Page<SysUser> springDataPage = oDao
-				.findAll(PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
+				.findAll(pager.parsePageable());
+		pager.setTotalRecords(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
 	@Override
 	public List<SysUser> findByPageable(Specification<SysUser> specification,
-			Page page) {
-		if (null != page && StringUtils.isEmpty(page.getOrderField())) {
-			page.setOrderDirection("desc");
-			page.setOrderField("createTime");
-		}
+			Pager pager) {
 		org.springframework.data.domain.Page<SysUser> springDataPage = oDao
-				.findAll(specification, PageUtils.createPageable(page));
-		page.setTotalCount(springDataPage.getTotalElements());
+				.findAll(specification, pager.parsePageable());
+		pager.setTotalRecords(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 

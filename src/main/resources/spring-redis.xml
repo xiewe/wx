@@ -9,7 +9,7 @@
   <description>Spring redis配置 </description>
 
   <context:property-placeholder location="classpath:/redis.properties" />
-  <!-- <context:component-scan base-package="com.wx.redis.dao"> </context:component-scan> -->
+  <!-- <context:component-scan base-package="com.uc.redis.dao"> </context:component-scan> -->
 
   <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
     <property name="maxIdle" value="${redis.maxIdle}" />

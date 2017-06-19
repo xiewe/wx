@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.framework.entity.SysRole;
 import com.framework.log4jdbc.Log;
-import com.framework.utils.page.Page;
+import com.framework.utils.pager.Pager;
 
 @Controller
 @RequestMapping("/security/role")
@@ -74,7 +75,7 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("Role:view")
 	@RequestMapping(value = "/list", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public String list(ServletRequest request, Page page,
+	public String list(ServletRequest request, Pager pager,
 			Map<String, Object> map) {
 		return LIST;
 	}
