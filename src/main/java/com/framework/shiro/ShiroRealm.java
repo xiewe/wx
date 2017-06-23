@@ -33,7 +33,7 @@ import com.framework.entity.SysUser;
 import com.framework.exception.IncorrectCaptchaException;
 import com.framework.service.SysUserService;
 import com.framework.utils.Digests;
-import com.framework.utils.Encodes;
+import com.framework.utils.EncodesUtil;
 
 @Service
 public class ShiroRealm extends AuthorizingRealm {
@@ -119,7 +119,7 @@ public class ShiroRealm extends AuthorizingRealm {
 				throw new DisabledAccountException();
 			}
 
-			byte[] salt = Encodes.decodeHex(sysUser.getSalt());
+			byte[] salt = EncodesUtil.decodeHex(sysUser.getSalt());
 
 			if (null != SecurityUtils.getSubject().getPreviousPrincipals())
 				doGetAuthorizationInfo(SecurityUtils.getSubject()
@@ -185,11 +185,11 @@ public class ShiroRealm extends AuthorizingRealm {
 	public static HashPassword encryptPassword(String plainPassword) {
 		HashPassword result = new HashPassword();
 		byte[] salt = Digests.generateSalt(SALT_SIZE);
-		result.salt = Encodes.encodeHex(salt);
+		result.salt = EncodesUtil.encodeHex(salt);
 
 		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), salt,
 				INTERATIONS);
-		result.password = Encodes.encodeHex(hashPassword);
+		result.password = EncodesUtil.encodeHex(hashPassword);
 		return result;
 	}
 
@@ -208,8 +208,8 @@ public class ShiroRealm extends AuthorizingRealm {
 	public static boolean validatePassword(String plainPassword,
 			String password, String salt) {
 		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(),
-				Encodes.decodeHex(salt), INTERATIONS);
-		String oldPassword = Encodes.encodeHex(hashPassword);
+				EncodesUtil.decodeHex(salt), INTERATIONS);
+		String oldPassword = EncodesUtil.encodeHex(hashPassword);
 		return password.equals(oldPassword);
 	}
 

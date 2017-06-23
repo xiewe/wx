@@ -31,18 +31,21 @@ public class SysLog implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5151544833673465082L;
+	private static final long serialVersionUID = -3940763449575258157L;
 	private Long id;
 	private String username;
 	private String ip;
 	private String userAgent;
+	private String category;
+	private String level;
 	private String message;
 	private Date createTime;
 
 	public SysLog() {
 	}
 
-	public SysLog(String username, String ip, String userAgent, String message, Date createTime) {
+	public SysLog(String username, String ip, String userAgent, String message,
+			Date createTime) {
 		this.username = username;
 		this.ip = ip;
 		this.userAgent = userAgent;
@@ -52,7 +55,6 @@ public class SysLog implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-
 	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
@@ -89,6 +91,24 @@ public class SysLog implements java.io.Serializable {
 		this.userAgent = userAgent;
 	}
 
+	@Column(name = "category", length = 50)
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	@Column(name = "level", length = 20)
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
 	@Column(name = "message", length = 256)
 	public String getMessage() {
 		return this.message;
@@ -107,5 +127,6 @@ public class SysLog implements java.io.Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
 
 }

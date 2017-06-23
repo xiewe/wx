@@ -31,7 +31,7 @@ public class Log4JDBCServiceImpl implements Log4JDBCService {
 	 * @param logLevel
 	 */
 	@Override
-	public void log(String message, Object[] objects, LogLevel logLevel) {
+	public void log(String message, Object[] objects, LogLevel logLevel, String category) {
 
 		MessageFormat mFormat = new MessageFormat(message);
 		String result = mFormat.format(objects);
@@ -47,6 +47,8 @@ public class Log4JDBCServiceImpl implements Log4JDBCService {
 		sysLog.setUsername(loginUser.getUsername());
 		sysLog.setIp(loginUser.getIp());
 		sysLog.setUserAgent(loginUser.getUserAgent());
+		sysLog.setCategory(category);
+		sysLog.setLevel(logLevel.value());
 		sysLog.setMessage(result);
 		sysLog.setCreateTime(new Date());
 
@@ -76,8 +78,8 @@ public class Log4JDBCServiceImpl implements Log4JDBCService {
 	}
 
 	@Override
-	public void log(String message, LogLevel logLevel) {
-		log(message, null, logLevel);
+	public void log(String message, LogLevel logLevel, String category) {
+		log(message, null, logLevel, category);
 	}
 
 }

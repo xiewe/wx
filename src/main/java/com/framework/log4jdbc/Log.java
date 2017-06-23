@@ -34,4 +34,9 @@ public @interface Log {
 	 * @return
 	 */
 	boolean override() default false;
+	
+	/**
+	 * category
+	 */
+	String catrgory() default "sys";
 }

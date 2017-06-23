@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
  * 4.JDK提供的URLEncoder
  * 
  */
-public class Encodes {
+public class EncodesUtil {
 
 	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 	private static final char[] BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"

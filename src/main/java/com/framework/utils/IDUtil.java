@@ -7,7 +7,7 @@ import java.util.UUID;
  * 封装各种生成唯一性ID算法的工具类.
  * 
  */
-public class Identities {
+public class IDUtil {
 
 	private static SecureRandom random = new SecureRandom();
 
@@ -38,7 +38,7 @@ public class Identities {
 	public static String randomBase62(int length) {
 		byte[] randomBytes = new byte[length];
 		random.nextBytes(randomBytes);
-		return Encodes.encodeBase62(randomBytes);
+		return EncodesUtil.encodeBase62(randomBytes);
 	}
 	
 	public static void main(String[] args) {

@@ -85,7 +85,8 @@ public class Log4JDBCInterceptor extends HandlerInterceptorAdapter {
 								if (log.override()) {
 									log4JDBCService.log(log.message(),
 											defaultLogMessageObject
-													.getObjects(), log.level());
+													.getObjects(), log.level(),
+											log.catrgory());
 								} else {
 									// 不覆盖，参考方法的日志等级是否大于等于最终的日志等级
 									if (!log.override()
@@ -94,7 +95,8 @@ public class Log4JDBCInterceptor extends HandlerInterceptorAdapter {
 										log4JDBCService.log(log.message(),
 												defaultLogMessageObject
 														.getObjects(), log
-														.level());
+														.level(), log
+														.catrgory());
 									}
 								}
 							}

@@ -5,9 +5,9 @@ import java.util.Map;
 import com.framework.log4jdbc.LogLevel;
 
 public interface Log4JDBCService {
-	void log(String message, LogLevel logLevel);
+	void log(String message, LogLevel logLevel, String category);
 
-	void log(String message, Object[] objects, LogLevel logLevel);
+	void log(String message, Object[] objects, LogLevel logLevel, String category);
 
 	/**
 	 * 

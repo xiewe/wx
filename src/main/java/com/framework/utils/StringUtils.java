@@ -35,18 +35,4 @@ public class StringUtils {
 		return flag;
 	}
 
-	/**
-	 * 判断字符串是否为空
-	 * 
-	 * @param str
-	 *            待验证的字符串
-	 * @return
-	 */
-	public static boolean isEmpty(String str) {
-		if (null == str)
-			return true;
-		if ("".equals(str))
-			return true;
-		return false;
-	}
 }

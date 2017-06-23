@@ -26,10 +26,7 @@ public class testMain {
 		TimeZone.setDefault(cal.getTimeZone());// 设置时区
 		System.out.println(new Date(cal.getTimeInMillis() - 1000000));
 		System.out.println(new Date());
-		
-		
-		String strim = "    Germany ";
-		System.out.println(strim.trim());
+
 	}
 
 }

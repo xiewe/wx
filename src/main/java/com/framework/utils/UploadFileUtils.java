@@ -39,10 +39,10 @@ public class UploadFileUtils {
 					String fileName = "";
 					int index = oldFileName.lastIndexOf(".");
 					if (index != -1) {
-						fileName = Identities.uuid()
+						fileName = IDUtil.uuid()
 								+ oldFileName.substring(index);
 					} else {
-						fileName = Identities.uuid();
+						fileName = IDUtil.uuid();
 					}
 
 					String path = filepath + fileName;

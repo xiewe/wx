@@ -142,6 +142,8 @@ CREATE TABLE IF NOT EXISTS `uc`.`sys_log` (
   `username` VARCHAR(32) NULL COMMENT '操作用户名',
   `ip` VARCHAR(45) NULL COMMENT '操作的IP',
   `user_agent` VARCHAR(200) NULL COMMENT '终端设备信息',
+  `category` VARCHAR(50) NULL COMMENT '类别',
+  `level` VARCHAR(20) NULL COMMENT '级别',
   `message` VARCHAR(256) NULL COMMENT '日志信息',
   `create_time` DATETIME NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
