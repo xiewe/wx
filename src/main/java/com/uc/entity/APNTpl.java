@@ -18,6 +18,10 @@ public class APNTpl implements java.io.Serializable {
 	 */
 	private int qci;
 	/**
+	 * ARP 优先级
+	 */
+	private int ARPPrio;
+	/**
 	 * ARP抢占标识
 	 */
 	private int preEmptionCapability;
@@ -170,6 +174,14 @@ public class APNTpl implements java.io.Serializable {
 
 	public void setVni(String vni) {
 		this.vni = vni;
+	}
+
+	public int getARPPrio() {
+		return ARPPrio;
+	}
+
+	public void setARPPrio(int aRPPrio) {
+		ARPPrio = aRPPrio;
 	}
 
 }

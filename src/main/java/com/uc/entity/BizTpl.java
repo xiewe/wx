@@ -31,7 +31,6 @@ public class BizTpl implements java.io.Serializable {
 	private int userType;
 	private int bizSwitcher;
 	private String bizIdList;
-	private int userPriority;
 
 	public int getBizTplId() {
 		return bizTplId;
@@ -71,14 +70,6 @@ public class BizTpl implements java.io.Serializable {
 
 	public void setBizIdList(String bizIdList) {
 		this.bizIdList = bizIdList;
-	}
-
-	public int getUserPriority() {
-		return userPriority;
-	}
-
-	public void setUserPriority(int userPriority) {
-		this.userPriority = userPriority;
 	}
 
 }

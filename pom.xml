@@ -14,7 +14,6 @@
     <!-- mybatis版本号 -->
     <mybatis.version>3.4.4</mybatis.version>
     <mybatis-spring.version>1.3.1</mybatis-spring.version>
-    <!-- log4j日志文件管理包版本 -->
     <slf4j.version>1.7.25</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
   </properties>
@@ -24,7 +23,6 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
-      <!-- 表示开发的时候引入，发布的时候不会加载此包 -->
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -33,7 +31,6 @@
       <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
-    <!-- spring核心包 -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -129,7 +126,6 @@
       <artifactId>aspectjweaver</artifactId>
       <version>1.8.10</version>
     </dependency>
-    <!-- hibernate -->
     <dependency>
       <groupId>org.hibernate.common</groupId>
       <artifactId>hibernate-commons-annotations</artifactId>
@@ -175,52 +171,31 @@
       <artifactId>javax.el</artifactId>
       <version>2.2.5</version>
     </dependency>
-    <!-- mybatis核心包 -->
-    <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis</artifactId>
-      <version>${mybatis.version}</version>
-    </dependency>
-    <!-- <dependency> <groupId>org.mybatis.generator</groupId> <artifactId>mybatis-generator-core</artifactId> 
-      <version>1.3.5</version> </dependency> -->
-    <!-- mybatis/spring包 -->
-    <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis-spring</artifactId>
-      <version>${mybatis-spring.version}</version>
-    </dependency>
-    <!-- 导入java ee jar 包 -->
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
       <version>7.0</version>
     </dependency>
-    <!-- 导入Mysql数据库链接jar包 -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.41</version>
     </dependency>
-    <!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
     <dependency>
       <groupId>commons-dbcp</groupId>
       <artifactId>commons-dbcp</artifactId>
       <version>1.4</version>
     </dependency>
-    <!-- jedis -->
     <dependency>
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
       <version>2.9.0</version>
     </dependency>
-    <!-- JSTL标签类 -->
     <dependency>
       <groupId>jstl</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
-
-    <!-- 处理json -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
@@ -236,16 +211,11 @@
       <artifactId>jackson-annotations</artifactId>
       <version>2.8.8</version>
     </dependency>
-    <!-- Baidu Translator -->
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20170516</version>
     </dependency>
-    
-    <!-- 日志文件管理包 -->
-    <!-- log start -->
-    <!-- 使用slf4j + logback -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
@@ -256,14 +226,6 @@
       <artifactId>logback-classic</artifactId>
       <version>1.2.2</version>
     </dependency>
-    <!-- 下面是使用log4j的依赖 -->
-    <!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
-      <version>${log4j.version}</version> </dependency> <dependency> <groupId>org.slf4j</groupId> 
-      <artifactId>slf4j-log4j12</artifactId> <version>${slf4j.version}</version> 
-      </dependency> -->
-    <!-- log end -->
-
-    <!-- Spring日志用logback输出，另需在web.xml中设置Listener -->
     <dependency>
       <groupId>org.logback-extensions</groupId>
       <artifactId>logback-ext-spring</artifactId>
@@ -274,15 +236,12 @@
       <artifactId>jcl-over-slf4j</artifactId>
       <version>1.7.25</version>
     </dependency>
-    <!-- Hack：确保commons-logging的jar包不被引入，否则将和jcl-over-slf4j冲突 -->
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.2</version>
       <scope>provided</scope>
     </dependency>
-
-    <!-- Shiro -->
     <dependency>
       <groupId>org.apache.shiro</groupId>
       <artifactId>shiro-all</artifactId>
@@ -293,8 +252,6 @@
       <artifactId>ehcache-core</artifactId>
       <version>2.6.11</version>
     </dependency>
-
-    <!-- 上传组件包 -->
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
@@ -315,8 +272,6 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.5</version>
     </dependency>
-
-    <!-- Excel -->
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
@@ -327,28 +282,16 @@
       <artifactId>poi-ooxml</artifactId>
       <version>3.16</version>
     </dependency>
-
-    <!-- Word -->
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
       <version>2.3.23</version>
     </dependency>
-
-    <!-- java audio video encoder -->
-    <dependency>
-      <groupId>it.sauronsoftware.jave</groupId>
-      <artifactId>jave</artifactId>
-      <version>1.0.2</version>
-    </dependency>
-    <!-- patchca -->
     <dependency>
       <groupId>org.patchca</groupId>
       <artifactId>patchca</artifactId>
       <version>0.5.0</version>
     </dependency>
-
-    <!-- http client -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
@@ -359,14 +302,6 @@
       <artifactId>httpcore</artifactId>
       <version>4.4.6</version>
     </dependency>
-
-    <!-- 图片处理 -->
-    <dependency>
-      <groupId>jmagick</groupId>
-      <artifactId>jmagick</artifactId>
-      <version>6.6.9</version>
-    </dependency>
-
   </dependencies>
 
   <build>
@@ -382,7 +317,6 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
-      <!-- 此plugin可以用 利用此plugin，把源代码中的xml文件，打包到相应位置， 这里主要是为了打包Mybatis的mapper.xml文件 -->
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <version>2.6</version>
