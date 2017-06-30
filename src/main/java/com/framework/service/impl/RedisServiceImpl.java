@@ -18,7 +18,8 @@ public class RedisServiceImpl implements RedisService {
 	@Override
 	public String generateToken(String uid) {
 		String token = UUID.randomUUID().toString();
-		stringRedisTemplate.boundValueOps(uid).set(token, AppConstants.TOKEN_EXPIRES, TimeUnit.MILLISECONDS);
+		stringRedisTemplate.boundValueOps(uid).set(token,
+				AppConstants.TOKEN_EXPIRES, TimeUnit.MILLISECONDS);
 		return token;
 	}
 
@@ -31,5 +32,12 @@ public class RedisServiceImpl implements RedisService {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void removeToken(String uid) {
+		if (stringRedisTemplate.hasKey(uid)) {
+			stringRedisTemplate.delete(uid);
+		}
 	}
 }

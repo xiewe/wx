@@ -38,7 +38,7 @@ public class SysLogServiceImpl implements SysLogService {
 	public List<SysLog> findAll(Pager pager) {
 		org.springframework.data.domain.Page<SysLog> springDataPage = logInfoDAO
 				.findAll(pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
@@ -47,7 +47,7 @@ public class SysLogServiceImpl implements SysLogService {
 			Pager pager) {
 		org.springframework.data.domain.Page<SysLog> springDataPage = logInfoDAO
 				.findAll(specification, pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 }

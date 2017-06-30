@@ -44,7 +44,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public List<SysRole> findAll(Pager pager) {
 		org.springframework.data.domain.Page<SysRole> springDataPage = oDao
 				.findAll(pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
@@ -53,7 +53,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 			Pager pager) {
 		org.springframework.data.domain.Page<SysRole> springDataPage = oDao
 				.findAll(specification, pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 }

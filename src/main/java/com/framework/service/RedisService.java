@@ -17,4 +17,11 @@ public interface RedisService {
 	 * @return boolean true:valid false:invalid
 	 */
 	boolean checkToken(String uid, String token);
+
+	/**
+	 * 删除指定用户的TOKEN
+	 * 
+	 * @param uid
+	 */
+	void removeToken(String uid);
 }

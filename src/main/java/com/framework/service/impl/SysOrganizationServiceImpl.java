@@ -38,7 +38,7 @@ public class SysOrganizationServiceImpl implements SysOrganizationService {
 	public List<SysOrganization> findAll(Pager pager) {
 		org.springframework.data.domain.Page<SysOrganization> springDataPage = oDao
 				.findAll(pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
@@ -47,7 +47,7 @@ public class SysOrganizationServiceImpl implements SysOrganizationService {
 			Specification<SysOrganization> specification, Pager pager) {
 		org.springframework.data.domain.Page<SysOrganization> springDataPage = oDao
 				.findAll(specification, pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 }

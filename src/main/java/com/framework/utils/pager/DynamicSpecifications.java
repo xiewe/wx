@@ -7,17 +7,25 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.ServletRequest;
 
 import org.apache.commons.lang3.EnumUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
+
+import com.framework.AppConstants;
+import com.framework.utils.ServletUtils;
+import com.framework.utils.pager.Dictionary.OperatorEum;
 
 public class DynamicSpecifications {
 	private static final Logger logger = LoggerFactory
@@ -26,6 +34,61 @@ public class DynamicSpecifications {
 	private static final String SHORT_DATE = "yyyy-MM-dd";
 	private static final String LONG_DATE = "yyyy-MM-dd HH:mm:ss";
 	private static final String TIME = "HH:mm:ss";
+
+	public static SearchFilter genSearchFilter(ServletRequest request) {
+		Map<String, Object> searchParams = ServletUtils
+				.getParametersStartingWith(request, AppConstants.SEARCH_PREFIX);
+		SearchFilter filter = parse(searchParams);
+		return filter;
+	}
+
+	/**
+	 * searchParams中key的格式为OPERATOR_FIELDNAME
+	 */
+	public static SearchFilter parse(Map<String, Object> searchParams) {
+		SearchFilter filter = new SearchFilter();
+
+		for (Entry<String, Object> entry : searchParams.entrySet()) {
+			// 过滤掉空值
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			if (StringUtils.isBlank((String) value)) {
+				continue;
+			}
+
+			// 拆分operator与filedAttribute
+			String[] names = StringUtils.split(key, "_");
+			if (names.length < 2) {
+				throw new IllegalArgumentException(key
+						+ " is not a valid search filter name");
+			}
+
+			String filedName = names[1];
+			// 判断参数是否大于2，即该entity的查询条件包含外键列，例如：search_EQ_user_username，Entity
+			// Task与用户表关联，页面封装的条件都以"_"分隔，需要特殊处理，此操作目前仅为了在页面输入查询条件在结果页把条件值显示出来
+			if (names.length > 2) {
+				for (int i = 2; i < names.length; i++) {
+					filedName += "." + names[i];
+				}
+			}
+
+			Rule rule = new Rule();
+			rule.setField(filedName);
+			rule.setOperator(OperatorEum.valueOf(names[0]));
+			rule.setData(value.toString());
+
+			filter.addRule(rule);
+		}
+
+		return filter;
+	}
+
+	public static <T> Specification<T> buildSpecification(
+			ServletRequest request, final Class<T> entityClazz) {
+		SearchFilter filter = genSearchFilter(request);
+
+		return buildSpecification(filter, entityClazz);
+	}
 
 	public static <T> Specification<T> buildSpecification(
 			final SearchFilter searchFilter, final Class<T> entityClazz) {

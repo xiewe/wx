@@ -38,7 +38,7 @@ public class SysRolePermissionServiceImpl implements SysRolePermissionService {
 	public List<SysRolePermission> findAll(Pager pager) {
 		org.springframework.data.domain.Page<SysRolePermission> springDataPage = oDao
 				.findAll(pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
@@ -47,7 +47,7 @@ public class SysRolePermissionServiceImpl implements SysRolePermissionService {
 			Specification<SysRolePermission> specification, Pager pager) {
 		org.springframework.data.domain.Page<SysRolePermission> springDataPage = oDao
 				.findAll(specification, pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 }

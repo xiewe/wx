@@ -67,7 +67,7 @@ public class SysUserServiceImpl implements SysUserService {
 	public List<SysUser> findAll(Pager pager) {
 		org.springframework.data.domain.Page<SysUser> springDataPage = oDao
 				.findAll(pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
@@ -76,7 +76,7 @@ public class SysUserServiceImpl implements SysUserService {
 			Pager pager) {
 		org.springframework.data.domain.Page<SysUser> springDataPage = oDao
 				.findAll(specification, pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 

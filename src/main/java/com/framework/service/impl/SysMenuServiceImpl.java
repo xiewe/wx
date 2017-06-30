@@ -38,7 +38,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 	public List<SysMenu> findAll(Pager pager) {
 		org.springframework.data.domain.Page<SysMenu> springDataPage = oDao
 				.findAll(pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
@@ -47,7 +47,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 			Pager pager) {
 		org.springframework.data.domain.Page<SysMenu> springDataPage = oDao
 				.findAll(specification, pager.parsePageable());
-		pager.setTotalRecords(springDataPage.getTotalElements());
+		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 }

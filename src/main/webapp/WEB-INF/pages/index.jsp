@@ -1,215 +1,269 @@
-<jsp:directive.page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true"/>
-<jsp:directive.include file="/WEB-INF/pages/include.inc.jsp"/>
-<jsp:directive.page import="java.util.Date" />
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<jsp:directive.page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true" />
+<jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><spring:message code="application.title" /></title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="../../favicon.ico">
+<title>UC</title>
 
-<!--可以在收藏夹中显示出图标-->
-<link rel="bookmark"  type="image/x-icon"  href="favicon.ico"/>
-<!--可以在地址栏中显示出图标-->
-<link rel="icon"  type="image/x-icon" href="favicon.ico" />
-<link rel="shortcut icon"  type="image/x-icon" href="favicon.ico" />
-<link href="${contextPath}/styles/dwz/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
-<link href="${contextPath}/styles/dwz/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
-<link href="${contextPath}/styles/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
-<link href="${contextPath}/styles/validationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" media="screen"/>
-<link href="${contextPath}/styles/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
-<link href="${contextPath}/styles/ztree/css/zTreeStyle.css" rel="stylesheet" type="text/css" media="screen"/>
-<link href="${contextPath}/styles/treeTable/themes/default/treeTable.css" rel="stylesheet" type="text/css" />
-<!--[if IE]>
-<link href="${contextPath}/styles/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" media="screen"/>
+<!-- Bootstrap core CSS -->
+<link href="../../styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link href="../../styles/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="../../styles/custom/css/dashboard.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="../../styles/bootstrap/js/html5shiv.min.js"></script>
+<script src="../../styles/bootstrap/js/respond.min.js"></script>
 <![endif]-->
-
-<!--[if lte IE 9]>
-<script src="${contextPath}/styles/dwz/js/speedup.js" type="text/javascript"></script>
-<![endif]-->
-
-<script src="${contextPath}/styles/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/jquery.validate.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/uploadify/scripts/jquery.uploadify.js" type="text/javascript"></script>
-
-<%-- --%>
-<script src="${contextPath}/styles/dwz/js/dwz.core.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.util.date.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.validate.method.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.barDrag.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.drag.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.tree.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.accordion.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.ui.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.theme.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.switchEnv.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.alertMsg.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.contextmenu.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.navTab.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.tab.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.resize.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.dialog.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.dialogDrag.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.sortDrag.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.cssTable.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.stable.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.taskBar.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.ajax.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.pagination.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.database.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.datepicker.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.effects.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.panel.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.checkbox.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.history.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.combox.js" type="text/javascript"></script>
-<script src="${contextPath}/styles/dwz/js/dwz.print.js" type="text/javascript"></script>
-<%-- validationEngine --%>
-<script src="${contextPath}/styles/validationEngine/js/languages/jquery.validationEngine-zh_CN.js" type="text/javascript" charset="utf-8"></script>
-<script src="${contextPath}/styles/validationEngine/js/jquery.validationEngine-2.6.4.js" type="text/javascript" charset="utf-8"></script>
-
-<script src="${contextPath}/styles/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
-<%-- zTree --%>
-<script src="${contextPath}/styles/ztree/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
-<%-- treeTable --%>
-<script src="${contextPath}/styles/treeTable/jquery.treeTable.min.js" type="text/javascript"></script>
-<%-- 自定义JS --%>
-<script src="${contextPath}/styles/custom/js/custom.js" type="text/javascript"></script>
-<script type="text/javascript">
-$(function(){
-	DWZ.init("${contextPath}/styles/dwz/dwz.frag.xml", {
-		loginUrl:"${contextPath}/login/timeout", loginTitle:"登录",	// 弹出登录对话框
-//		loginUrl:"login.html",	// 跳到登录页面
-		statusCode:{ok:200, error:300, timeout:301}, //【可选】
-		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //【可选】
-		debug:false,	// 调试模式 【true|false】
-		callback:function(){
-			initEnv();
-			$("#themeList").theme({themeBase:"${contextPath}/styles/dwz/themes"}); // themeBase 相对于index页面的主题base路径
-		}
-	});
-});
-</script>
-
+<style type="text/css">
+</style>
 </head>
-<body scroll="no">
-<div id="layout">
-	<div id="header">
-		<div class="headerNav">
-			<a class="logo"  style="width: 50px;margin:5px;">Logo</a>
-			<span ><font style="float:left;font-size: 27px;color: white;margin-top: 12px;" >贸人E家管理控制中心</font></span>
-			<ul class="nav">
-				<li><a href="${contextPath}/index"><spring:message code="application.home" /></a></li>
-				<li><a href="${contextPath}/index/updateBase" target="dialog" mask="true" width="400" height="190">修改用户信息</a></li>
-				<li><a href="${contextPath}/index/updatePwd" target="dialog" mask="true" width="400" height="190">修改密码</a></li>
-				<li><a href="${contextPath}/logout">退出</a></li>
-			</ul>
-			<%-- --%>
-			<ul class="themeList" id="themeList">
-				<li theme="default"><div class="selected">default</div></li>
-				<li theme="green"><div>green</div></li>
-				<li theme="purple"><div>purple</div></li>
-				<li theme="silver"><div>silver</div></li>
-				<li theme="azure"><div>azure</div></li>
-			</ul>
+<body>
 
-		</div>
-	</div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fruid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">TCN2000用户中心</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span>欢迎您，admin</span></a></li>
+                    <li><a href="#"><span>修改密码</span></a></li>
+                    <li><a href="#" style="padding-right: 50px"><span>退出</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-	<div id="leftside">
-		<div id="sidebar_s">
-			<div class="collapse">
-				<div class="toggleCollapse"><div></div></div>
-			</div>
-		</div>
-		<div id="sidebar">
-			<div class="toggleCollapse"><h2>主菜单</h2><div>收缩</div></div>
-			<div class="accordion" fillSpace="sidebar">
-				<c:forEach var="level1" items="${menuModule.children }">
-				<div class="accordionHeader">
-					<h2><span>Folder</span>${level1.name}</h2>
-				</div>
-				<div class="accordionContent">
-					<ul class="tree treeFolder expand">
-					<c:forEach var="level2" items="${level1.children }">
-						<li><own:menuAccordion child="${level2 }" urlPrefix="${contextPath }"/></li>
-					</c:forEach>
-					</ul>
-				</div>
-				</c:forEach>
-			</div>
-		</div>
-	</div>
+    <div class="container-fruid">
+        <div class="row index-row">
+            <div class="col-md-2 col-sm-3 sideMenu">
+                <a href="#" class="btn btn-defaut" role="button"> <!-- <span class="glyphicon glyphicon-menu-left"></span> --><< TCN2000网管
+                </a>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span class="glyphicon-minus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> 点击我进行展开1 </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">免费域名注册</a> <a href="#" class="list-group-item">简单的可折叠组件</a> <a href="#" class="list-group-item">图像的数量</a> <a href="#" class="list-group-item">24*7 支持</a> <a href="#" class="list-group-item">每年更新成本</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span class="glyphicon-plus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> 点击我进行展开2 </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a>
+                                <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span class="glyphicon-plus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> 点击我进行展开3 </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-	<div id="container">
-		<div id="navTab" class="tabsPage">
-			<div class="tabsPageHeader">
-				<div class="tabsPageHeaderContent"><!-- 显示左右控制时添加 class="tabsPageHeaderMargin" -->
-					<ul class="navTab-tab">
-						<li tabid="main" class="main"><a href="javascript:void(0)"><span><span class="home_icon">主页</span></span></a></li>
-					</ul>
-				</div>
-				<div class="tabsLeft">left</div><!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" -->
-				<div class="tabsRight">right</div><!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" -->
-				<div class="tabsMore">more</div>
-			</div>
-			<ul class="tabsMoreList">
-				<li><a href="javascript:void(0)">主页</a></li>
-			</ul>
-			<div class="navTab-panel tabsPageContent layoutBox">
-				<div class="page unitBox">
-					<div class="accountInfo">
-						<div class="right">
-							<p><fmt:formatDate value="<%=new Date() %>" pattern="yyyy-MM-dd EEEE"/></p>
-						</div>
-						<p><span>欢迎, ${login_user.username } .</span></p>
-						<%-- <p>当前在线：
-						<%
-							java.util.HashSet onlineSessions = (java.util.HashSet)application.getAttribute("OnlineSessions");
-							out.print(onlineSessions.size());
-						%>	 --%>
-						</p>
-						<%-- <br/><a target="navTab" href="${contextPath}/sample/task/test">点击接收客户端推送消息</a> --%>
-					</div>
-					<div class="pageFormContent" layouth="80">
-					<fieldset>
-						<legend>基本信息</legend>
-						<dl>
-							<dt>登录名称：</dt>
-							<dd><span class="unit">${login_user.username }</span></dd>
-						</dl>
-						<dl>
-							<dt>电话：</dt>
-							<dd><span class="unit">${login_user.phone }</span></dd>
-						</dl>
-						<dl>
-							<dt>E-Mail：</dt>
-							<dd><span class="unit">${login_user.email }</span></dd>
-						</dl>
-						<dl>
-							<dt>创建时间：</dt>
-							<dd><span class="unit"><fmt:formatDate value="${login_user.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span></dd>
-						</dl>
-						<dl>
-							<dt>可用状态：</dt>
-							<dd><span class="unit">${(login_user.status == 0)? "可用":"不可用"}</span></dd>
-						</dl>
-						<dl>
-							<dt>部门：</dt>
-							<dd><span class="unit">${login_user.organization.name }</span></dd>
-						</dl>
-					</fieldset>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+            <div class="col-sm-9 col-md-10 main">
+                <!-- 可变内容开始 -->
 
-<div id="footer">Copyright &copy; 2015-2020, Shenzhen CWbizchat technology co.,LTD, All Rights Reserve. <a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备15066967号</a></div>
+                <div class="divbc">
+                    <ol class="breadcrumb">
+                        <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                        <li class="active">2013</li>
+                        <li class="active">十一月</li>
+                    </ol>
+                </div>
+
+                <!-- 隐藏的form -->
+                <div class="row main-content">
+                    <form role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="opId" class="control-label col-xs-3 col-sm-1">ID:</label>
+                            <div class="col-xs-9 col-sm-3">
+                                <input type="text" class="form-control" id="opId" placeholder="请输入OP ID"／>
+                            </div>
+                            <label for="opName" class="control-label col-xs-3 col-sm-1">名称:</label>
+                            <div class="col-xs-9 col-sm-3">
+                                <input type="text" class="form-control" id="opName" placeholder="请输入名称"／>
+                            </div>
+                            <div class="col-xs-6 col-sm-2">
+                                <button type="submit" class="btn btn-default doSearch">查询</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr class="clearfix">
+
+                    <p>
+                        <button type="button" class="btn btn-default doAdd">添加</button>
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover table-condensed" id="tabData">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>运营商主密钥模板名称</th>
+                                    <th>运营商可变算法配置域</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1,001</td>
+                                    <td>Lorem</td>
+                                    <td>ipsum</td>
+                                    <td>dolor</td>
+                                </tr>
+                                <tr>
+                                    <td>1,002</td>
+                                    <td>amet</td>
+                                    <td>consectetur</td>
+                                    <td>adipiscing</td>
+                                </tr>
+                                <tr>
+                                    <td>1,003</td>
+                                    <td>Integer</td>
+                                    <td>nec</td>
+                                    <td>odio</td>
+                                </tr>
+                                <tr>
+                                    <td>1,003</td>
+                                    <td>libero</td>
+                                    <td>Sed</td>
+                                    <td>cursus</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 分页开始 -->
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3">
+                            <p>
+                                每页显示 <select class="pager-select" style="width: 50px; border: 1px solid #ccc; border-radius: 5px;">
+                                    <option>10</option>
+                                    <option>15</option>
+                                    <option>20</option>
+                                    <option>30</option>
+                                    <option>50</option>
+                                </select>，共<span id="totalCount">123</span>条数据
+                            </p>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-8 text-right" style="padding-right: 0px;">
+                            <ul class="pagination pagination-sm" style="margin: 0px;">
+                                <li><a href="#">首页</a></li>
+                                <li><a href="#">上一页</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li class="active"><a href="#">5</a></li>
+                                <li><a href="#">...</a></li>
+                                <li><a href="#">100</a></li>
+                                <li><a href="#">下一页</a></li>
+                                <li><a href="#">尾页</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="input-group input-group-sm col-sm-1 text-left">
+                            <input type="text" class="form-control pager-input"> <span class="input-group-btn">
+                                <button class="btn btn-default pager-go" type="button">Go</button>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- 分页结束 -->
+
+
+                </div>
+
+
+                <!-- 可变内容结束 -->
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-center">Copyright © 2013-2017 XINWEI All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script src="../../styles/jquery-3.2.1.min.js"></script>
+    <script src="../../styles/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../styles/utils/common.js"></script>
+    <!--         <script src="../../assets/js/vendor/holder.min.js"></script> -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../styles/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script type="text/javascript">
+					$('.list-group').on(
+							'click',
+							'a,li',
+							function(e) {
+								stopBubble(e);
+								stopDefault(e);
+
+								$('.panel-group .list-group a,li').removeClass(
+										'active');
+								$(this).addClass('active');
+
+								//alert($(this).text());
+							});
+
+					$('.panel-title').on(
+							'click',
+							'[data-toggle="collapse"]',
+							function(e) {
+								var minus = 0;
+								if ($(this).parent().find('span').hasClass(
+										'glyphicon-minus')) {
+									minus = 1;
+								}
+
+								$('.panel-group .panel-heading span')
+										.removeClass('glyphicon-minus');
+								$('.panel-group .panel-heading span').addClass(
+										'glyphicon-plus');
+
+								if (minus == 0) {
+									$(this).parent().find('span').addClass(
+											'glyphicon-minus');
+								}
+
+							})
+				</script>
+
 </body>
 </html>

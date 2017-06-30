@@ -9,22 +9,22 @@ public class Pager {
 	/**
 	 * 每页显示条数
 	 */
-	public int rows = 10;
+	public int pageSize = 10;
 
 	/**
 	 * 当前页
 	 */
-	public int page = 1;
+	public int currPage = 1;
 
 	/**
 	 * 排序列名
 	 */
-	public String sidx;
+	public String orderField;
 
 	/**
 	 * 排序类型：asc or desc
 	 */
-	public String sord;
+	public String orderDirection;
 
 	/**
 	 * 总页数
@@ -34,38 +34,47 @@ public class Pager {
 	/**
 	 * 总记录数
 	 */
-	public long totalRecords = 0;
+	public long totalCount = 0;
 
-	public int getRows() {
-		return rows;
+	public int getPageSize() {
+		return pageSize;
 	}
 
-	public void setRows(int rows) {
-		this.rows = rows;
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 
-	public int getPage() {
-		return page;
+	public int getCurrPage() {
+		return currPage;
 	}
 
-	public void setPage(int page) {
-		this.page = page;
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
 	}
 
-	public String getSidx() {
-		return sidx;
+	public String getOrderField() {
+		return orderField;
 	}
 
-	public void setSidx(String sidx) {
-		this.sidx = sidx;
+	public void setOrderField(String orderField) {
+		this.orderField = orderField;
 	}
 
-	public String getSord() {
-		return sord;
+	public String getOrderDirection() {
+		return orderDirection;
 	}
 
-	public void setSord(String sord) {
-		this.sord = sord;
+	public void setOrderDirection(String orderDirection) {
+		this.orderDirection = orderDirection;
+	}
+
+	public long getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(long totalCount) {
+		this.totalCount = totalCount;
+		totalPage = (int) (totalCount - 1) / this.pageSize + 1;
 	}
 
 	public int getTotalPage() {
@@ -76,27 +85,21 @@ public class Pager {
 		this.totalPage = totalPage;
 	}
 
-	public long getTotalRecords() {
-		return totalRecords;
-	}
-
-	public void setTotalRecords(long totalRecords) {
-		this.totalRecords = totalRecords;
-		totalPage = (int) (totalRecords - 1) / this.rows + 1;
-	}
-
 	public Pageable parsePageable() {
-		if (StringUtils.isNotBlank(getSidx())) {
-			return new PageRequest(getPage() - 1, getRows(), getSord()
-					.equalsIgnoreCase("asc") ? Sort.Direction.ASC
-					: Sort.Direction.DESC, getSidx());
+		if (StringUtils.isNotBlank(getOrderField())) {
+			return new PageRequest(
+					getCurrPage() - 1,
+					getPageSize(),
+					getOrderDirection().equalsIgnoreCase("asc") ? Sort.Direction.ASC
+							: Sort.Direction.DESC, getOrderField());
 		}
-		return new PageRequest(getPage() - 1, getRows());
+		return new PageRequest(getCurrPage() - 1, getPageSize());
 	}
 
 	public String toJson() {
-		return "{\"total\":" + getTotalPage() + ",\"page\":" + getPage()
-				+ ",\"records\": " + getTotalRecords() + ",\"rows\":%s}";
+		return "{\"totalPage\":" + getTotalPage() + ",\"currPage\":"
+				+ getCurrPage() + ",\"totalCount\": " + getTotalCount()
+				+ ",\"rows\":%s}";
 	}
 
 }
