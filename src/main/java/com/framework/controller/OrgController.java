@@ -27,9 +27,9 @@ public class OrgController extends BaseController {
 	@Autowired
 	private SysUserService sysUserService;
 
-	private static final String CREATE = "security/user/create";
-	private static final String UPDATE = "security/user/update";
-	private static final String LIST = "security/user/list";
+	private static final String CREATE = "sys/org/create";
+	private static final String UPDATE = "sys/org/update";
+	private static final String LIST = "sys/org/list";
 
 	@RequiresPermissions("User:save")
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
