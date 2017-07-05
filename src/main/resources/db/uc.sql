@@ -180,7 +180,7 @@ INSERT INTO `sys_menu` (`id`,`category`,`name`,`url`,`parent_id`,`flag`,`target`
 (35,'用户管理','用户状态','/userstatus',31,NULL,NULL,NULL),
 (36,'用户管理','组信息','/groupinfo',31,NULL,NULL,NULL);
 
-INSERT INTO `uc`.`sys_menu_class` (`menu_id`,`name`,`class_name`,`method`) VALUES 
+INSERT INTO `sys_menu_class` (`menu_id`,`name`,`class_name`,`method`) VALUES 
 (2,'增（Create）','com.framework.entity.SysOrganization','SysOrganization:create'),
 (2,'删（Delete）','com.framework.entity.SysOrganization','SysOrganization:delete'),
 (2,'改（Update）','com.framework.entity.SysOrganization','SysOrganization:update'),
@@ -258,7 +258,13 @@ INSERT INTO `uc`.`sys_menu_class` (`menu_id`,`name`,`class_name`,`method`) VALUE
 (36,'改（Update）','com.uc.entity.GroupInOrg','GroupInOrg:update'),
 (36,'查（View）','com.uc.entity.GroupInOrg','GroupInOrg:view');
 
-INSERT INTO `sys_user` (`id`, `uid`, `username`, `password`, `salt`, `realname`, `gender`, `photo`, `phone`, `country_code`, `nationality`, `individual_id`, `email`, `address`, `self_intro`, `is_vip`, `status`, `utype`, `org_id`, `role_id`, `gps`, `longitude`, `latitude`, `user_agent`, `last_login`, `create_time`, `modify_time`) VALUES('1','10001','admin','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'xiewe9@163.com',NULL,'创建者','1','0','0',NULL,NULL,NULL,'0','0',NULL,NULL,NULL,NULL);
+INSERT INTO `sys_role` (`id`,`name`,`description`) VALUES (1,'Admin','Admin');
+
+insert into sys_role_permission(role_id, menu_id, menu_class_id)
+(SELECT '1', m.id, c.id FROM sys_menu m, sys_menu_class c where m.id = c.menu_id);
+
+INSERT INTO `sys_user` (`id`, `uid`, `username`, `password`, `salt`, `realname`, `gender`, `photo`, `phone`, `country_code`, `nationality`, `individual_id`, `email`, `address`, `self_intro`, `is_vip`, `status`, `utype`, `org_id`, `role_id`, `gps`, `longitude`, `latitude`, `user_agent`, `last_login`, `create_time`, `modify_time`) 
+VALUES('1','10001','admin','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'xiewe9@163.com',NULL,'创建者','1','0','0',NULL,NULL,NULL,'0','0',NULL,NULL,NULL,NULL);
 COMMIT;
 
 
