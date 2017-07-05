@@ -14,8 +14,11 @@ public interface SysOrganizationService {
 
 	void delete(Integer id);
 
+	List<SysOrganization> findAll();
+
+	List<SysOrganization> findAll(Specification<SysOrganization> specification);
+
 	List<SysOrganization> findAll(Pager page);
 
-	List<SysOrganization> findByPageable(
-			Specification<SysOrganization> specification, Pager page);
+	List<SysOrganization> findByPageable(Specification<SysOrganization> specification, Pager page);
 }

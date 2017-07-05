@@ -36,18 +36,26 @@ public class SysMenuServiceImpl implements SysMenuService {
 
 	@Override
 	public List<SysMenu> findAll(Pager pager) {
-		org.springframework.data.domain.Page<SysMenu> springDataPage = oDao
-				.findAll(pager.parsePageable());
+		org.springframework.data.domain.Page<SysMenu> springDataPage = oDao.findAll(pager.parsePageable());
 		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
 	@Override
-	public List<SysMenu> findByPageable(Specification<SysMenu> specification,
-			Pager pager) {
-		org.springframework.data.domain.Page<SysMenu> springDataPage = oDao
-				.findAll(specification, pager.parsePageable());
+	public List<SysMenu> findByPageable(Specification<SysMenu> specification, Pager pager) {
+		org.springframework.data.domain.Page<SysMenu> springDataPage = oDao.findAll(specification,
+		        pager.parsePageable());
 		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
+	}
+
+	@Override
+	public List<SysMenu> findAll() {
+		return oDao.findAll();
+	}
+
+	@Override
+	public List<SysMenu> findAll(Specification<SysMenu> specification) {
+		return oDao.findAll(specification);
 	}
 }

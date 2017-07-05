@@ -14,6 +14,10 @@ public interface SysRoleService {
 
 	void delete(Integer id);
 
+	List<SysRole> findAll();
+
+	List<SysRole> findAll(Specification<SysRole> specification);
+
 	List<SysRole> findAll(Pager page);
 
 	List<SysRole> findByPageable(Specification<SysRole> specification, Pager page);

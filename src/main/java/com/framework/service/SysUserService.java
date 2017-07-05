@@ -15,6 +15,10 @@ public interface SysUserService {
 
 	void delete(Long id);
 
+	List<SysUser> findAll();
+
+	List<SysUser> findAll(Specification<SysUser> specification);
+
 	List<SysUser> findAll(Pager page);
 
 	List<SysUser> findByPageable(Specification<SysUser> specification, Pager page);

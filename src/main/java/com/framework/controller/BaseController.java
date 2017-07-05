@@ -29,8 +29,7 @@ import com.framework.service.RedisService;
  *
  */
 public abstract class BaseController {
-	private final static Logger logger = LoggerFactory
-			.getLogger(BaseController.class);
+	private final static Logger logger = LoggerFactory.getLogger(BaseController.class);
 
 	@Autowired
 	public HttpServletRequest request;
@@ -48,12 +47,10 @@ public abstract class BaseController {
 	public LocaleResolver localeResolver;
 
 	@ModelAttribute
-	public void initPath(HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+	public void initPath(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		String base = request.getContextPath();
 
-		String fullPath = request.getScheme() + "://" + request.getServerName()
-				+ base;
+		String fullPath = request.getScheme() + "://" + request.getServerName() + base;
 		model.addAttribute("base", base);
 		model.addAttribute("fullPath", fullPath);
 
@@ -66,8 +63,7 @@ public abstract class BaseController {
 	protected String getMessage(String code, Object[] args) {
 		// HttpServletRequest request =
 		// ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-		LocaleResolver localeResolver = RequestContextUtils
-				.getLocaleResolver(request);
+		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
 		Locale locale = localeResolver.resolveLocale(request);
 		return resourceBundleMessageSource.getMessage(code, args, locale);
 	}
@@ -100,8 +96,7 @@ public abstract class BaseController {
 				lang = cookie.getValue();
 				request.setAttribute("language", lang);
 			}
-			logger.debug("key:" + cookie.getName() + ", value:"
-					+ cookie.getValue());
+			logger.debug("key:" + cookie.getName() + ", value:" + cookie.getValue());
 		}
 		// if (!redisService.checkToken(uid, token)) {
 		//
@@ -116,8 +111,7 @@ public abstract class BaseController {
 		}
 	}
 
-	public void setLogObject(Object o) {
-		request.setAttribute(AppConstants.LOG_ARGUMENTS, LogMessageObject
-				.newWrite().setObjects(new Object[] { o }));
+	public void setLogObject(Object[] o) {
+		request.setAttribute(AppConstants.LOG_ARGUMENTS, LogMessageObject.newWrite().setObjects(o));
 	}
 }

@@ -10,29 +10,23 @@ public interface AppConstants {
 	/**
 	 * 系统全局线程池 -- 阻塞系数0.9可根据项目实际情况调整，取值在0和1之间，计算密集型任务的阻塞系数为0，IO密集型任务的阻塞系数接近1；
 	 */
-	final ExecutorService EXECUTOR_THREAD_POOL = Executors
-			.newFixedThreadPool((int) (Runtime.getRuntime()
-					.availableProcessors() / (1 - 0.9)));
+	final ExecutorService EXECUTOR_THREAD_POOL = Executors.newFixedThreadPool((int) (Runtime.getRuntime()
+	        .availableProcessors() / (1 - 0.9)));
 
 	/** 服务器地址+端口 ***/
-	public final static String SERVER_HOST = PropertiesUtil.getInstance()
-			.getKeyValue("server.host");
-	public final static String SERVER_PORT = PropertiesUtil.getInstance()
-			.getKeyValue("server.port");
-	public final static String SERVER_PROTOCOL = PropertiesUtil.getInstance()
-			.getKeyValue("server.protocol");
-	public final static String SERVER_PROJECT = PropertiesUtil.getInstance()
-			.getKeyValue("server.project");
+	public final static String SERVER_HOST = PropertiesUtil.getInstance().getKeyValue("server.host");
+	public final static String SERVER_PORT = PropertiesUtil.getInstance().getKeyValue("server.port");
+	public final static String SERVER_PROTOCOL = PropertiesUtil.getInstance().getKeyValue("server.protocol");
+	public final static String SERVER_PROJECT = PropertiesUtil.getInstance().getKeyValue("server.project");
 
 	/** 服务器地址 ***/
-	public final static String SERVER_ROOT_URL = PropertiesUtil.getInstance()
-			.getKeyValue("server.protocol")
-			+ "://"
-			+ PropertiesUtil.getInstance().getKeyValue("server.host")
-			+ ":"
-			+ PropertiesUtil.getInstance().getKeyValue("server.port")
-			+ "/"
-			+ PropertiesUtil.getInstance().getKeyValue("server.project") + "/";
+	public final static String SERVER_ROOT_URL = PropertiesUtil.getInstance().getKeyValue("server.protocol") + "://"
+	        + PropertiesUtil.getInstance().getKeyValue("server.host") + ":"
+	        + PropertiesUtil.getInstance().getKeyValue("server.port") + "/"
+	        + PropertiesUtil.getInstance().getKeyValue("server.project") + "/";
+	
+	public final static int SUCCESS = 0;
+	public final static int FAILED = -1;
 
 	public final static Integer PAGE_SIZE_DEFAULT = 15;
 
@@ -97,6 +91,5 @@ public interface AppConstants {
 	 * 文件类型：图片
 	 */
 	public static final int UPLOAD_FILE_TYPE_IMAGE = 2;
-
 
 }

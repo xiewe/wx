@@ -36,18 +36,26 @@ public class SysOrganizationServiceImpl implements SysOrganizationService {
 
 	@Override
 	public List<SysOrganization> findAll(Pager pager) {
-		org.springframework.data.domain.Page<SysOrganization> springDataPage = oDao
-				.findAll(pager.parsePageable());
+		org.springframework.data.domain.Page<SysOrganization> springDataPage = oDao.findAll(pager.parsePageable());
 		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
 	@Override
-	public List<SysOrganization> findByPageable(
-			Specification<SysOrganization> specification, Pager pager) {
-		org.springframework.data.domain.Page<SysOrganization> springDataPage = oDao
-				.findAll(specification, pager.parsePageable());
+	public List<SysOrganization> findByPageable(Specification<SysOrganization> specification, Pager pager) {
+		org.springframework.data.domain.Page<SysOrganization> springDataPage = oDao.findAll(specification,
+		        pager.parsePageable());
 		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
+	}
+
+	@Override
+	public List<SysOrganization> findAll() {
+		return oDao.findAll();
+	}
+
+	@Override
+	public List<SysOrganization> findAll(Specification<SysOrganization> specification) {
+		return oDao.findAll(specification);
 	}
 }

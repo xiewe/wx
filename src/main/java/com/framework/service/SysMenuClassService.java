@@ -14,8 +14,11 @@ public interface SysMenuClassService {
 
 	void delete(Integer id);
 
+	List<SysMenuClass> findAll();
+
+	List<SysMenuClass> findAll(Specification<SysMenuClass> specification);
+
 	List<SysMenuClass> findAll(Pager page);
 
-	List<SysMenuClass> findByPageable(
-			Specification<SysMenuClass> specification, Pager page);
+	List<SysMenuClass> findByPageable(Specification<SysMenuClass> specification, Pager page);
 }

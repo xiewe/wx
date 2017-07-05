@@ -41,10 +41,8 @@ public class SysUserServiceImpl implements SysUserService {
 			}
 
 			// 设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
-			if (StringUtils.isNotBlank(o.getPlainPassword())
-					&& shiroRealm != null) {
-				HashPassword hashPassword = ShiroRealm.encryptPassword(o
-						.getPlainPassword());
+			if (StringUtils.isNotBlank(o.getPlainPassword()) && shiroRealm != null) {
+				HashPassword hashPassword = ShiroRealm.encryptPassword(o.getPlainPassword());
 				o.setSalt(hashPassword.salt);
 				o.setPassword(hashPassword.password);
 			}
@@ -65,17 +63,15 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Override
 	public List<SysUser> findAll(Pager pager) {
-		org.springframework.data.domain.Page<SysUser> springDataPage = oDao
-				.findAll(pager.parsePageable());
+		org.springframework.data.domain.Page<SysUser> springDataPage = oDao.findAll(pager.parsePageable());
 		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
 	@Override
-	public List<SysUser> findByPageable(Specification<SysUser> specification,
-			Pager pager) {
-		org.springframework.data.domain.Page<SysUser> springDataPage = oDao
-				.findAll(specification, pager.parsePageable());
+	public List<SysUser> findByPageable(Specification<SysUser> specification, Pager pager) {
+		org.springframework.data.domain.Page<SysUser> springDataPage = oDao.findAll(specification,
+		        pager.parsePageable());
 		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
@@ -108,8 +104,7 @@ public class SysUserServiceImpl implements SysUserService {
 	@Override
 	public void updatePwd(SysUser user, String newPwd) throws ServiceException {
 		// 设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
-		boolean isMatch = ShiroRealm.validatePassword(user.getPlainPassword(),
-				user.getPassword(), user.getSalt());
+		boolean isMatch = ShiroRealm.validatePassword(user.getPlainPassword(), user.getPassword(), user.getSalt());
 		if (isMatch) {
 			HashPassword hashPassword = ShiroRealm.encryptPassword(newPwd);
 			user.setSalt(hashPassword.salt);
@@ -135,5 +130,15 @@ public class SysUserServiceImpl implements SysUserService {
 		user.setPassword(hashPassword.password);
 
 		oDao.save(user);
+	}
+
+	@Override
+	public List<SysUser> findAll() {
+		return oDao.findAll();
+	}
+
+	@Override
+	public List<SysUser> findAll(Specification<SysUser> specification) {
+		return oDao.findAll(specification);
 	}
 }

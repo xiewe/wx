@@ -14,8 +14,11 @@ public interface SysRolePermissionService {
 
 	void delete(Integer id);
 
+	List<SysRolePermission> findAll();
+
+	List<SysRolePermission> findAll(Specification<SysRolePermission> specification);
+
 	List<SysRolePermission> findAll(Pager page);
 
-	List<SysRolePermission> findByPageable(
-			Specification<SysRolePermission> specification, Pager page);
+	List<SysRolePermission> findByPageable(Specification<SysRolePermission> specification, Pager page);
 }

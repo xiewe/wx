@@ -42,18 +42,26 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	@Override
 	public List<SysRole> findAll(Pager pager) {
-		org.springframework.data.domain.Page<SysRole> springDataPage = oDao
-				.findAll(pager.parsePageable());
+		org.springframework.data.domain.Page<SysRole> springDataPage = oDao.findAll(pager.parsePageable());
 		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
 	}
 
 	@Override
-	public List<SysRole> findByPageable(Specification<SysRole> specification,
-			Pager pager) {
-		org.springframework.data.domain.Page<SysRole> springDataPage = oDao
-				.findAll(specification, pager.parsePageable());
+	public List<SysRole> findByPageable(Specification<SysRole> specification, Pager pager) {
+		org.springframework.data.domain.Page<SysRole> springDataPage = oDao.findAll(specification,
+		        pager.parsePageable());
 		pager.setTotalCount(springDataPage.getTotalElements());
 		return springDataPage.getContent();
+	}
+
+	@Override
+	public List<SysRole> findAll() {
+		return oDao.findAll();
+	}
+
+	@Override
+	public List<SysRole> findAll(Specification<SysRole> specification) {
+		return oDao.findAll(specification);
 	}
 }
