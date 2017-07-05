@@ -42,7 +42,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span>欢迎您，admin</span></a></li>
                     <li><a href="#"><span>修改密码</span></a></li>
-                    <li><a href="#" style="padding-right: 50px"><span>退出</span></a></li>
+                    <li><a href="#"><span style="padding-right: 50px; border-right: 0px">退出</span></a></li>
                 </ul>
             </div>
         </div>
@@ -97,120 +97,9 @@
             <div class="col-sm-9 col-md-10 main">
                 <!-- 可变内容开始 -->
 
-                <div class="divbc">
-                    <ol class="breadcrumb">
-                        <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                        <li class="active">2013</li>
-                        <li class="active">十一月</li>
-                    </ol>
-                </div>
-
-                <!-- 隐藏的form -->
-                <div class="row main-content">
-                    <form role="form" class="form-horizontal">
-                        <div class="form-group">
-                            <label for="opId" class="control-label col-xs-3 col-sm-1">ID:</label>
-                            <div class="col-xs-9 col-sm-3">
-                                <input type="text" class="form-control" id="opId" placeholder="请输入OP ID"／>
-                            </div>
-                            <label for="opName" class="control-label col-xs-3 col-sm-1">名称:</label>
-                            <div class="col-xs-9 col-sm-3">
-                                <input type="text" class="form-control" id="opName" placeholder="请输入名称"／>
-                            </div>
-                            <div class="col-xs-6 col-sm-2">
-                                <button type="submit" class="btn btn-default doSearch">查询</button>
-                            </div>
-                        </div>
-                    </form>
-                    <hr class="clearfix">
-
-                    <p>
-                        <button type="button" class="btn btn-default doAdd">添加</button>
-                    </p>
-
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover table-condensed" id="tabData">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>运营商主密钥模板名称</th>
-                                    <th>运营商可变算法配置域</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1,001</td>
-                                    <td>Lorem</td>
-                                    <td>ipsum</td>
-                                    <td>dolor</td>
-                                </tr>
-                                <tr>
-                                    <td>1,002</td>
-                                    <td>amet</td>
-                                    <td>consectetur</td>
-                                    <td>adipiscing</td>
-                                </tr>
-                                <tr>
-                                    <td>1,003</td>
-                                    <td>Integer</td>
-                                    <td>nec</td>
-                                    <td>odio</td>
-                                </tr>
-                                <tr>
-                                    <td>1,003</td>
-                                    <td>libero</td>
-                                    <td>Sed</td>
-                                    <td>cursus</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- 分页开始 -->
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-3">
-                            <p>
-                                每页显示 <select class="pager-select" style="width: 50px; border: 1px solid #ccc; border-radius: 5px;">
-                                    <option>10</option>
-                                    <option>15</option>
-                                    <option>20</option>
-                                    <option>30</option>
-                                    <option>50</option>
-                                </select>，共<span id="totalCount">123</span>条数据
-                            </p>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-8 text-right" style="padding-right: 0px;">
-                            <ul class="pagination pagination-sm" style="margin: 0px;">
-                                <li><a href="#">首页</a></li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li class="active"><a href="#">5</a></li>
-                                <li><a href="#">...</a></li>
-                                <li><a href="#">100</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li><a href="#">尾页</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="input-group input-group-sm col-sm-1 text-left">
-                            <input type="text" class="form-control pager-input"> <span class="input-group-btn">
-                                <button class="btn btn-default pager-go" type="button">Go</button>
-                            </span>
-                        </div>
-                    </div>
-                    <!-- 分页结束 -->
-
-
-                </div>
-
+                <div></div>
 
                 <!-- 可变内容结束 -->
-
             </div>
         </div>
     </div>
@@ -220,6 +109,25 @@
             <p class="text-center">Copyright © 2013-2017 XINWEI All Rights Reserved.</p>
         </div>
     </footer>
+    <!-- Modal begin -->
+    <div class="modal fade" id="indexModal" tabindex="-1" role="dialog" aria-labelledby="indexModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                    <h4 class="modal-title" id="indexModalLabel">模态框（Modal）标题</h4>
+                </div>
+                <div class="modal-body" id="indexModalContent">在这里添加一些文本</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" style="display: none;">确定</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- Modal end -->
     <script src="../../styles/jquery-3.2.1.min.js"></script>
     <script src="../../styles/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../styles/utils/common.js"></script>
@@ -228,6 +136,49 @@
     <script src="../../styles/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
 
     <script type="text/javascript">
+					$(function() {
+						getTreeMenu();
+					})
+
+					function getTreeMenu() {
+						$.ajax({
+							type : "get",
+							url : "${contextPath}/treemenu",
+							data : {},
+							dataType : 'json',
+							success : function(result) {
+								var status = result.status;
+								if (status == 1) {
+									galert(result.errCode + ":"
+											+ result.errMsg);
+								} else if (status == 0) {
+									var data = result.data;
+									printHotLoc(data);
+								}
+							},
+							error : function(result) {
+								showAlert("indexModal", "错误", "获取菜单失败");
+							}
+						});
+					}
+
+                    $('#indexModal .modal-footer .btn-primary').on('click',function(e) {
+                        e.preventDefault();
+                        var url = $(this).data('url');
+                        $.ajax({
+                            type : "get",
+                            url : url,
+                            data : {},
+                            dataType : 'json',
+                            success : function(result) {
+ 
+                            },
+                            error : function(result) {
+                                
+                            }
+                        });
+                    })
+
 					$('.list-group').on(
 							'click',
 							'a,li',

@@ -106,3 +106,17 @@ function keysrt(key, desc) {
 		return desc ? ~~(a[key] < b[key]) : ~~(a[key] > b[key]);
 	}
 }
+
+function showAlert(modal, title, msg) {
+    $("#"+modal+" .modal-header h4").text(title);
+    $("#"+modal+" .modal-body").html(msg);
+    $("#"+modal).modal('show');
+}
+
+function showConfirm(modal, title, msg, url) {
+    $("#"+modal+" .modal-header h4").text(title);
+    $("#"+modal+" .modal-body").html(msg);
+    $("#"+modal+" .modal-footer .btn-primary").css('display', 'block');
+    $("#"+modal+" .modal-footer .btn-primary").data('url', url);
+    $("#"+modal).modal('show');
+}
