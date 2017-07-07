@@ -43,26 +43,39 @@ public class ShiroRealm extends AuthorizingRealm {
 	private static final String ALGORITHM = "SHA-1";
 	protected boolean useCaptcha = false;// 是否使用验证码
 
-	@Autowired
 	protected SysUserService sysUserService;
 
 	@Autowired
 	private HttpServletRequest request;
+
+	public boolean isUseCaptcha() {
+		return useCaptcha;
+	}
+
+	public void setUseCaptcha(boolean useCaptcha) {
+		this.useCaptcha = useCaptcha;
+	}
+
+	public SysUserService getSysUserService() {
+		return sysUserService;
+	}
+
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+	}
 
 	/**
 	 * 给ShiroRealm提供编码信息，用于密码密码比对
 	 */
 	public ShiroRealm() {
 		super();
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(
-				ALGORITHM);
+		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(ALGORITHM);
 		matcher.setHashIterations(INTERATIONS);
 		setCredentialsMatcher(matcher);
 	}
 
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(
-			PrincipalCollection principals) {
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		// Collection<?> collection = principals.fromRealm(getName());
 		// if (collection == null || collection.isEmpty()) {
 		// return null;
@@ -93,17 +106,15 @@ public class ShiroRealm extends AuthorizingRealm {
 	}
 
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(
-			AuthenticationToken arg0) throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0) throws AuthenticationException {
 
 		if (useCaptcha) {
 			CaptchaUsernamePasswordToken token = (CaptchaUsernamePasswordToken) arg0;
 			String parm = token.getCaptcha();
 
 			if (StringUtils.isEmpty(parm)
-					|| !PatchcaServlet.validate(SecurityUtils.getSubject()
-							.getSession().getId().toString(),
-							parm.toLowerCase())) {
+			        || !PatchcaServlet.validate(SecurityUtils.getSubject().getSession().getId().toString(),
+			                parm.toLowerCase())) {
 				throw new IncorrectCaptchaException("验证码错误！");
 			}
 		}
@@ -122,10 +133,8 @@ public class ShiroRealm extends AuthorizingRealm {
 			byte[] salt = EncodesUtil.decodeHex(sysUser.getSalt());
 
 			if (null != SecurityUtils.getSubject().getPreviousPrincipals())
-				doGetAuthorizationInfo(SecurityUtils.getSubject()
-						.getPreviousPrincipals());
-			return new SimpleAuthenticationInfo(sysUser, sysUser.getPassword(),
-					ByteSource.Util.bytes(salt), getName());
+				doGetAuthorizationInfo(SecurityUtils.getSubject().getPreviousPrincipals());
+			return new SimpleAuthenticationInfo(sysUser, sysUser.getPassword(), ByteSource.Util.bytes(salt), getName());
 		} else {
 			return null;
 		}
@@ -136,8 +145,7 @@ public class ShiroRealm extends AuthorizingRealm {
 	 * SimpleAuthenticationInfo传入类型
 	 */
 	public void clearCachedAuthorizationInfo(Object principal) {
-		SimplePrincipalCollection principals = new SimplePrincipalCollection(
-				principal, getName());
+		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
 		clearCachedAuthorizationInfo(principals);
 	}
 
@@ -146,8 +154,7 @@ public class ShiroRealm extends AuthorizingRealm {
 	 * SimpleAuthenticationInfo传入类型
 	 */
 	public void clearCachedAuthenticationInfo(Object principal) {
-		SimplePrincipalCollection principals = new SimplePrincipalCollection(
-				principal, getName());
+		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
 		clearCachedAuthenticationInfo(principals);
 	}
 
@@ -187,8 +194,7 @@ public class ShiroRealm extends AuthorizingRealm {
 		byte[] salt = Digests.generateSalt(SALT_SIZE);
 		result.salt = EncodesUtil.encodeHex(salt);
 
-		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), salt,
-				INTERATIONS);
+		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), salt, INTERATIONS);
 		result.password = EncodesUtil.encodeHex(hashPassword);
 		return result;
 	}
@@ -205,21 +211,10 @@ public class ShiroRealm extends AuthorizingRealm {
 	 *            Salt值
 	 * @return
 	 */
-	public static boolean validatePassword(String plainPassword,
-			String password, String salt) {
-		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(),
-				EncodesUtil.decodeHex(salt), INTERATIONS);
+	public static boolean validatePassword(String plainPassword, String password, String salt) {
+		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), EncodesUtil.decodeHex(salt), INTERATIONS);
 		String oldPassword = EncodesUtil.encodeHex(hashPassword);
 		return password.equals(oldPassword);
-	}
-
-	/**
-	 * 设置 useCaptcha 的值
-	 * 
-	 * @param useCaptcha
-	 */
-	public void setUseCaptcha(boolean useCaptcha) {
-		this.useCaptcha = useCaptcha;
 	}
 
 }
