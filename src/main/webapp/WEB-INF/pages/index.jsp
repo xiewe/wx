@@ -8,22 +8,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
+<link rel="icon" href="${contextPath}/favicon.ico">
 <title>UC</title>
 
 <!-- Bootstrap core CSS -->
-<link href="../../styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${contextPath}/styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<link href="../../styles/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<link href="${contextPath}/styles/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="../../styles/custom/css/dashboard.css" rel="stylesheet">
+<link href="${contextPath}/styles/custom/css/dashboard.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-<script src="../../styles/bootstrap/js/html5shiv.min.js"></script>
-<script src="../../styles/bootstrap/js/respond.min.js"></script>
+<script src="${contextPath}/styles/bootstrap/js/html5shiv.min.js"></script>
+<script src="${contextPath}/styles/bootstrap/js/respond.min.js"></script>
 <![endif]-->
 <style type="text/css">
 </style>
@@ -115,11 +115,11 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- Modal end -->
-    <script src="../../styles/jquery-3.2.1.min.js"></script>
-    <script src="../../styles/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../styles/utils/common.js"></script>
+    <script src="${contextPath}/styles/jquery-3.2.1.min.js"></script>
+    <script src="${contextPath}/styles/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/styles/utils/common.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../styles/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="${contextPath}/styles/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
     <script type="text/javascript">
     </script>
 

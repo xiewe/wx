@@ -115,7 +115,7 @@ public class BaseFormAuthenticationFilter extends FormAuthenticationFilter {
 					.getContextPath() + this.getSuccessUrl());
 		} else {
 			httpServletResponse.sendRedirect(httpServletRequest
-					.getContextPath() + "/login/timeout/success");
+					.getContextPath() + this.getSuccessUrl());
 		}
 
 		return false;

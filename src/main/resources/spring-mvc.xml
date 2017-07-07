@@ -80,6 +80,7 @@
         <property name="statusCodes">
             <props>
                 <prop key="500">500</prop>
+                <prop key="405">405</prop>
                 <prop key="404">404</prop>
                 <prop key="403">403</prop>
             </props>

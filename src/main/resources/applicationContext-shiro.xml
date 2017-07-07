@@ -30,16 +30,12 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
-                /t/** = anon
-                /m/** = anon
                 /w/** = anon
                 /Captcha.jpg = anon
-                /biz/** = anon
-                /bizs/** = anon
-                /wap/** = anon
+                /favicon.ico = anon
+                /ie10-viewport-bug-workaround.js = anon
                 /login/changeLocale/* = anon
                 /styles/** = anon
-                /websocket/** = anon
                 /login/timeout = anon
                 /login = authc
                 /logout = logout
