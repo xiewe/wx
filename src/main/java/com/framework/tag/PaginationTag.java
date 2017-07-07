@@ -24,29 +24,27 @@ public class PaginationTag extends SimpleTagSupport {
 		builder.append("<div class=\"row\">\n");
 		builder.append("    <div class=\"col-xs-12 col-sm-3\">\n");
 		builder.append("        <p>每页显示\n");
-		builder.append("        <select class=\"pager-select\" style=\"width: 50px; border: 1px solid #ccc; border-radius: 5px;\">\n");
+		builder.append("        <select class=\"pager-select\" style=\"width: 50px; border: 1px solid #ccc; border-radius: 5px;\" onchange=\"pagerChange({pageSize:this.value})\">\n");
 
 		for (int i = begin; i <= end; i += step) {
 			if (i == pager.getPageSize()) {
-				builder.append("            <option selected>").append(i)
-						.append("</option>\n");
+				builder.append("            <option selected>").append(i).append("</option>\n");
 			} else {
-				builder.append("            <option>").append(i)
-						.append("</option>\n");
+				builder.append("            <option>").append(i).append("</option>\n");
 			}
 		}
 
-		builder.append("        </select>，共<span id=\"totalCount\">")
-				.append(pager.getTotalCount()).append("</span>条数据</p>\n");
+		builder.append("        </select>，共<span id=\"totalCount\">").append(pager.getTotalCount())
+		        .append("</span>条数据</p>\n");
 		builder.append("    </div>\n");
 		builder.append("    <div class=\"col-xs-12 col-sm-8 text-right\" style=\"padding-right: 0px;\">\n");
-		builder.append("      <ul class=\"pagination pagination-sm\" style=\"margin:0px;\">\n");
+		builder.append("      <ul class=\"pagination pagination-sm pager-list\" style=\"margin:0px;\">\n");
 
 		if (pager.getTotalPage() <= 1) {
-			builder.append("        <li><a href=\"#\">1</a></li>\n");
+			builder.append("        <li class=\"active\"><a href=\"#\" onclick=\"goToN(event,1)\">1</a></li>\n");
 		} else {
-			builder.append("        <li><a href=\"#\">首页</a></li>\n");
-			builder.append("        <li><a href=\"#\">上一页</a></li>\n");
+			builder.append("        <li><a href=\"#\" onclick=\"goToN(event,1)\">首页</a></li>\n");
+			builder.append("        <li><a href=\"#\" onclick=\"goToPre(event)\">上一页</a></li>\n");
 
 			int mid = pagerNumShown / 2;
 			int diff = pagerNumShown - 1;
@@ -73,25 +71,22 @@ public class PaginationTag extends SimpleTagSupport {
 
 			for (int i = startNum; i <= endNum; i++) {
 				if (i == pager.getCurrPage()) {
-					builder.append(
-							"        <li class=\"active\"><a href=\"#\">")
-							.append(i).append("</a></li>\n");
+					builder.append("        <li class=\"active\"><a href=\"#\" onclick=\"goToN(event,").append(i).append(")\">").append(i).append("</a></li>\n");
 				} else {
-					builder.append("        <li><a href=\"#\">").append(i)
-							.append("</a></li>\n");
+					builder.append("        <li><a href=\"#\" onclick=\"goToN(event,").append(i).append(")\">").append(i).append("</a></li>\n");
 				}
 			}
 
-			builder.append("        <li><a href=\"#\">下一页</a></li>\n");
-			builder.append("        <li><a href=\"#\">尾页</a></li>\n");
+			builder.append("        <li><a href=\"#\" onclick=\"goToNext(event)\">下一页</a></li>\n");
+			builder.append("        <li><a href=\"#\" onclick=\"goToLast(event)\">尾页</a></li>\n");
 		}
 
 		builder.append("      </ul>\n");
 		builder.append("    </div>\n");
 		builder.append("    <div class=\"input-group input-group-sm col-sm-1 text-left\">\n");
-		builder.append("        <input type=\"text\" class=\"form-control pager-input\">\n");
+		builder.append("        <input type=\"number\" class=\"form-control pager-input\">\n");
 		builder.append("        <span class=\"input-group-btn\">\n");
-		builder.append("            <button class=\"btn btn-default pager-go\" type=\"button\">Go</button>\n");
+		builder.append("            <button class=\"btn btn-default pager-go\" type=\"button\" onclick=\"goToD(event)\">Go</button>\n");
 		builder.append("        </span>\n");
 		builder.append("    </div>\n");
 		builder.append("</div>\n");

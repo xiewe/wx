@@ -107,16 +107,198 @@ function keysrt(key, desc) {
 	}
 }
 
-function showAlert(modal, title, msg) {
-    $("#"+modal+" .modal-header h4").text(title);
-    $("#"+modal+" .modal-body").html(msg);
-    $("#"+modal).modal('show');
+// 通用模态窗口
+function showAlert(title, msg) {
+	$("#indexModal .modal-header h4").text(title);
+	$("#indexModal .modal-body").html(msg);
+	$("#indexModal .modal-footer .btn-primary").css('display', 'none');
+	$("#indexModal").modal('show');
 }
 
-function showConfirm(modal, title, msg, url) {
-    $("#"+modal+" .modal-header h4").text(title);
-    $("#"+modal+" .modal-body").html(msg);
-    $("#"+modal+" .modal-footer .btn-primary").css('display', 'block');
-    $("#"+modal+" .modal-footer .btn-primary").data('url', url);
-    $("#"+modal).modal('show');
+function showConfirm(title, msg, url) {
+	$("#indexModal .modal-header h4").text(title);
+	$("#indexModal .modal-body").html(msg);
+	$("#indexModal .modal-footer .btn-primary").data('url', url);
+	$("#indexModal").modal('show');
 }
+
+$("#indexModal").on("hidden.bs.modal", function() {
+	$(this).removeData("bs.modal");
+	// $(this).find(".modal-body").children().remove();
+})
+// confirm action
+$('#indexModal .modal-footer .btn-primary').on('click',function(e) {
+    e.preventDefault();
+    var url = $(this).data('url');
+    $.ajax({
+        type : "get",
+        url : url,
+        data : {},
+        dataType : 'json'
+    }).done(function(result) {
+		console.log("done");
+	}).fail(function(result) {
+		console.log("error");
+	}).always(function() {
+		console.log("complete");
+	});
+})
+
+// 导航树的选中，切换图标等效果
+$('.list-group').on('click', 'a,li', function(e) {
+	stopBubble(e);
+	stopDefault(e);
+
+	$('.panel-group .list-group a,li').removeClass('active');
+	$(this).addClass('active');
+	
+	var url = $(this).data('url');
+
+    $.ajax({
+        type : "get",
+        url : url,
+        data : {},
+        dataType : 'json'
+    }).done(function(result) {
+        console.log("done");
+        $('.main').html(result);
+    }).fail(function(result) {
+        console.log("error");
+        showAlert('错误', '查询错误');
+    }).always(function() {
+        console.log("complete");
+    });
+})
+
+$('.panel-title').on('click', '[data-toggle="collapse"]', function(e) {
+	var minus = 0;
+	if ($(this).parent().find('span').hasClass('glyphicon-minus')) {
+		minus = 1;
+	}
+
+	$('.panel-group .panel-heading span').removeClass('glyphicon-minus');
+	$('.panel-group .panel-heading span').addClass('glyphicon-plus');
+
+	if (minus == 0) {
+		$(this).parent().find('span').addClass('glyphicon-minus');
+	}
+
+})
+
+// 表格中行选中效果
+$('table tbody tr').on('click', function(e) {
+	// e.preventDefault();
+	if ($(this).hasClass('success')) {
+		$(this).removeClass('success');
+	} else {
+		$(this).addClass('success');
+	}
+})
+
+/**
+ * 清空列表搜索栏所有内容
+ * 
+ * @param divid
+ */
+function clearAllSearchContent(divid) {
+
+	var txts = document.getElementById(divid).getElementsByTagName("input");
+	for (var i = 0; i < txts.length; i++) {
+		if (txts[i].type == "text") {
+			txts[i].value = ""; // input 清空
+		}
+	}
+	var selects = document.getElementById(divid).getElementsByTagName("select");
+	for (var i = 0; i < selects.length; i++) {
+		selects[i].options[0].selected = true; // select选择第一项
+	}
+}
+
+// 分页查询
+function doSearch(form) {
+	var $form = $(form);
+
+	var url = $form.attr('action');
+	$.ajax({
+		type : "get",
+		url : url,
+		data : $form.serializeArray(),
+		dataType : 'json',
+		beforeSend : function() {
+			console.log('===beforeSend');
+		}
+	}).done(function(result) {
+		console.log("done");
+		$('.main').html(result);
+	}).fail(function(result) {
+		console.log("error");
+		showAlert('错误', '查询错误');
+	}).always(function() {
+		console.log("complete");
+	});
+}
+
+function _getSearchForm(args) {
+	var form = $('#searchForm').get(0);
+
+	if (form) {
+		if (args["currPage"]) form["currPage"].value = args["currPage"];
+		if (args["pageSize"]) form["pageSize"].value = args["pageSize"];
+		if (args["orderField"]) form["orderField"].value = args["orderField"];
+		if (args["orderDirection"]) form["orderDirection"].value = args["orderDirection"];
+	}
+
+	return form;
+}
+function pagerChange(args) {
+	var form = _getSearchForm(args);
+	doSearch(form);
+}
+function goToN(e,n) {
+	e.preventDefault();
+	pagerChange({"currPage":n}});
+}
+function goToPre(e) {
+	e.preventDefault();
+	var curr = $('.pager-list li.active a').text();
+
+	if (curr <= 1) {
+		pagerChange({"currPage":1}});
+	} else {
+		pagerChange({"currPage":curr - 1}});
+	}
+}
+function goToNext(e) {
+	e.preventDefault();
+	var curr = $('.pager-list li.active a').text();
+	var form = $('#searchForm').get(0);
+	var totalPage = 1;
+	if (form) totalPage = form["totalPage"].value;
+	if (curr >= totalPage) {
+		pagerChange({"currPage":curr}});
+	} else {
+		pagerChange({"currPage":curr + 1}});
+	}
+}
+function goToLast(e) {
+	e.preventDefault();
+	var form = $('#searchForm').get(0);
+	var totalPage = 1;
+	if (form) totalPage = form["totalPage"].value;
+	pagerChange({"currPage":totalPage}});
+}
+function goToD(e) {
+	e.preventDefault();
+	var n = $('.pager-input').val();
+	if (n == undefined || n == 0) {
+		return;
+	}
+	var form = $('#searchForm').get(0);
+	var totalPage = 1;
+	if (form) totalPage = form["totalPage"].value;
+	if (n >= totalPage) {
+		n = totalPage;
+	}
+	pagerChange({"currPage":n}});
+}
+

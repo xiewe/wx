@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.framework.dao.SysRolePermissionDAO;
+import com.framework.entity.SysRole;
 import com.framework.entity.SysRolePermission;
 import com.framework.service.SysRolePermissionService;
 import com.framework.utils.pager.Pager;
@@ -57,5 +58,10 @@ public class SysRolePermissionServiceImpl implements SysRolePermissionService {
 	@Override
 	public List<SysRolePermission> findAll(Specification<SysRolePermission> specification) {
 		return oDao.findAll(specification);
+	}
+
+	@Override
+	public List<SysRolePermission> findBySysRoleOrderBySysMenuClass(SysRole sysRole) {
+		return oDao.findBySysRoleOrderBySysMenuClass(sysRole);
 	}
 }

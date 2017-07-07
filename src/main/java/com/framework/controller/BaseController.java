@@ -20,14 +20,6 @@ import com.framework.AppConstants;
 import com.framework.log4jdbc.LogMessageObject;
 import com.framework.service.RedisService;
 
-/**
- * Controller抽象类，继承此类都要遵守约定以下方法命名规则:
- * 分页查询以list开头、新增以create开头、修改以update、删除以delete开头、单个记录查询以view开头
- * 按此约定系统会在每个方法调用时注入数据级权限控制，否则会导致权限访问失败问题。
- *
- * @author dengyong
- *
- */
 public abstract class BaseController {
 	private final static Logger logger = LoggerFactory.getLogger(BaseController.class);
 

@@ -13,7 +13,7 @@
 		<tag-class>com.framework.tag.PaginationFormTag</tag-class>
 		<body-content>scriptless</body-content>
 		<attribute>
-			<name>page</name>
+			<name>pager</name>
 			<required>true</required>
 			<fragment>true</fragment>
 		</attribute>
@@ -28,13 +28,25 @@
 		</attribute>
 	</tag>
 
+    <tag>
+        <description>form中隐藏的分页信息</description>
+        <name>paginationHidden</name>
+        <tag-class>com.framework.tag.PaginationHidden</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>pager</name>
+            <required>true</required>
+            <fragment>true</fragment>
+        </attribute>
+    </tag>
+    
 	<tag>
 		<description>分页标签</description>
 		<name>pagination</name>
 		<tag-class>com.framework.tag.PaginationTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>page</name>
+			<name>pager</name>
 			<required>true</required>
 			<fragment>true</fragment>
 		</attribute>

@@ -103,7 +103,10 @@
                 <!-- 隐藏的form -->
                 <div class="row main-content">
                     <form role="form" class="form-horizontal">
-                        <div class="form-group">
+                        <div class="form-group" id="searchDiv">
+                            <input type="hidden" name="currPage" value="1"/>
+                            <input type="hidden" name="currPage1" value="11"/>
+                            <input type="hidden" name="currPage2" value="12"/>
                             <label for="opId" class="control-label col-xs-3 col-sm-1">ID:</label>
                             <div class="col-xs-9 col-sm-3">
                                 <input type="text" class="form-control" id="opId" placeholder="请输入OP ID" ／>
@@ -114,12 +117,16 @@
                             </div>
                             <div class="col-xs-6 col-sm-2">
                                 <button type="submit" class="btn btn-default doSearch">查询</button>
+                                <button type="submit" class="btn btn-default" onclick="javascript:clearAllSearchContent('searchDiv');return false;">清除</button>
                             </div>
                         </div>
                     </form>
                     <hr class="clearfix">
                     <p>
-                        <button type="button" class="btn btn-default doAdd">添加</button>
+                        <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doCreate">添加</a>
+                        <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doDelete">删除</a>
+                        <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doUpdate">修改</a>
+                        <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doView">查看</a>
                     </p>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover table-condensed" id="tabData">
@@ -145,7 +152,7 @@
                                     <td>adipiscing</td>
                                 </tr>
                                 <tr>
-                                    <td>1,003</td>
+                                    <td><a href="www.baidu.com" target="_blank">1,003</a></td>
                                     <td>Integer</td>
                                     <td>nec</td>
                                     <td>odio</td>
@@ -205,6 +212,25 @@
             <p class="text-center">Copyright © 2013-2017 XINWEI All Rights Reserved.</p>
         </div>
     </footer>
+    <!-- Modal begin -->
+    <div class="modal fade" id="indexModal" tabindex="-1" role="dialog" aria-labelledby="indexModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+                    <h4 class="modal-title" id="indexModalLabel">模态框（Modal）标题</h4>
+                </div>
+                <div class="modal-body" id="indexModalContent">在这里添加一些文本</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" style="display: none;">确定</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- Modal end -->
     <script src="../../styles/jquery-3.2.1.min.js"></script>
     <script src="../../styles/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../styles/utils/common.js"></script>
@@ -212,41 +238,8 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../styles/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
     <script type="text/javascript">
-    $('.list-group').on(
-        'click',
-        'a,li',
-        function(e) {
-            stopBubble(e);
-            stopDefault(e);
 
-            $('.panel-group .list-group a,li').removeClass(
-                'active');
-            $(this).addClass('active');
 
-            //alert($(this).text());
-        });
-
-    $('.panel-title').on(
-        'click',
-        '[data-toggle="collapse"]',
-        function(e) {
-            var minus = 0;
-            if ($(this).parent().find('span').hasClass(
-                    'glyphicon-minus')) {
-                minus = 1;
-            }
-
-            $('.panel-group .panel-heading span')
-                .removeClass('glyphicon-minus');
-            $('.panel-group .panel-heading span').addClass(
-                'glyphicon-plus');
-
-            if (minus == 0) {
-                $(this).parent().find('span').addClass(
-                    'glyphicon-minus');
-            }
-
-        })
     </script>
 </body>
 

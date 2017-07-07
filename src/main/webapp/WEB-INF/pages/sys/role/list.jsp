@@ -1,7 +1,7 @@
 <jsp:directive.page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true"/>
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp"/> 
 
-<own:paginationForm action="${contextPath }/security/role/list" page="${page}">
+<own:paginationForm action="${contextPath }/security/role/list" pager="${pager}">
 	<input type="hidden" name="search_LIKE_name" value="${param.search_LIKE_name}"/>
 </own:paginationForm>
 
@@ -65,5 +65,5 @@
 		</tbody>
 	</table>
 	<!-- 分页 -->
-	<own:pagination page="${page}"/>
+	<own:pagination pager="${pager}"/>
 </div>

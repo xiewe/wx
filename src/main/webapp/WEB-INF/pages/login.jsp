@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Signin</title>
+    <title>登陆</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -33,12 +33,17 @@
 
     <div class="container">
 
-      <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <form class="form-signin" method="post" action="${contextPath}/login" id="formID">
+        <h2 class="form-signin-heading">请输入</h2>
+        <label for="inputUid" class="sr-only">用户名</label>
+        <input type="text" id="inputUid" class="form-control" placeholder="用户名" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <label for="captcha" class="sr-only">验证码</label>
+        
+        <input type="text" id="captcha" name="captcha" class="form-control" style="width:120px" placeholder="验证码" required>
+        <span><img src="${contextPath}/Captcha.jpg" alt="点击刷新验证码" width="120" height="40" id="captcha_img" style="cursor:pointer"/></span>
+        
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
@@ -49,8 +54,16 @@
 
     </div> <!-- /container -->
 
-
+    <script src="../../styles/jquery-3.2.1.min.js"></script>
+    <script src="../../styles/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../styles/utils/common.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script>
+        $("#captcha_img").click(function(){
+            $(this).attr("src", "${contextPath}/Captcha.jpg?time=" + new Date());
+            return false;
+        });
+    </script>
   </body>
 </html>

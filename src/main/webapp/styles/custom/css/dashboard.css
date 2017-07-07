@@ -37,6 +37,9 @@ body {
 a:link, a:visited {
   text-decoration: none;
 }
+.main-content p a {
+  padding: 2px 6px;
+}
 table thead tr {
   background-color: #ccc;
 }

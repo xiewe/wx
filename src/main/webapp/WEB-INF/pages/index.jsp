@@ -40,7 +40,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span>欢迎您，admin</span></a></li>
+                    <li><a href="#"><span>欢迎您，{login_user.username}</span></a></li>
                     <li><a href="#"><span>修改密码</span></a></li>
                     <li><a href="#"><span style="padding-right: 50px; border-right: 0px">退出</span></a></li>
                 </ul>
@@ -51,46 +51,33 @@
     <div class="container-fruid">
         <div class="row index-row">
             <div class="col-md-2 col-sm-3 sideMenu">
-                <a href="#" class="btn btn-defaut" role="button"> <!-- <span class="glyphicon glyphicon-menu-left"></span> --><< TCN2000网管
-                </a>
+                <a href="#" class="btn btn-defaut" role="button"> <!-- <span class="glyphicon glyphicon-menu-left"></span> --><< TCN2000网管 </a>
                 <div class="panel-group" id="accordion">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <span class="glyphicon-minus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> 点击我进行展开1 </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse in">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">免费域名注册</a> <a href="#" class="list-group-item">简单的可折叠组件</a> <a href="#" class="list-group-item">图像的数量</a> <a href="#" class="list-group-item">24*7 支持</a> <a href="#" class="list-group-item">每年更新成本</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <span class="glyphicon-plus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> 点击我进行展开2 </a>
-                            </h4>
-                        </div>
-                        <div id="collapseTwo" class="panel-collapse collapse">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a>
-                                <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <span class="glyphicon-plus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> 点击我进行展开3 </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a> <a href="#" class="list-group-item">Link</a>
-                            </div>
-                        </div>
-                    </div>
+                    <c:set var="menuParentId" value="0" />
+                    <c:forEach var="item" items="${menu}">
+                        <c:if test="${item.parentId == null || item.parentId == 0}">
+                            <c:set var="menuParentId" value="${item.id }" />
+                            <c:if test="${menuParentId != 0 }">
+                                    </div>
+                                </div>
+                            </div>                            
+                            </c:if>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <span class="glyphicon-minus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapse${menuParentId}"> ${item.name} </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse${menuParentId}" class="panel-collapse collapse in">
+                                    <div class="list-group">
+                        </c:if>
+                        <c:if test="${item.parentId != null && item.parentId == menuParentId}">
+                                        <a href="#" class="list-group-item" data-url="${item.url }">${item.name}</a>
+                        </c:if>
+                    </c:forEach>
+                                    </div>
+                                </div>
+                            </div>                            
                 </div>
             </div>
 
@@ -120,7 +107,7 @@
                 <div class="modal-body" id="indexModalContent">在这里添加一些文本</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" style="display: none;">确定</button>
+                    <button type="button" class="btn btn-primary">确定</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -131,90 +118,10 @@
     <script src="../../styles/jquery-3.2.1.min.js"></script>
     <script src="../../styles/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../styles/utils/common.js"></script>
-    <!--         <script src="../../assets/js/vendor/holder.min.js"></script> -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../styles/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
-
     <script type="text/javascript">
-					$(function() {
-						getTreeMenu();
-					})
-
-					function getTreeMenu() {
-						$.ajax({
-							type : "get",
-							url : "${contextPath}/treemenu",
-							data : {},
-							dataType : 'json',
-							success : function(result) {
-								var status = result.status;
-								if (status == 1) {
-									galert(result.errCode + ":"
-											+ result.errMsg);
-								} else if (status == 0) {
-									var data = result.data;
-									printHotLoc(data);
-								}
-							},
-							error : function(result) {
-								showAlert("indexModal", "错误", "获取菜单失败");
-							}
-						});
-					}
-
-                    $('#indexModal .modal-footer .btn-primary').on('click',function(e) {
-                        e.preventDefault();
-                        var url = $(this).data('url');
-                        $.ajax({
-                            type : "get",
-                            url : url,
-                            data : {},
-                            dataType : 'json',
-                            success : function(result) {
- 
-                            },
-                            error : function(result) {
-                                
-                            }
-                        });
-                    })
-
-					$('.list-group').on(
-							'click',
-							'a,li',
-							function(e) {
-								stopBubble(e);
-								stopDefault(e);
-
-								$('.panel-group .list-group a,li').removeClass(
-										'active');
-								$(this).addClass('active');
-
-								//alert($(this).text());
-							});
-
-					$('.panel-title').on(
-							'click',
-							'[data-toggle="collapse"]',
-							function(e) {
-								var minus = 0;
-								if ($(this).parent().find('span').hasClass(
-										'glyphicon-minus')) {
-									minus = 1;
-								}
-
-								$('.panel-group .panel-heading span')
-										.removeClass('glyphicon-minus');
-								$('.panel-group .panel-heading span').addClass(
-										'glyphicon-plus');
-
-								if (minus == 0) {
-									$(this).parent().find('span').addClass(
-											'glyphicon-minus');
-								}
-
-							})
-				</script>
+    </script>
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 <jsp:directive.page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true"/>
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp"/> 
 
-<own:paginationForm action="${contextPath }/security/logInfo/list" page="${page }">
+<own:paginationForm action="${contextPath }/security/logInfo/list" pager="${pager }">
 	<input type="hidden" name="search_EQ_username" value="${param.search_EQ_username }"/>
 	<input type="hidden" name="search_EQ_ipAddress" value="${param.search_EQ_ipAddress }"/>
 	<input type="hidden" name="search_EQ_logLevel" value="${param.search_EQ_logLevel }"/>
@@ -88,5 +88,5 @@
 		</tbody>
 	</table>
 	<!-- 分页 -->
-	<own:pagination page="${page }"/>
+	<own:pagination pager="${pager }"/>
 </div>

@@ -17,7 +17,7 @@ public class PaginationFormTag extends SimpleTagSupport {
 	public void doTag() throws JspException, IOException {
 		StringBuilder builder = new StringBuilder();
 		if (onsubmit != null) {
-			builder.append("<form id=\"pagerrForm\" method=\"post\" action=\""
+			builder.append("<form id=\"pagerForm\" method=\"post\" action=\""
 					+ action + "\" onsubmit=\"" + onsubmit + "\">\n");
 		} else {
 			builder.append("<form id=\"pagerrForm\" method=\"post\" action=\""

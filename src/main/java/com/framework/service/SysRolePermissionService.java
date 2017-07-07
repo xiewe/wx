@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.framework.entity.SysRole;
 import com.framework.entity.SysRolePermission;
 import com.framework.utils.pager.Pager;
 
@@ -21,4 +22,6 @@ public interface SysRolePermissionService {
 	List<SysRolePermission> findAll(Pager page);
 
 	List<SysRolePermission> findByPageable(Specification<SysRolePermission> specification, Pager page);
+
+	List<SysRolePermission> findBySysRoleOrderBySysMenuClass(SysRole sysRole);
 }

@@ -1,64 +1,72 @@
-<jsp:directive.page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true"/>
-<jsp:directive.include file="/WEB-INF/pages/include.inc.jsp"/>
-<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="${contextPath}/security/organization/tree" style="display:none;"></a>
-<own:paginationForm action="${contextPath}/security/organization/list/${parentOrganizationId}" page="${page }" onsubmit="return divSearch(this, 'jbsxBox2organizationList');">
-	<input type="hidden" name=search_LIKE_name value="${param.search_LIKE_name }"/>
-</own:paginationForm>
+<jsp:directive.page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true" />
+<jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
-<form method="post" action="${contextPath }/security/organization/list/${parentOrganizationId}" onsubmit="return divSearch(this, 'jbsxBox2organizationList');">
-	<div class="pageHeader">
-		<div class="searchBar" id="commonSearchDiv">
-			<ul class="searchContent">
-				<li>
-					<label>组织名称：</label>
-					<input type="text" name=search_LIKE_name value="${param.search_LIKE_name }"/>
-				</li>
-			</ul>
-			<div class="subBar">
-				<ul>	
-					<li><div class="button"><div class="buttonContent"><button type="button" onclick="clearAllSearchContent('commonSearchDiv');">清空</button></div></div></li>					
-					<li><div class="button"><div class="buttonContent"><button type="submit">搜索</button></div></div></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</form>
+<div class="divbc">
+    <ol class="breadcrumb">
+        <li><span class="glyphicon glyphicon-home"></span> 主页</li>
+        <li>系统管理</li>
+        <li>组织管理</li>
+    </ol>
+</div>
 
-<div class="pageContent">
-	<div class="panelBar">
-		<ul class="toolBar">
-		<shiro:hasPermission name="Organization:save">
-			<li><a iconClass="group_add" target="dialog" mask="true" width="530" height="260" href="${contextPath}/security/organization/create/${parentOrganizationId}"><span>添加组织</span></a></li>
-		</shiro:hasPermission>
-		<shiro:hasPermission name="Organization:edit">
-			<li><a iconClass="group_edit" target="dialog" mask="true" rel="lookupParent2org_edit" width="530" height="260" href="${contextPath}/security/organization/update/{slt_uid}"><span>编辑组织</span></a></li>
-		</shiro:hasPermission>
-		<shiro:hasPermission name="Organization:delete">
-			<li><a iconClass="group_delete" target="ajaxTodo" callback="dialogReloadRel2Org" href="${contextPath}/security/organization/delete/{slt_uid}" title="确认要删除该组织?"><span>删除组织</span></a></li>
-		</shiro:hasPermission>	
-		</ul>
-	</div>
-	<table class="table" layoutH="142" width="100%" rel="jbsxBox2organizationList" >
-		<thead>
-			<tr>
-				<th>名称</th>
-				<th>优先级</th>
-				<th>描述</th>
-				<th>父组织</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="item" items="${organizations}">
-			<tr target="slt_uid" rel="${item.id}">
-				<td>${item.name}</td>				
-				<td>${item.priority}</td>
-				<td>${item.description}</td>
-				<td>${item.parent.name}</td>
-			</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+<div class="row main-content">
+    <form role="form" class="form-horizontal" method="post" action="${contextPath }/org/list" id="searchForm" onsubmit="return doSearch(this)">
+        <div class="form-group" id="searchDiv">
+            <own:paginationHidden pager="${pager}" />
+            <label for="name" class="control-label col-xs-3 col-sm-1">组织名称:</label>
+            <div class="col-xs-9 col-sm-3">
+                <input type="text" class="form-control" placeholder="请输入名称" name="search_LIKE_name" value="${param.search_EQ_name}" />
+            </div>
+            <div class="col-xs-6 col-sm-2">
+                <button type="submit" class="btn btn-default doSearch">查询</button>
+                <button type="submit" class="btn btn-default" onclick="javascript:clearAllSearchContent('searchDiv');return false;">清除</button>
+            </div>
+        </div>
+    </form>
+    <hr class="clearfix">
+    <p>
+        <shiro:hasPermission name="SysOrganization:create">
+            <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doCreate">添加</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="SysOrganization:delete">
+            <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doDelete">删除</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="SysOrganization:update">
+            <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doUpdate">修改</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="SysOrganization:view">
+            <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doView">查看</a>
+        </shiro:hasPermission>
+    </p>
 
-	<!-- 分页 -->
-	<own:pagination page="${page }" rel="jbsxBox2organizationList" onchange="navTabPageBreak({numPerPage:this.value}, 'jbsxBox2organizationList')"/>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover table-condensed" id="tabData">
+            <thead>
+                <tr>
+                    <th>组织名称</th>
+                    <th>父组织</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%-- <c:choose> --%>
+                <%-- <c:when test="${orgs.size() == 0}">
+                        <tr colspan="3"><td>没有记录</td></tr>
+                    </c:when>
+                    <c:otherwise> --%>
+                <c:forEach var="item" items="${orgs}">
+                    <tr data-id="${item.id}">
+                        <td>${item.name}</td>
+                        <td>${item.parentId}</td>
+                        <td>${item.description}</td>
+                    </tr>
+                </c:forEach>
+                <%-- </c:otherwise> --%>
+                <%-- </c:choose> --%>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 分页 -->
+    <own:pagination pager="${pager}" />
 </div>
