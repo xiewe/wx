@@ -71,9 +71,11 @@ public class PaginationTag extends SimpleTagSupport {
 
 			for (int i = startNum; i <= endNum; i++) {
 				if (i == pager.getCurrPage()) {
-					builder.append("        <li class=\"active\"><a href=\"#\" onclick=\"goToN(event,").append(i).append(")\">").append(i).append("</a></li>\n");
+					builder.append("        <li class=\"active\"><a href=\"#\" onclick=\"goToN(event,").append(i)
+					        .append(")\">").append(i).append("</a></li>\n");
 				} else {
-					builder.append("        <li><a href=\"#\" onclick=\"goToN(event,").append(i).append(")\">").append(i).append("</a></li>\n");
+					builder.append("        <li><a href=\"#\" onclick=\"goToN(event,").append(i).append(")\">")
+					        .append(i).append("</a></li>\n");
 				}
 			}
 
@@ -94,42 +96,42 @@ public class PaginationTag extends SimpleTagSupport {
 		getJspContext().getOut().write(builder.toString());
 	}
 
-	/**
-	 * @param pager
-	 *            the pager to set
-	 */
-	public void setPage(Pager pager) {
+	public Pager getPager() {
+		return pager;
+	}
+
+	public void setPager(Pager pager) {
 		this.pager = pager;
 	}
 
-	/**
-	 * @param pagerNumShown
-	 *            the pagerNumShown to set
-	 */
-	public void setPageNumShown(int pagerNumShown) {
+	public int getPagerNumShown() {
+		return pagerNumShown;
+	}
+
+	public void setPagerNumShown(int pagerNumShown) {
 		this.pagerNumShown = pagerNumShown;
 	}
 
-	/**
-	 * @param begin
-	 *            the begin to set
-	 */
+	public int getBegin() {
+		return begin;
+	}
+
 	public void setBegin(int begin) {
 		this.begin = begin;
 	}
 
-	/**
-	 * @param end
-	 *            the end to set
-	 */
+	public int getEnd() {
+		return end;
+	}
+
 	public void setEnd(int end) {
 		this.end = end;
 	}
 
-	/**
-	 * @param step
-	 *            the step to set
-	 */
+	public int getStep() {
+		return step;
+	}
+
 	public void setStep(int step) {
 		this.step = step;
 	}

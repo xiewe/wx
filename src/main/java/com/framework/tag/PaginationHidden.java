@@ -25,11 +25,12 @@ public class PaginationHidden extends SimpleTagSupport {
 		getJspContext().getOut().write(builder.toString());
 	}
 
-	/**
-	 * @param pager
-	 *            the pager to set
-	 */
-	public void setPage(Pager pager) {
+	public Pager getPager() {
+		return pager;
+	}
+
+	public void setPager(Pager pager) {
 		this.pager = pager;
 	}
+
 }

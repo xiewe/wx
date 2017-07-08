@@ -65,14 +65,14 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <span class="glyphicon-minus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapse${menuParentId}"> ${item.name} </a>
+                                        <span class="glyphicon-plus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapse${menuParentId}"> ${item.name} </a>
                                     </h4>
                                 </div>
-                                <div id="collapse${menuParentId}" class="panel-collapse collapse in">
+                                <div id="collapse${menuParentId}" class="panel-collapse collapse">
                                     <div class="list-group">
                         </c:if>
                         <c:if test="${item.parentId != null && item.parentId == menuParentId}">
-                                        <a href="#" class="list-group-item" data-url="${item.url }">${item.name}</a>
+                                        <a href="#" class="list-group-item" data-url="${contextPath}${item.url }">${item.name}</a>
                         </c:if>
                     </c:forEach>
                     <c:if test="${menuParentId != 0 }">

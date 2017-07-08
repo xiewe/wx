@@ -17,25 +17,18 @@ public class PaginationFormTag extends SimpleTagSupport {
 	public void doTag() throws JspException, IOException {
 		StringBuilder builder = new StringBuilder();
 		if (onsubmit != null) {
-			builder.append("<form id=\"pagerForm\" method=\"post\" action=\""
-					+ action + "\" onsubmit=\"" + onsubmit + "\">\n");
+			builder.append("<form id=\"pagerForm\" method=\"post\" action=\"" + action + "\" onsubmit=\"" + onsubmit
+			        + "\">\n");
 		} else {
-			builder.append("<form id=\"pagerrForm\" method=\"post\" action=\""
-					+ action + "\">\n");
+			builder.append("<form id=\"pagerrForm\" method=\"post\" action=\"" + action + "\">\n");
 		}
 
-		builder.append("<input type=\"hidden\" name=\"currPage\" value=\""
-				+ pager.getCurrPage() + "\"/>\n");
-		builder.append("<input type=\"hidden\" name=\"pageSize\" value=\""
-				+ pager.getPageSize() + "\"/>\n");
-		builder.append("<input type=\"hidden\" name=\"totalPage\" value=\""
-				+ pager.getTotalPage() + "\"/>\n");
-		builder.append("<input type=\"hidden\" name=\"orderField\" value=\""
-				+ pager.getOrderField() + "\"/>\n");
-		builder.append("<input type=\"hidden\" name=\"orderDirection\" value=\""
-				+ pager.getOrderDirection() + "\"/>\n");
-		builder.append("<input type=\"hidden\" name=\"totalCount\" value=\""
-				+ pager.getTotalCount() + "\"/>\n");
+		builder.append("<input type=\"hidden\" name=\"currPage\" value=\"" + pager.getCurrPage() + "\"/>\n");
+		builder.append("<input type=\"hidden\" name=\"pageSize\" value=\"" + pager.getPageSize() + "\"/>\n");
+		builder.append("<input type=\"hidden\" name=\"totalPage\" value=\"" + pager.getTotalPage() + "\"/>\n");
+		builder.append("<input type=\"hidden\" name=\"orderField\" value=\"" + pager.getOrderField() + "\"/>\n");
+		builder.append("<input type=\"hidden\" name=\"orderDirection\" value=\"" + pager.getOrderDirection() + "\"/>\n");
+		builder.append("<input type=\"hidden\" name=\"totalCount\" value=\"" + pager.getTotalCount() + "\"/>\n");
 
 		getJspContext().getOut().write(builder.toString());
 
@@ -44,27 +37,28 @@ public class PaginationFormTag extends SimpleTagSupport {
 		getJspContext().getOut().write("</form>\n");
 	}
 
-	/**
-	 * @param pager
-	 *            the pager to set
-	 */
-	public void setPage(Pager pager) {
+	public Pager getPager() {
+		return pager;
+	}
+
+	public void setPager(Pager pager) {
 		this.pager = pager;
 	}
 
-	/**
-	 * @param action
-	 *            the action to set
-	 */
+	public String getAction() {
+		return action;
+	}
+
 	public void setAction(String action) {
 		this.action = action;
 	}
 
-	/**
-	 * @param onsubmit
-	 *            the onsubmit to set
-	 */
+	public String getOnsubmit() {
+		return onsubmit;
+	}
+
 	public void setOnsubmit(String onsubmit) {
 		this.onsubmit = onsubmit;
 	}
+
 }
