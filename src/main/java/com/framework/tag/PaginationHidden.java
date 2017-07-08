@@ -18,8 +18,8 @@ public class PaginationHidden extends SimpleTagSupport {
 		builder.append("<input type=\"hidden\" name=\"currPage\" value=\"" + pager.getCurrPage() + "\"/>\n");
 		builder.append("<input type=\"hidden\" name=\"pageSize\" value=\"" + pager.getPageSize() + "\"/>\n");
 		builder.append("<input type=\"hidden\" name=\"totalPage\" value=\"" + pager.getTotalPage() + "\"/>\n");
-		builder.append("<input type=\"hidden\" name=\"orderField\" value=\"" + pager.getOrderField() + "\"/>\n");
-		builder.append("<input type=\"hidden\" name=\"orderDirection\" value=\"" + pager.getOrderDirection() + "\"/>\n");
+		builder.append("<input type=\"hidden\" name=\"orderField\" value=\"").append(pager.getOrderField()!=null?pager.getOrderField():"").append("\"/>\n");
+		builder.append("<input type=\"hidden\" name=\"orderDirection\" value=\"").append(pager.getOrderDirection()!=null?pager.getOrderDirection():"").append("\"/>\n");
 		builder.append("<input type=\"hidden\" name=\"totalCount\" value=\"" + pager.getTotalCount() + "\"/>\n");
 
 		getJspContext().getOut().write(builder.toString());

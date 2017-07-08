@@ -133,8 +133,7 @@ $('#indexModal .modal-footer .btn-primary').on('click',function(e) {
     $.ajax({
         type : "get",
         url : url,
-        data : {},
-        dataType : 'json'
+        data : {}
     }).done(function(result) {
 		console.log("done");
 	}).fail(function(result) {
@@ -157,8 +156,7 @@ $('.list-group').on('click', 'a,li', function(e) {
     $.ajax({
         type : "get",
         url : url,
-        data : {},
-        dataType : 'json'
+        data : {}
     }).done(function(result) {
         console.log("done");
         $('.main').html(result);
@@ -223,18 +221,17 @@ function doSearch(form) {
 		type : "get",
 		url : url,
 		data : $form.serializeArray(),
-		dataType : 'json',
 		beforeSend : function() {
-			console.log('===beforeSend');
+			//console.log('===beforeSend');
 		}
 	}).done(function(result) {
-		console.log("done");
+		//console.log("done");
 		$('.main').html(result);
 	}).fail(function(result) {
-		console.log("error");
+		//console.log("error");
 		showAlert('错误', '查询错误');
 	}).always(function() {
-		console.log("complete");
+		//console.log("complete");
 	});
 }
 
@@ -290,7 +287,7 @@ function goToLast(e) {
 function goToD(e) {
 	e.preventDefault();
 	var n = $('.pager-input').val();
-	if (n == undefined || n == 0) {
+	if (n == undefined || n <= 0) {
 		return;
 	}
 	var form = $('#searchForm').get(0);

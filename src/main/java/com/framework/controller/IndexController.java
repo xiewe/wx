@@ -2,6 +2,7 @@ package com.framework.controller;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.framework.AppConstants;
 import com.framework.entity.SysMenu;
-import com.framework.entity.SysRolePermission;
 import com.framework.entity.SysUser;
 import com.framework.exception.ServiceException;
 import com.framework.log4jdbc.Log;
@@ -57,6 +57,7 @@ public class IndexController extends BaseController {
 
 		});
 		map.put("menu", listMenu);
+		map.put("date", new Date().getTime());
 
 		return INDEX;
 	}

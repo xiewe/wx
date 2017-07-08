@@ -13,11 +13,11 @@
     <form role="form" class="form-horizontal" method="post" action="${contextPath }/org/list" id="searchForm" onsubmit="return doSearch(this)">
         <div class="form-group" id="searchDiv">
             <own:paginationHidden pager="${pager}" />
-            <label for="name" class="control-label col-xs-3 col-sm-1">组织名称:</label>
-            <div class="col-xs-9 col-sm-3">
+            <label for="name" class="control-label col-md-2 col-sm-6">组织名称:</label>
+            <div class="col-md-4 col-sm-6">
                 <input type="text" class="form-control" placeholder="请输入名称" name="search_LIKE_name" value="${param.search_EQ_name}" />
             </div>
-            <div class="col-xs-6 col-sm-2">
+            <div class="col-md-4 col-sm-6">
                 <button type="submit" class="btn btn-default doSearch">查询</button>
                 <button type="submit" class="btn btn-default" onclick="javascript:clearAllSearchContent('searchDiv');return false;">清除</button>
             </div>
