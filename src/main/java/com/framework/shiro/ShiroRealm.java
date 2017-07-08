@@ -2,6 +2,7 @@ package com.framework.shiro;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,10 +28,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.framework.AppConstants;
+import com.framework.entity.SysMenuClass;
 import com.framework.entity.SysRole;
-import com.framework.entity.SysRolePermission;
 import com.framework.entity.SysUser;
 import com.framework.exception.IncorrectCaptchaException;
+import com.framework.service.SysMenuClassService;
 import com.framework.service.SysUserService;
 import com.framework.utils.Digests;
 import com.framework.utils.EncodesUtil;
@@ -44,6 +46,9 @@ public class ShiroRealm extends AuthorizingRealm {
 	protected boolean useCaptcha = false;// 是否使用验证码
 
 	protected SysUserService sysUserService;
+
+	@Autowired
+	private SysMenuClassService sysMenuClassService;
 
 	@Autowired
 	private HttpServletRequest request;
@@ -91,10 +96,11 @@ public class ShiroRealm extends AuthorizingRealm {
 			// 获取角色: 对非系统角色需要获取原生的角色，以匹配java类shiro注解角色的拦截
 			info.addRole(userRole.getName());
 
+			List<SysMenuClass> listSMC = sysMenuClassService.findByRoleId(userRole.getId());
 			// 获取操作权限
 			Collection<String> permissions = new HashSet<String>();
-			for (SysRolePermission o : userRole.getSysRolePermissions()) {
-				permissions.add(o.getSysMenuClass().getMethod());
+			for (SysMenuClass o : listSMC) {
+				permissions.add(o.getMethod());
 			}
 
 			info.addStringPermissions(permissions);

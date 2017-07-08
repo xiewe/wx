@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `uc`.`sys_role_permission` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `role_id` INT NOT NULL,
   `menu_id` INT NOT NULL,
-  `menu_class_id` INT NOT NULL,
+  `menu_class_id` INT,
   PRIMARY KEY (`id`),
   INDEX `idx_sys_role_permission_1` (`role_id` ASC),
   INDEX `idx_sys_role_permission_2` (`menu_id` ASC),
@@ -261,10 +261,10 @@ INSERT INTO `sys_menu_class` (`menu_id`,`name`,`class_name`,`method`) VALUES
 INSERT INTO `sys_role` (`id`,`name`,`description`) VALUES (1,'Admin','Admin');
 
 insert into sys_role_permission(role_id, menu_id, menu_class_id)
-(SELECT '1', m.id, c.id FROM sys_menu m, sys_menu_class c where m.id = c.menu_id);
+(SELECT '1', m.id, c.id FROM sys_menu m left join sys_menu_class c on m.id = c.menu_id);
 
 INSERT INTO `sys_user` (`id`, `uid`, `username`, `password`, `salt`, `realname`, `gender`, `photo`, `phone`, `country_code`, `nationality`, `individual_id`, `email`, `address`, `self_intro`, `is_vip`, `status`, `utype`, `org_id`, `role_id`, `gps`, `longitude`, `latitude`, `user_agent`, `last_login`, `create_time`, `modify_time`) 
-VALUES('1','10001','admin','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'xiewe9@163.com',NULL,'创建者','1','0','0',NULL,NULL,NULL,'0','0',NULL,NULL,NULL,NULL);
+VALUES('1','10001','admin','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'xiewe9@163.com',NULL,'创建者','1','0','0',NULL,1,NULL,'0','0',NULL,NULL,NULL,NULL);
 COMMIT;
 
 

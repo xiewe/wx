@@ -21,4 +21,6 @@ public interface SysMenuClassService {
 	List<SysMenuClass> findAll(Pager page);
 
 	List<SysMenuClass> findByPageable(Specification<SysMenuClass> specification, Pager page);
+
+	List<SysMenuClass> findByRoleId(Integer rid);
 }

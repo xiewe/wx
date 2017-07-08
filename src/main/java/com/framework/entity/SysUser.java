@@ -121,7 +121,7 @@ public class SysUser implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "org_id")
 	public SysOrganization getSysOrganization() {
 		return this.sysOrganization;
@@ -131,7 +131,7 @@ public class SysUser implements java.io.Serializable {
 		this.sysOrganization = sysOrganization;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "role_id")
 	public SysRole getSysRole() {
 		return this.sysRole;

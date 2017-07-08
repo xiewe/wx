@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -107,7 +108,7 @@ public class SysMenuClass implements java.io.Serializable {
 		this.method = method;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysMenuClass")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysMenuClass", cascade = { CascadeType.ALL })
 	public Set<SysRolePermission> getSysRolePermissions() {
 		return this.sysRolePermissions;
 	}

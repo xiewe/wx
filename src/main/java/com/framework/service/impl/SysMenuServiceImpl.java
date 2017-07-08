@@ -58,4 +58,9 @@ public class SysMenuServiceImpl implements SysMenuService {
 	public List<SysMenu> findAll(Specification<SysMenu> specification) {
 		return oDao.findAll(specification);
 	}
+
+	@Override
+	public List<SysMenu> findByRoleId(Integer rid) {
+		return oDao.findByRoleId(rid);
+	}
 }

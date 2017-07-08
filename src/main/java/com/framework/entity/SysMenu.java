@@ -4,6 +4,7 @@ package com.framework.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -135,7 +136,7 @@ public class SysMenu implements java.io.Serializable {
 		this.description = description;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysMenu")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysMenu", cascade = { CascadeType.ALL })
 	public Set<SysMenuClass> getSysMenuClasses() {
 		return this.sysMenuClasses;
 	}
@@ -144,7 +145,7 @@ public class SysMenu implements java.io.Serializable {
 		this.sysMenuClasses = sysMenuClasses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysMenu")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysMenu", cascade = { CascadeType.ALL })
 	public Set<SysRolePermission> getSysRolePermissions() {
 		return this.sysRolePermissions;
 	}

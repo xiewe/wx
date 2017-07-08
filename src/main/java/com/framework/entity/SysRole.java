@@ -4,10 +4,12 @@ package com.framework.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -83,7 +85,7 @@ public class SysRole implements java.io.Serializable {
 		this.description = description;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysRole")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysRole", cascade = { CascadeType.ALL })
 	public Set<SysUser> getSysUsers() {
 		return this.sysUsers;
 	}
@@ -92,7 +94,7 @@ public class SysRole implements java.io.Serializable {
 		this.sysUsers = sysUsers;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysRole")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysRole", cascade = { CascadeType.ALL })
 	public Set<SysRolePermission> getSysRolePermissions() {
 		return this.sysRolePermissions;
 	}

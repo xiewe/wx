@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -127,7 +128,7 @@ public class SysOrganization implements java.io.Serializable {
 		this.modifyTime = modifyTime;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysOrganization")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysOrganization", cascade = { CascadeType.ALL })
 	public Set<SysUser> getSysUsers() {
 		return this.sysUsers;
 	}
