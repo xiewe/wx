@@ -51,48 +51,49 @@
     <div class="container-fruid">
         <div class="row index-row">
             <div class="col-md-2 col-sm-3 sideMenu">
-                <a href="#" class="btn btn-defaut" role="button"> <!-- <span class="glyphicon glyphicon-menu-left"></span> --><< TCN2000网管 </a>
+                <a href="#" class="btn btn-defaut" role="button"> <!-- <span class="glyphicon glyphicon-menu-left"></span> --><< TCN2000网管
+                </a>
                 <div class="panel-group" id="accordion">
                     <c:set var="menuParentId" value="0" />
                     <c:forEach var="item" items="${menu}">
                         <c:if test="${item.parentId == null || item.parentId == 0}">
                             <c:if test="${menuParentId != 0 }">
-                                    </div>
-                                </div>
-                            </div>                            
-                            </c:if>
-                            <c:set var="menuParentId" value="${item.id }" />
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <span class="glyphicon-plus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapse${menuParentId}"> ${item.name} </a>
-                                    </h4>
-                                </div>
-                                <div id="collapse${menuParentId}" class="panel-collapse collapse">
-                                    <div class="list-group">
-                        </c:if>
-                        <c:if test="${item.parentId != null && item.parentId == menuParentId}">
-                                        <a href="#" class="list-group-item" data-url="${contextPath}${item.url }">${item.name}</a>
-                        </c:if>
-                    </c:forEach>
-                    <c:if test="${menuParentId != 0 }">
-                                    </div>
-                                </div>
-                            </div>
-                    </c:if>
                 </div>
-            </div>
-
-            <div class="col-sm-9 col-md-10 main">
-                <!-- 可变内容开始 -->
-
-                <div class="row">
-                <p>欢迎您！</p>
-                </div>
-
-                <!-- 可变内容结束 -->
             </div>
         </div>
+        </c:if>
+        <c:set var="menuParentId" value="${item.id }" />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <span class="glyphicon-plus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapse${menuParentId}"> ${item.name} </a>
+                </h4>
+            </div>
+            <div id="collapse${menuParentId}" class="panel-collapse collapse">
+                <div class="list-group">
+                    </c:if>
+                    <c:if test="${item.parentId != null && item.parentId == menuParentId}">
+                        <a href="#" class="list-group-item" data-url="${contextPath}${item.url }">${item.name}</a>
+                    </c:if>
+                    </c:forEach>
+                    <c:if test="${menuParentId != 0 }">
+                </div>
+            </div>
+        </div>
+        </c:if>
+    </div>
+    </div>
+
+    <div class="col-sm-9 col-md-10 main">
+        <!-- 可变内容开始 -->
+
+        <div class="row">
+            <p>欢迎您！</p>
+        </div>
+
+        <!-- 可变内容结束 -->
+    </div>
+    </div>
     </div>
 
     <footer class="footer">
@@ -125,7 +126,8 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <%-- <script src="${contextPath}/styles/bootstrap/js/ie10-viewport-bug-workaround.js"></script> --%>
     <script type="text/javascript">
-    </script>
+                    
+                </script>
 
 </body>
 </html>

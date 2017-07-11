@@ -94,7 +94,7 @@ public class RoleController extends BaseController {
 		return mapper.writeValueAsString(ret);
 	}
 
-	@ModelAttribute("preloadUser")
+	@ModelAttribute("preload")
 	public SysRole preload(@RequestParam(value = "id", required = false) Integer id) {
 		if (id != null) {
 			SysRole role = sysRoleService.get(id);
@@ -114,7 +114,7 @@ public class RoleController extends BaseController {
 	@Log(message = "修改了{0}角色的信息。", level = LogLevel.INFO)
 	@RequiresPermissions("SysRole:update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody String update(@Valid @ModelAttribute("preloadUser") SysRole role)
+	public @ResponseBody String update(@Valid @ModelAttribute("preload") SysRole role)
 	        throws JsonProcessingException {
 		GeneralResponseData<SysRole> ret = new GeneralResponseData<SysRole>();
 

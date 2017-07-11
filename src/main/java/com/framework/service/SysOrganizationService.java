@@ -8,17 +8,19 @@ import com.framework.entity.SysOrganization;
 import com.framework.utils.pager.Pager;
 
 public interface SysOrganizationService {
-	SysOrganization get(Integer id);
+    SysOrganization get(Integer id);
 
-	SysOrganization saveOrUpdate(SysOrganization o);
+    SysOrganization saveOrUpdate(SysOrganization o);
 
-	void delete(Integer id);
+    void delete(Integer id);
 
-	List<SysOrganization> findAll();
+    List<SysOrganization> findAll();
 
-	List<SysOrganization> findAll(Specification<SysOrganization> specification);
+    List<SysOrganization> findAll(Specification<SysOrganization> specification);
 
-	List<SysOrganization> findAll(Pager page);
+    List<SysOrganization> findAll(Pager page);
 
-	List<SysOrganization> findByPageable(Specification<SysOrganization> specification, Pager page);
+    List<SysOrganization> findByPageable(Specification<SysOrganization> specification, Pager page);
+
+    List<SysOrganization> findByIdIn(List<Integer> ids);
 }

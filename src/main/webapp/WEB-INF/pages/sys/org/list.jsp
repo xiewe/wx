@@ -13,9 +13,9 @@
     <form role="form" class="form-horizontal" method="post" action="${contextPath }/org/list" id="searchForm" onsubmit="return doSearch(this)">
         <div class="form-group" id="searchDiv">
             <own:paginationHidden pager="${pager}" />
-            <label for="name" class="control-label col-md-2 col-sm-6">组织名称:</label>
+            <label for="search_LIKE_name" class="control-label col-md-2 col-sm-6">组织名称:</label>
             <div class="col-md-4 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入名称" name="search_LIKE_name" value="${param.search_EQ_name}" />
+                <input type="text" class="form-control" placeholder="请输入名称" name="search_LIKE_name" value="${param.search_LIKE_name}" />
             </div>
             <div class="col-md-4 col-sm-6">
                 <button type="submit" class="btn btn-default doSearch">查询</button>
@@ -26,16 +26,16 @@
     <hr class="clearfix">
     <p>
         <shiro:hasPermission name="SysOrganization:create">
-            <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doCreate">添加</a>
+            <a href="#" class="btn btn-default doCreate">添加</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="SysOrganization:delete">
-            <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doDelete">删除</a>
+            <a href="#" class="btn btn-default doDelete">删除</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="SysOrganization:update">
-            <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doUpdate">修改</a>
+            <a href="#" class="btn btn-default doUpdate">修改</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="SysOrganization:view">
-            <a href="#" data-toggle="modal" data-target="#indexModal" class="btn btn-default doView">查看</a>
+            <a href="#" class="btn btn-default doView">查看</a>
         </shiro:hasPermission>
     </p>
 
@@ -49,20 +49,13 @@
                 </tr>
             </thead>
             <tbody>
-                <%-- <c:choose> --%>
-                <%-- <c:when test="${orgs.size() == 0}">
-                        <tr colspan="3"><td>没有记录</td></tr>
-                    </c:when>
-                    <c:otherwise> --%>
                 <c:forEach var="item" items="${orgs}">
                     <tr data-id="${item.id}">
-                        <td>${item.name}</td>
-                        <td>${item.parentId}</td>
+                        <td><a href="${contextPath }/org/view/${item.id}" data-toggle="modal" data-target="#indexModal">${item.name}</a></td>
+                        <td>${item.parentName}</td>
                         <td>${item.description}</td>
                     </tr>
                 </c:forEach>
-                <%-- </c:otherwise> --%>
-                <%-- </c:choose> --%>
             </tbody>
         </table>
     </div>
@@ -70,3 +63,52 @@
     <!-- 分页 -->
     <own:pagination pager="${pager}" />
 </div>
+
+<script type="text/javascript">
+    $('a.btn').on('click', function(e) {
+        stopBubble(e);
+        stopDefault(e);
+
+        var id = "";
+        if ($('table tbody').find('tr.success').length == 0 || $('table tbody').find('tr.success').length > 1) {
+            showAlert('提示', '请选择并仅选择一条记录');
+            return;
+        } else {
+            id = $('table tbody').find('tr.success').eq[0].data(id);
+        }
+
+        var url = "";
+        var type = "get";
+        if ($(this).hasClass('doCreate')) {
+            url = "${contextPath }/org/create";
+        } else if ($(this).hasClass('doDelete')) {
+            url = "${contextPath }/org/delete/" + id;
+            type = "post";
+        } else if ($(this).hasClass('doUpdate')) {
+            url = "${contextPath }/org/update/" + id;
+        } else if ($(this).hasClass('doView')) {
+            url = "${contextPath }/org/view/" + id;
+        } else {
+            console.log('not supported');
+            return;
+        }
+
+        $.ajax({
+            type : type,
+            url : url
+        }).done(function(result) {
+            if (type == "get") {
+                $("#indexModal .modal-header h4").text(title);
+                $("#indexModal .modal-body").html(result);
+                $("#indexModal .modal-footer .btn-primary").data('url', url);
+                $("#indexModal").modal('show');
+            } else {
+                loadContent("${contextPath }/org/list");
+            }
+        }).fail(function(result) {
+            showAlert('错误', '失败原因：' + result);
+        }).always(function() {
+        });
+
+    })
+</script>

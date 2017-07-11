@@ -1,37 +1,43 @@
-<jsp:directive.page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true"/>
-<jsp:directive.include file="/WEB-INF/pages/include.inc.jsp"/>
-<a id="refreshJbsxBox2organizationTree" rel="jbsxBox2organizationTree" target="ajax" href="${request.contextPath}/security/organization/tree" style="display:none;"></a>
-<div class="pageContent">
-<form method="post" action="${contextPath }/security/organization/update" class="required-validate pageForm" onsubmit="return validateCallback(this, dialogReloadRel2Org);">
-	<input type="hidden" name="id" value="${organization.id }"/>
-	<input type="hidden" name="parent.id" value="${organization.parent.id }"/>
-	<div class="pageFormContent" layoutH="58">
-		<p>
-			<label>父组织：</label>
-			<input name="parent.id" value="${organization.parent.id }" type="hidden"/>
-			<input class="validate[required] required" name="parent.name" type="text" readonly="readonly" value="${organization.parent.name }" style="width: 140px;"/>
-			<a class="btnLook" href="${contextPath}/security/organization/lookupParent/${organization.id}" lookupGroup="parent" mask="true" title="更改父组织" width="400">查找带回</a>
-		</p>
-		<p>
-			<label>名称：</label>
-			<input type="text" name="name" class="input-medium validate[required,maxSize[64]] required" maxlength="64" value="${organization.name }"/>
-		</p>	
-		<p>
-			<label>优先级：</label>
-			<input type="text" name="priority" class="validate[required,custom[integer],min[1],max[999]] required" value="${organization.priority }" maxlength="3" style="width: 80px;"/>
-			<span class="info">（越小越靠前）</span>
-		</p>				
-		<p class="nowrap">
-			<label>描述：</label>
-			<textarea name="description" cols="29" rows="3" maxlength="256" class="input-medium textarea-scroll">${organization.description }</textarea>
-		</p>			
-	</div>
-			
-	<div class="formBar">
-		<ul>
-			<li><div class="button"><div class="buttonContent"><button type="submit">确定</button></div></div></li>
-			<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div></li>
-		</ul>
-	</div>
-</form>
+<jsp:directive.page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true" />
+<jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
+
+<div class="row main-content">
+    <form class="form-horizontal" role="form" method="post" action="${contextPath }/sys/org/create" onsubmit="return validateCallback(this, dialogReloadRel2Org);">
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">名称</label>
+            <div class="col-sm-10">
+                <input type="hidden" name="id" value="${org.id}"> <input type="text" class="form-control" name="name" value="${org.name }" placeholder="请输入组织名字">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="parentId" class="col-sm-2 control-label">父组织</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="parentId">
+                    <option value=""></option>
+                    <c:forEach var="item" items="${orgs}">
+                        <c:choose>
+                            <c:when test="${org.parentId == item.id }">
+                                <option value="${item.id }" selected>${item.name}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${item.id }">${item.name}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description" class="col-sm-2 control-label">描述</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="3" name="description" placeholder="请输入描述"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-default">确定</button>
+            </div>
+        </div>
+    </form>
 </div>

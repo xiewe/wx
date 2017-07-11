@@ -85,7 +85,7 @@ public class UserController extends BaseController {
 		return mapper.writeValueAsString(ret);
 	}
 
-	@ModelAttribute("preloadUser")
+	@ModelAttribute("preload")
 	public SysUser preload(@RequestParam(value = "id", required = false) Long id) {
 		if (id != null) {
 			SysUser user = sysUserService.get(id);
@@ -105,7 +105,7 @@ public class UserController extends BaseController {
 	@Log(message = "修改了{0}用户的信息。", level = LogLevel.INFO)
 	@RequiresPermissions("SysUser:update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody String update(@Valid @ModelAttribute("preloadUser") SysUser user)
+	public @ResponseBody String update(@Valid @ModelAttribute("preload") SysUser user)
 	        throws JsonProcessingException {
 		GeneralResponseData<SysUser> ret = new GeneralResponseData<SysUser>();
 		if (user.getSysOrganization().getId() == null) {
