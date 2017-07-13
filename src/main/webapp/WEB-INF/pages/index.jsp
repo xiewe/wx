@@ -18,7 +18,7 @@
 <link href="${contextPath}/styles/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="${contextPath}/styles/custom/css/dashboard.css" rel="stylesheet">
+<link href="${contextPath}/styles/custom/css/dashboard.css?v=${date}" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -112,7 +112,7 @@
                 <div class="modal-body" id="indexModalContent">在这里添加一些文本</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-primary doConfirm">确定</button>
                 </div>
             </div>
             <!-- /.modal-content -->

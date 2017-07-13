@@ -29,79 +29,76 @@ import com.framework.utils.Exceptions;
 @Controller
 @RequestMapping("/login")
 public class LoginController extends BaseController {
-	private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
-	@Autowired
-	private LocaleResolver localeResolver;
-	private static final String LOGIN_PAGE = "login";
+    private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
+    @Autowired
+    private LocaleResolver localeResolver;
+    private static final String LOGIN_PAGE = "login";
+    private static final String LOGIN_DIALOG = "login";
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String login() {
-		return LOGIN_PAGE;
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String login() {
+        return LOGIN_PAGE;
+    }
 
+    @RequestMapping(value = "/timeout", method = { RequestMethod.GET })
+    public String timeout() {
+        return LOGIN_DIALOG;
+    }
 
-//	@RequestMapping(value = "/timeout", method = { RequestMethod.GET })
-//	public String timeout() {
-//		return LOGIN_DIALOG;
-//	}
-//
-//	@RequestMapping(value = "/timeout/success", method = { RequestMethod.GET })
-//	public @ResponseBody
-//	String timeoutSuccess() {
-//		return AjaxObject.ajaxDoneSuccess("登录成功。").toString();
-//	}
+    @RequestMapping(value = "/timeout/success", method = { RequestMethod.GET })
+    public @ResponseBody String timeoutSuccess() {
+        return "login success";
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String fail(
-			@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username,
-			Map<String, Object> map, ServletRequest request) {
+    @RequestMapping(method = RequestMethod.POST)
+    public String fail(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username,
+            Map<String, Object> map, ServletRequest request) {
 
-		String msg = parseException(request);
+        String msg = parseException(request);
 
-		map.put("msg", msg);
-		map.put("username", username);
+        map.put("msg", msg);
+        map.put("username", username);
 
-		return LOGIN_PAGE;
-	}
+        return LOGIN_PAGE;
+    }
 
-	private String parseException(ServletRequest request) {
-		String errorString = (String) request
-				.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
-		Class<?> error = null;
-		try {
-			if (errorString != null) {
-				error = Class.forName(errorString);
-			}
-		} catch (ClassNotFoundException e) {
-			LOG.error(Exceptions.getStackTraceAsString(e));
-		}
+    private String parseException(ServletRequest request) {
+        String errorString = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
+        Class<?> error = null;
+        try {
+            if (errorString != null) {
+                error = Class.forName(errorString);
+            }
+        } catch (ClassNotFoundException e) {
+            LOG.error(Exceptions.getStackTraceAsString(e));
+        }
 
-		String msg = "其他错误！";
-		if (error != null) {
-			if (error.equals(UnknownAccountException.class))
-				msg = "未知帐号错误！";
-			else if (error.equals(IncorrectCredentialsException.class))
-				msg = "密码错误！";
-			else if (error.equals(IncorrectCaptchaException.class))
-				msg = "验证码错误！";
-			else if (error.equals(AuthenticationException.class))
-				msg = "认证失败！";
-			else if (error.equals(DisabledAccountException.class))
-				msg = "账号被冻结！";
-		}
+        String msg = "其他错误！";
+        if (error != null) {
+            if (error.equals(UnknownAccountException.class))
+                msg = "未知帐号错误！";
+            else if (error.equals(IncorrectCredentialsException.class))
+                msg = "密码错误！";
+            else if (error.equals(IncorrectCaptchaException.class))
+                msg = "验证码错误！";
+            else if (error.equals(AuthenticationException.class))
+                msg = "认证失败！";
+            else if (error.equals(DisabledAccountException.class))
+                msg = "账号被冻结！";
+        }
 
-		return "登录失败，" + msg;
-	}
+        return "登录失败，" + msg;
+    }
 
-	@RequestMapping("/changeLocale/{language}")
-	public String changeLocale(@PathVariable String language, HttpServletRequest request, HttpServletResponse response) {
-		String[] lang = language.split("_");
-		if (null != lang && lang.length >= 2) {
-			Locale locale = new Locale(lang[0], lang[1]);
-			// LocaleResolver localeResolver = RequestContextUtils
-			// .getLocaleResolver(request);
-			localeResolver.setLocale(request, response, locale);
-		}
-		return LOGIN_PAGE;
-	}
+    @RequestMapping("/changeLocale/{language}")
+    public String changeLocale(@PathVariable String language, HttpServletRequest request, HttpServletResponse response) {
+        String[] lang = language.split("_");
+        if (null != lang && lang.length >= 2) {
+            Locale locale = new Locale(lang[0], lang[1]);
+            // LocaleResolver localeResolver = RequestContextUtils
+            // .getLocaleResolver(request);
+            localeResolver.setLocale(request, response, locale);
+        }
+        return LOGIN_PAGE;
+    }
 }

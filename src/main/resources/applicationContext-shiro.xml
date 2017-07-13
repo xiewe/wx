@@ -75,7 +75,7 @@
         <!-- 定义Cookie的过期时间，单位为秒，如果设置为-1表示浏览器关闭，则Cookie消失 -->
         <property name="maxAge" value="-1" />
     </bean>
-    <!-- 定义会话管理器的操作 -->
+    <!-- 定义会话管理器的操作，使用redis存储session，废弃shiro默认使用的servlet容器会话（tomcat默认会话存储在hashmap中） -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <!-- 定义的是全局的session会话超时时间，此操作会覆盖web.xml文件中的超时时间配置 ms -->
         <property name="globalSessionTimeout" value="1800000" />

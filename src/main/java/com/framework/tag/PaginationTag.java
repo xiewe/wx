@@ -54,6 +54,7 @@ public class PaginationTag extends SimpleTagSupport {
 			if (pager.getCurrPage() >= mid) {
 				if (pager.getCurrPage() + mid > pager.getTotalPage()) {
 					startNum = pager.getTotalPage() - diff;
+					startNum = startNum < 1 ? 1 : startNum;
 					endNum = pager.getTotalPage();
 				} else {
 					startNum = pager.getCurrPage() + mid - diff;

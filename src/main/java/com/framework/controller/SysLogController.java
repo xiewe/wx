@@ -31,7 +31,7 @@ public class SysLogController {
 	@Autowired
 	private SysLogService sysLogService;
 
-	private static final String LIST = "sys/loginfo/list";
+	private static final String LIST = "sys/logInfo/list";
 
 	@InitBinder
 	public void dataBinder(WebDataBinder dataBinder) {

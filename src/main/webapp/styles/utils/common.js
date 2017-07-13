@@ -107,24 +107,36 @@ function keysrt(key, desc) {
     }
 }
 
+// ajax请求时发生session超时，跳转到登陆页
+$(document).ajaxComplete(function(event, xhr, settings) {
+    if (xhr.responseText.indexOf('form-signin-heading') != -1) {
+        window.location.href = window.location.href;
+        return;
+    }
+});
+
 // 通用模态窗口
 function showAlert(title, msg) {
     $("#indexModal .modal-header h4").text(title);
     $("#indexModal .modal-body").html(msg);
-    $("#indexModal .modal-footer .btn-primary").css('display', 'none');
+    $("#indexModal .modal-footer").css('display', 'block');
+    $("#indexModal .modal-footer .btn").css('display', 'block');
+    $("#indexModal .modal-footer .doConfirm").css('display', 'none');
     $("#indexModal").modal('show');
 }
 
 function showConfirm(title, msg, url) {
     $("#indexModal .modal-header h4").text(title);
     $("#indexModal .modal-body").html(msg);
-    $("#indexModal .modal-footer .btn-primary").data('url', url);
+    $("#indexModal .modal-footer").css('display', 'block');
+    $("#indexModal .modal-footer .btn").css('display', 'block');
+    $("#indexModal .modal-footer .doConfirm").data('url', url);
     $("#indexModal").modal('show');
 }
 
 $("#indexModal").on("hidden.bs.modal", function() {
-    $(this).removeData("bs.modal");
-    // $(this).find(".modal-body").children().remove();
+    // $(this).removeData("bs.modal");
+    $(this).find(".modal-body").children().remove();
 })
 // confirm action
 $('#indexModal .modal-footer .btn-primary').on('click', function(e) {
@@ -134,9 +146,10 @@ $('#indexModal .modal-footer .btn-primary').on('click', function(e) {
         type : "get",
         url : url,
         data : {}
-    }).done(function(result) {
+    }).done(function(data, textStatus, jqXHR) {
         console.log("done");
-    }).fail(function(result) {
+        $("#indexModal").modal('hide');
+    }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log("error");
     }).always(function() {
         console.log("complete");
@@ -160,14 +173,12 @@ function loadContent(url) {
         type : "get",
         url : url,
         data : {}
-    }).done(function(result) {
-        console.log("loadcontent done");
+    }).done(function(result, textStatus, jqXHR) {
         $('.main').html(result);
-    }).fail(function(result) {
-        console.log("loadcontent error");
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus + " - " + errorThrown);
         showAlert('错误', '加载错误');
     }).always(function() {
-        console.log("loadcontent complete");
     });
 }
 
@@ -184,16 +195,6 @@ $('.panel-title').on('click', '[data-toggle="collapse"]', function(e) {
         $(this).parent().find('span').addClass('glyphicon-minus');
     }
 
-})
-
-// 表格中行选中效果
-$('table tbody tr').on('click', function(e) {
-    // e.preventDefault();
-    if ($(this).hasClass('success')) {
-        $(this).removeClass('success');
-    } else {
-        $(this).addClass('success');
-    }
 })
 
 /**
@@ -215,6 +216,33 @@ function clearAllSearchContent(divid) {
     }
 }
 
+// save
+function doSave(form, listUrl) {
+    var $form = $(form);
+
+    var url = $form.attr('action');
+    $.ajax({
+        type : "post",
+        url : url,
+        data : $form.serializeArray(),
+        dataType : 'json'
+    }).done(function(result, textStatus, jqXHR) {
+        if (result.status == 0) {
+            loadContent(listUrl);
+            $("#indexModal").modal('hide');
+        } else {
+            showAlert('错误', '创建错误');
+        }
+        $('.main').html(result);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus + " - " + errorThrown);
+        showAlert('错误', '创建错误：' + errorThrown);
+    }).always(function() {
+    });
+
+    return false;
+}
+
 // 分页查询
 function doSearch(form) {
     var $form = $(form);
@@ -223,19 +251,16 @@ function doSearch(form) {
     $.ajax({
         type : "get",
         url : url,
-        data : $form.serializeArray(),
-        beforeSend : function() {
-            // console.log('===beforeSend');
-        }
-    }).done(function(result) {
-        // console.log("done");
+        data : $form.serializeArray()
+    }).done(function(result, textStatus, jqXHR) {
         $('.main').html(result);
-    }).fail(function(result) {
-        // console.log("error");
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus + " - " + errorThrown);
         showAlert('错误', '查询错误');
     }).always(function() {
-        // console.log("complete");
     });
+
+    return false;
 }
 
 function _getSearchForm(args) {
@@ -274,7 +299,7 @@ function goToPre(e) {
         });
     } else {
         pagerChange({
-            "currPage" : curr - 1
+            "currPage" : parseInt(curr) - 1
         });
     }
 }
@@ -291,7 +316,7 @@ function goToNext(e) {
         });
     } else {
         pagerChange({
-            "currPage" : curr + 1
+            "currPage" : parseInt(curr) + 1
         });
     }
 }
@@ -321,4 +346,42 @@ function goToD(e) {
     pagerChange({
         "currPage" : n
     });
+}
+
+function loadListener() {
+
+    $('table tbody tr').on('click', function(e) {
+        // e.preventDefault();
+        $(this).parent().find('tr').removeClass('success');
+        $(this).addClass('success');
+        //        
+        // if ($(this).hasClass('success')) {
+        // $(this).removeClass('success');
+        // } else {
+        // $(this).addClass('success');
+        // }
+    })
+
+}
+
+$(function() {
+    changeHeight();
+})
+
+function changeHeight() {
+    if (window.innerWidth)
+        winWidth = window.innerWidth;
+    else if ((document.body) && (document.body.clientWidth))
+        winWidth = document.body.clientWidth;
+    if (window.innerHeight)
+        winHeight = window.innerHeight;
+    else if ((document.body) && (document.body.clientHeight))
+        winHeight = document.body.clientHeight;
+
+    $('.index-row').css('height', winHeight - 100);
+    $('.index-row').css('overflow-y', 'auto');
+}
+
+window.onresize = function() {
+    changeHeight();
 }

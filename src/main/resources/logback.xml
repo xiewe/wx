@@ -1,48 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-  <!-- 控制台输出日志 -->
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>%d{mm:ss} %-5level %logger{36} >>> %msg%n</pattern>
-    </encoder>
-  </appender>
-  <!--每天生成一个日志文件，保存30天的日志文件。 -->
-  <appender name="DayFile"
-    class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>../logs/uc.log</file>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>../logs/uc.%d{yyyy-MM-dd}.log.zip
-      </fileNamePattern>
-      <maxHistory>30</maxHistory>
-    </rollingPolicy>
-    <encoder>
-      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
-      </pattern>
-    </encoder>
-  </appender>
-  <appender name="SpringFile"
-    class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>../logs/spring.log</file>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>../logs/spring.%d{yyyy-MM-dd}.log.zip
-      </fileNamePattern>
-      <maxHistory>30</maxHistory>
-    </rollingPolicy>
-    <encoder>
-      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
-      </pattern>
-    </encoder>
-  </appender>
-  <logger name="com.framework" level="debug" additivity="true">
-    <appender-ref ref="DayFile" />
-  </logger>
-  <logger name="com.uc" level="DEBUG" additivity="true">
-    <appender-ref ref="DayFile" />
-  </logger>
-  <logger name="org.springframework" level="error" additivity="true">
-    <appender-ref ref="SpringFile" />
-  </logger>
-  <root level="WARN">
-    <appender-ref ref="STDOUT" />
-  </root>
+    <!-- 控制台输出日志 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p][%c:%M:%L]-> %m%n</pattern>
+        </encoder>
+    </appender>
+    <!--每天生成一个日志文件，保存30天的日志文件。 -->
+    <appender name="DayFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/uc.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/uc.%d{yyyy-MM-dd}.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p][%c:%M:%L]-> %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="SpringFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/spring.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/spring.%d{yyyy-MM-dd}.log.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p][%c:%M:%L]-> %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <logger name="com.framework" level="debug" additivity="true">
+        <appender-ref ref="DayFile" />
+    </logger>
+    <logger name="com.uc" level="DEBUG" additivity="true">
+        <appender-ref ref="DayFile" />
+    </logger>
+    <logger name="org.springframework" level="error" additivity="true">
+        <appender-ref ref="SpringFile" />
+    </logger>
+    <root level="WARN">
+        <appender-ref ref="STDOUT" />
+    </root>
 </configuration>

@@ -5,33 +5,37 @@
     <ol class="breadcrumb">
         <li><span class="glyphicon glyphicon-home"></span> 主页</li>
         <li>系统管理</li>
-        <li>日志管理</li>
+        <li>系统日志</li>
     </ol>
 </div>
 
 <div class="row main-content">
-    <form role="form" class="form-horizontal" method="post" action="${contextPath }/log/list" id="searchForm" onsubmit="return doSearch(this)">
-        <div class="form-group" id="searchDiv">
+    <form role="form" class="form-horizontal" method="post" action="${contextPath }/log/list" id="searchForm" onsubmit="return doSearch(this);">
+        <div class="" id="searchDiv">
             <own:paginationHidden pager="${pager}" />
-            <label for="search_LIKE_username" class="control-label col-md-2 col-sm-6">用户:</label>
-            <div class="col-md-4 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入用户名" name="search_LIKE_username" value="${param.search_LIKE_username}" />
+            <div class="form-group form-group-sm">
+                <label for="search_LIKE_username" class="control-label col-md-1 col-sm-6">用户:</label>
+                <div class="col-md-3 col-sm-6">
+                    <input type="text" class="form-control" placeholder="请输入用户名" name="search_LIKE_username" value="${param.search_LIKE_username}" />
+                </div>
+                <label for="search_LIKE_ip" class="control-label col-md-1 col-sm-6">IP:</label>
+                <div class="col-md-3 col-sm-6">
+                    <input type="text" class="form-control" placeholder="请输入IP" name="search_LIKE_ip" value="${param.search_LIKE_ip}" />
+                </div>
+                <label for="search_LIKE_category" class="control-label col-md-1 col-sm-6">类别:</label>
+                <div class="col-md-3 col-sm-6">
+                    <input type="text" class="form-control" placeholder="请输入日志类别" name="search_LIKE_category" value="${param.search_LIKE_category}" />
+                </div>
             </div>
-            <label for="search_LIKE_ip" class="control-label col-md-2 col-sm-6">IP:</label>
-            <div class="col-md-4 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入IP" name="search_LIKE_ip" value="${param.search_LIKE_ip}" />
-            </div>
-            <label for="search_LIKE_category" class="control-label col-md-2 col-sm-6">类别:</label>
-            <div class="col-md-4 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入日志类别" name="search_LIKE_category" value="${param.search_LIKE_category}" />
-            </div>
-            <label for="search_LIKE_message" class="control-label col-md-2 col-sm-6">日志:</label>
-            <div class="col-md-4 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入日志关键字" name="search_LIKE_message" value="${param.search_LIKE_message}" />
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <button type="submit" class="btn btn-default doSearch">查询</button>
-                <button type="submit" class="btn btn-default" onclick="javascript:clearAllSearchContent('searchDiv');return false;">清除</button>
+            <div class="form-group form-group-sm">
+                <label for="search_LIKE_message" class="control-label col-md-1 col-sm-6">日志:</label>
+                <div class="col-md-3 col-sm-6">
+                    <input type="text" class="form-control" placeholder="请输入日志关键字" name="search_LIKE_message" value="${param.search_LIKE_message}" />
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <button type="submit" class="btn btn-default btn-sm doSearch">查询</button>
+                    <button type="submit" class="btn btn-default btn-sm" onclick="javascript:clearAllSearchContent('searchDiv');return false;">清除</button>
+                </div>
             </div>
         </div>
     </form>
@@ -57,7 +61,7 @@
                         <td>${item.ip}</td>
                         <td>${item.userAgent}</td>
                         <td>${item.message}</td>
-                        <td>${item.createTime}</td>
+                        <td><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                     </tr>
                 </c:forEach>
             </tbody>

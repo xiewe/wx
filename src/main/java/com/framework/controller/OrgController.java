@@ -103,6 +103,9 @@ public class OrgController extends BaseController {
     public String preUpdate(@PathVariable Integer id, Map<String, Object> map) {
         SysOrganization org = sysOrganizationService.get(id);
         map.put("org", org);
+        List<SysOrganization> orgs = sysOrganizationService.findAll();
+        orgs.remove(org);
+        map.put("orgs", orgs);
         return UPDATE;
     }
 
@@ -146,7 +149,7 @@ public class OrgController extends BaseController {
 
         for (SysOrganization o : orgs) {
             if (o.getParentId() == null) {
-                break;
+                continue;
             }
             for (SysOrganization n : pOrgs) {
                 if (o.getParentId() == n.getId()) {

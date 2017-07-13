@@ -18,12 +18,15 @@
             </tr>
             <tr>
                 <td class="text-right">创建时间</td>
-                <td>${org.createTime}</td>
+                <td><fmt:formatDate value="${org.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
             </tr>
             <tr>
                 <td class="text-right">修改时间</td>
-                <td>${org.modifyTime}</td>
+                <td><fmt:formatDate value="${org.modifyTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
             </tr>
         </tbody>
     </table>
+    <div class="col-sm-offset-2 col-sm-10 text-right" style="margin-bottom:20px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+    </div>
 </div>

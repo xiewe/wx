@@ -2,7 +2,7 @@
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
 <div class="row main-content">
-    <form class="form-horizontal" role="form" method="post" action="${contextPath }/sys/org/create" onsubmit="return validateCallback(this, dialogReloadRel2Org);">
+    <form class="form-horizontal" role="form" method="post" action="${contextPath }/org/create" onsubmit="return doSave(this, '${contextPath }/org/list');">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">名称</label>
             <div class="col-sm-10">
@@ -29,8 +29,12 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="submit" class="btn btn-default">确定</button>
+                <button type="submit" class="btn btn-primary">确定</button>
             </div>
         </div>
     </form>
 </div>
+<script type="text/javascript">
+
+
+</script>
