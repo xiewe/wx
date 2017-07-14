@@ -41,133 +41,148 @@ import com.framework.utils.pager.SearchFilter;
 @Controller
 @RequestMapping("/role")
 public class RoleController extends BaseController {
-	private final Logger logger = LoggerFactory.getLogger(RoleController.class);
+    private final Logger logger = LoggerFactory.getLogger(RoleController.class);
 
-	@Autowired
-	private SysRoleService sysRoleService;
+    @Autowired
+    private SysRoleService sysRoleService;
 
-	ObjectMapper mapper = new ObjectMapper();
-	private static final String CREATE = "sys/role/create";
-	private static final String UPDATE = "sys/role/update";
-	private static final String LIST = "sys/role/list";
+    ObjectMapper mapper = new ObjectMapper();
+    private static final String CREATE = "sys/role/create";
+    private static final String UPDATE = "sys/role/update";
+    private static final String LIST = "sys/role/list";
+    private static final String VIEW = "sys/role/view";
 
-	@InitBinder
-	public void initListBinder(WebDataBinder binder) {
-		// 使用SpringMVC提交数组时，如果list大小超过256，就会报错，默认为256
-		binder.setAutoGrowCollectionLimit(5000);
-	}
+    @InitBinder
+    public void initListBinder(WebDataBinder binder) {
+        // 使用SpringMVC提交数组时，如果list大小超过256，就会报错，默认为256
+        binder.setAutoGrowCollectionLimit(5000);
+    }
 
-	@RequiresPermissions("SysRole:create")
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String preCreate() {
-		return CREATE;
-	}
+    @RequiresPermissions("SysRole:create")
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String preCreate() {
+        return CREATE;
+    }
 
-	@Log(message = "添加了{0}角色。", level = LogLevel.INFO)
-	@RequiresPermissions("SysRole:create")
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public @ResponseBody String create(@Valid SysRole role) throws JsonProcessingException {
-		GeneralResponseData<SysRole> ret = new GeneralResponseData<SysRole>();
+    @Log(message = "添加了{0}角色。", level = LogLevel.INFO)
+    @RequiresPermissions("SysRole:create")
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public @ResponseBody String create(@Valid SysRole role) throws JsonProcessingException {
+        GeneralResponseData<SysRole> ret = new GeneralResponseData<SysRole>();
 
-		SysRole o = sysRoleService.saveOrUpdate(role);
-		if (o == null) {
-			ret.setStatus(AppConstants.FAILED);
-			ret.setErrCode("1001");
-			ret.setErrMsg(SysErrorCode.MAP.get("1001"));
-		} else {
-			ret.setStatus(AppConstants.SUCCESS);
-			ret.setData(o);
-			setLogObject(new Object[] { role.getName() });
-		}
+        SysRole o = sysRoleService.saveOrUpdate(role);
+        if (o == null) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode("1001");
+            ret.setErrMsg(SysErrorCode.MAP.get("1001"));
+        } else {
+            ret.setStatus(AppConstants.SUCCESS);
+            ret.setData(o);
+            setLogObject(new Object[] { role.getName() });
+        }
 
-		return mapper.writeValueAsString(ret);
-	}
+        return mapper.writeValueAsString(ret);
+    }
 
-	@Log(message = "删除了{0}角色。", level = LogLevel.INFO)
-	@RequiresPermissions("SysRole:delete")
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-	public @ResponseBody String delete(@PathVariable Integer id) throws JsonProcessingException {
-		GeneralResponseData<String> ret = new GeneralResponseData<String>();
-		sysRoleService.delete(id);
-		ret.setStatus(AppConstants.SUCCESS);
-		setLogObject(new Object[] { id });
-		return mapper.writeValueAsString(ret);
-	}
+    @Log(message = "删除了{0}角色。", level = LogLevel.INFO)
+    @RequiresPermissions("SysRole:delete")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public @ResponseBody String delete(@PathVariable Integer id) throws JsonProcessingException {
+        GeneralResponseData<String> ret = new GeneralResponseData<String>();
 
-	@ModelAttribute("preload")
-	public SysRole preload(@RequestParam(value = "id", required = false) Integer id) {
-		if (id != null) {
-			SysRole role = sysRoleService.get(id);
-			return role;
-		}
-		return null;
-	}
+        if (id == 1) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.ADMIN_CANNOT_DELETE);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.ADMIN_CANNOT_DELETE));
+            return mapper.writeValueAsString(ret);
+        }
+        sysRoleService.delete(id);
+        ret.setStatus(AppConstants.SUCCESS);
+        setLogObject(new Object[] { id });
+        return mapper.writeValueAsString(ret);
+    }
 
-	@RequiresPermissions("SysRole:update")
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-	public String preUpdate(@PathVariable Integer id, Map<String, Object> map) {
-		SysRole role = sysRoleService.get(id);
-		map.put("role", role);
-		return UPDATE;
-	}
+    @ModelAttribute("preload")
+    public SysRole preload(@RequestParam(value = "id", required = false) Integer id) {
+        if (id != null) {
+            SysRole role = sysRoleService.get(id);
+            return role;
+        }
+        return null;
+    }
 
-	@Log(message = "修改了{0}角色的信息。", level = LogLevel.INFO)
-	@RequiresPermissions("SysRole:update")
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody String update(@Valid @ModelAttribute("preload") SysRole role)
-	        throws JsonProcessingException {
-		GeneralResponseData<SysRole> ret = new GeneralResponseData<SysRole>();
+    @RequiresPermissions("SysRole:update")
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public String preUpdate(@PathVariable Integer id, Map<String, Object> map) {
+        SysRole role = sysRoleService.get(id);
+        map.put("role", role);
+        return UPDATE;
+    }
 
-		SysRole o = sysRoleService.saveOrUpdate(role);
-		if (o == null) {
-			ret.setStatus(AppConstants.FAILED);
-			ret.setErrCode("1001");
-			ret.setErrMsg(SysErrorCode.MAP.get("1001"));
-		} else {
-			ret.setStatus(AppConstants.SUCCESS);
-			ret.setData(o);
-			setLogObject(new Object[] { role.getName() });
-		}
+    @Log(message = "修改了{0}角色的信息。", level = LogLevel.INFO)
+    @RequiresPermissions("SysRole:update")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public @ResponseBody String update(@Valid @ModelAttribute("preload") SysRole role) throws JsonProcessingException {
+        GeneralResponseData<SysRole> ret = new GeneralResponseData<SysRole>();
 
-		return mapper.writeValueAsString(ret);
-	}
+        SysRole o = sysRoleService.saveOrUpdate(role);
+        if (o == null) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode("1001");
+            ret.setErrMsg(SysErrorCode.MAP.get("1001"));
+        } else {
+            ret.setStatus(AppConstants.SUCCESS);
+            ret.setData(o);
+            setLogObject(new Object[] { role.getName() });
+        }
 
-	@RequiresPermissions(value = { "SysRole:view", "SysRole:create", "SysRole:update", "SysRole:delete" }, logical = Logical.OR)
-	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public String list(ServletRequest request, Pager pager, Map<String, Object> map) {
-		Specification<SysRole> specification = DynamicSpecifications.buildSpecification(request, SysRole.class);
-		List<SysRole> roles = sysRoleService.findByPageable(specification, pager);
-		map.put("pager", pager);
-		map.put("roles", roles);
+        return mapper.writeValueAsString(ret);
+    }
 
-		return LIST;
-	}
+    @RequiresPermissions(value = { "SysRole:view", "SysRole:create", "SysRole:update", "SysRole:delete" }, logical = Logical.OR)
+    @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
+    public String list(ServletRequest request, Pager pager, Map<String, Object> map) {
+        Specification<SysRole> specification = DynamicSpecifications.buildSpecification(request, SysRole.class);
+        List<SysRole> roles = sysRoleService.findByPageable(specification, pager);
+        map.put("pager", pager);
+        map.put("roles", roles);
 
-	@RequiresPermissions("SysRole:view")
-	@RequestMapping(value = "/json", method = RequestMethod.GET)
-	public @ResponseBody String json(@RequestParam(value = "filter", required = false) String filter)
-	        throws JsonProcessingException {
-		GeneralResponseData<List<SysRole>> ret = new GeneralResponseData<List<SysRole>>();
+        return LIST;
+    }
 
-		List<SysRole> list = new ArrayList<SysRole>();
-		if (filter != null) {
-			SearchFilter sf = new SearchFilter();
-			Rule rule = new Rule();
-			rule.setField("name");
-			rule.setOperator(OperatorEum.LIKE);
-			rule.setData(filter);
-			sf.addRule(rule);
-			Specification<SysRole> specification = DynamicSpecifications.buildSpecification(sf, SysRole.class);
+    @RequiresPermissions("SysRole:view")
+    @RequestMapping(value = "/json", method = RequestMethod.GET)
+    public @ResponseBody String json(@RequestParam(value = "filter", required = false) String filter)
+            throws JsonProcessingException {
+        GeneralResponseData<List<SysRole>> ret = new GeneralResponseData<List<SysRole>>();
 
-			list = sysRoleService.findAll(specification);
-		} else {
-			list = sysRoleService.findAll();
-		}
+        List<SysRole> list = new ArrayList<SysRole>();
+        if (filter != null) {
+            SearchFilter sf = new SearchFilter();
+            Rule rule = new Rule();
+            rule.setField("name");
+            rule.setOperator(OperatorEum.LIKE);
+            rule.setData(filter);
+            sf.addRule(rule);
+            Specification<SysRole> specification = DynamicSpecifications.buildSpecification(sf, SysRole.class);
 
-		ret.setStatus(AppConstants.SUCCESS);
-		ret.setData(list);
+            list = sysRoleService.findAll(specification);
+        } else {
+            list = sysRoleService.findAll();
+        }
 
-		return mapper.writeValueAsString(ret);
-	}
+        ret.setStatus(AppConstants.SUCCESS);
+        ret.setData(list);
 
+        return mapper.writeValueAsString(ret);
+    }
+
+    @RequiresPermissions("SysRole:view")
+    @RequestMapping(value = "/view/{id}", method = { RequestMethod.GET })
+    public String view(@PathVariable Integer id, Map<String, Object> map) {
+        SysRole role = sysRoleService.get(id);
+
+        map.put("role", role);
+        return VIEW;
+    }
 }

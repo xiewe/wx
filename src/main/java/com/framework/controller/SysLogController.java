@@ -52,6 +52,8 @@ public class SysLogController {
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list(ServletRequest request, Pager pager, Map<String, Object> map) {
 		Specification<SysLog> specification = DynamicSpecifications.buildSpecification(request, SysLog.class);
+		pager.setOrderField("createTime");
+		pager.setOrderDirection("desc");
 		List<SysLog> logs = sysLogService.findByPageable(specification, pager);
 		map.put("pager", pager);
 		map.put("logs", logs);

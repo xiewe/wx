@@ -2,7 +2,7 @@
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
 <div class="row main-content">
-    <form class="form-horizontal" role="form" method="post" action="${contextPath }/org/create" onsubmit="return doSave(this, '${contextPath }/org/list');">
+    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/org/create" onsubmit="return doSave(this, '${contextPath }/org/list');">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">名称</label>
             <div class="col-sm-10">
@@ -35,6 +35,28 @@
     </form>
 </div>
 <script type="text/javascript">
-
-
+    $(document).ready(function() {
+        $('#saveForm').bootstrapValidator({
+            feedbackIcons : {
+                valid : 'glyphicon glyphicon-ok',
+                invalid : 'glyphicon glyphicon-remove',
+                validating : 'glyphicon glyphicon-refresh'
+            },
+            fields : {
+                name : {
+                    validators : {
+                        notEmpty : {
+                        },
+                        stringLength : {
+                            min : 6,
+                            max : 30
+                        },
+                        regexp : {
+                            regexp : /^[a-zA-Z0-9_\.]+$/
+                        }
+                    }
+                }
+            }
+        });
+    });
 </script>

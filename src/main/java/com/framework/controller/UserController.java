@@ -78,6 +78,13 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	public @ResponseBody String delete(@PathVariable Long id) throws JsonProcessingException {
 		GeneralResponseData<String> ret = new GeneralResponseData<String>();
+        if (id == 1) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.ADMIN_CANNOT_DELETE);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.ADMIN_CANNOT_DELETE));
+            return mapper.writeValueAsString(ret);
+        }
+        
 		sysUserService.delete(id);
 		shiroRealm.clearAllCachedAuthorizationInfo();
 		ret.setStatus(AppConstants.SUCCESS);

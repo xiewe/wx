@@ -67,8 +67,8 @@ public class OrgController extends BaseController {
         SysOrganization o = sysOrganizationService.saveOrUpdate(org);
         if (o == null) {
             ret.setStatus(AppConstants.FAILED);
-            ret.setErrCode("1001");
-            ret.setErrMsg(SysErrorCode.MAP.get("1001"));
+            ret.setErrCode(SysErrorCode.SAVE_FAILED);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.SAVE_FAILED));
         } else {
             ret.setStatus(AppConstants.SUCCESS);
             ret.setData(o);
@@ -120,8 +120,8 @@ public class OrgController extends BaseController {
         SysOrganization o = sysOrganizationService.saveOrUpdate(org);
         if (o == null) {
             ret.setStatus(AppConstants.FAILED);
-            ret.setErrCode("1001");
-            ret.setErrMsg(SysErrorCode.MAP.get("1001"));
+            ret.setErrCode(SysErrorCode.SAVE_FAILED);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.SAVE_FAILED));
         } else {
             ret.setStatus(AppConstants.SUCCESS);
             ret.setData(o);

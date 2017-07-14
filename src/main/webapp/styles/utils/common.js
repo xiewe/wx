@@ -214,6 +214,8 @@ function clearAllSearchContent(divid) {
     for (var i = 0; i < selects.length; i++) {
         selects[i].options[0].selected = true; // select选择第一项
     }
+
+    return false;
 }
 
 // save
@@ -352,14 +354,13 @@ function loadListener() {
 
     $('table tbody tr').on('click', function(e) {
         // e.preventDefault();
-        $(this).parent().find('tr').removeClass('success');
-        $(this).addClass('success');
-        //        
-        // if ($(this).hasClass('success')) {
-        // $(this).removeClass('success');
-        // } else {
-        // $(this).addClass('success');
-        // }
+        $(this).siblings('tr').removeClass('success');
+
+        if ($(this).hasClass('success')) {
+            $(this).removeClass('success');
+        } else {
+            $(this).addClass('success');
+        }
     })
 
 }
