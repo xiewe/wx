@@ -2,7 +2,7 @@
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
 <div class="row main-content">
-    <form class="form-horizontal" role="form" method="post" action="${contextPath }/org/update" onsubmit="return doSave(this, '${contextPath }/org/list');">
+    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/org/update" onsubmit="return doSave(this, '${contextPath }/org/list');">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">名称</label>
             <div class="col-sm-10">
@@ -30,7 +30,7 @@
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">描述</label>
             <div class="col-sm-10">
-                <textarea class="form-control" rows="3" name="description" placeholder="请输入描述" >${org.description }</textarea>
+                <textarea class="form-control" rows="3" name="description" placeholder="请输入描述">${org.description }</textarea>
             </div>
         </div>
         <div class="form-group">
@@ -41,3 +41,46 @@
         </div>
     </form>
 </div>
+<script type="text/javascript">
+    function doSave(form, listUrl) {
+        $(form).data("bootstrapValidator").validate();
+        var flag = $(form).data("bootstrapValidator").isValid();
+        if (flag) {
+            _doSave(form, listUrl);
+        }
+        return false;
+    }
+
+    $(document).ready(function() {
+
+        $('#saveForm').bootstrapValidator({
+            feedbackIcons : {
+                valid : 'glyphicon glyphicon-ok',
+                invalid : 'glyphicon glyphicon-remove',
+                validating : 'glyphicon glyphicon-refresh'
+            },
+            fields : {
+                name : {
+                    validators : {
+                        notEmpty : {},
+                        stringLength : {
+                            min : 1,
+                            max : 45
+                        }
+                    }
+                },
+                description : {
+                    validators : {
+                        notEmpty : {},
+                        stringLength : {
+                            max : 128
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function(e) {
+            e.preventDefault();
+        });
+    });
+    
+</script>

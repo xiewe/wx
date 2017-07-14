@@ -99,7 +99,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p class="text-center">Copyright © 2013-2017 XINWEI All Rights Reserved.</p>
+            <p class="text-center">Copyright © 2017-2017 XINWEI All Rights Reserved.</p>
         </div>
     </footer>
     <!-- Modal begin -->

@@ -4,7 +4,7 @@
 <div class="row main-content">
     <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/org/create" onsubmit="return doSave(this, '${contextPath }/org/list');">
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">名称</label>
+            <label for="name" class="col-sm-2 control-label">名称 *</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="name" placeholder="请输入组织名字">
             </div>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="description" class="col-sm-2 control-label">描述</label>
+            <label for="description" class="col-sm-2 control-label">描述 *</label>
             <div class="col-sm-10">
                 <textarea class="form-control" rows="3" name="description" placeholder="请输入描述"></textarea>
             </div>
@@ -35,7 +35,16 @@
     </form>
 </div>
 <script type="text/javascript">
+    function doSave(form, listUrl) {
+        var flag = $(form).data("bootstrapValidator").isValid();
+        if (flag) {
+            _doSave(form, listUrl);
+        }
+        return false;
+    }
+
     $(document).ready(function() {
+
         $('#saveForm').bootstrapValidator({
             feedbackIcons : {
                 valid : 'glyphicon glyphicon-ok',
@@ -45,18 +54,24 @@
             fields : {
                 name : {
                     validators : {
-                        notEmpty : {
-                        },
+                        notEmpty : {},
                         stringLength : {
-                            min : 6,
-                            max : 30
-                        },
-                        regexp : {
-                            regexp : /^[a-zA-Z0-9_\.]+$/
+                            min : 1,
+                            max : 45
+                        }
+                    }
+                },
+                description : {
+                    validators : {
+                        notEmpty : {},
+                        stringLength : {
+                            max : 128
                         }
                     }
                 }
             }
+        }).on('success.form.bv', function(e) {
+            e.preventDefault();
         });
     });
 </script>

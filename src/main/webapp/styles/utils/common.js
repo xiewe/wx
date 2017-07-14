@@ -219,7 +219,7 @@ function clearAllSearchContent(divid) {
 }
 
 // save
-function doSave(form, listUrl) {
+function _doSave(form, listUrl) {
     var $form = $(form);
 
     var url = $form.attr('action');
@@ -293,7 +293,7 @@ function goToN(e, n) {
 }
 function goToPre(e) {
     e.preventDefault();
-    var curr = $('.pager-list li.active a').text();
+    var curr = parseInt($('.pager-list li.active a').text());
 
     if (curr <= 1) {
         pagerChange({
@@ -301,24 +301,24 @@ function goToPre(e) {
         });
     } else {
         pagerChange({
-            "currPage" : parseInt(curr) - 1
+            "currPage" : curr - 1
         });
     }
 }
 function goToNext(e) {
     e.preventDefault();
-    var curr = $('.pager-list li.active a').text();
+    var curr = parseInt($('.pager-list li.active a').text());
     var form = $('#searchForm').get(0);
     var totalPage = 1;
     if (form)
-        totalPage = form["totalPage"].value;
+        totalPage = parseInt(form["totalPage"].value);
     if (curr >= totalPage) {
         pagerChange({
             "currPage" : curr
         });
     } else {
         pagerChange({
-            "currPage" : parseInt(curr) + 1
+            "currPage" : curr + 1
         });
     }
 }
