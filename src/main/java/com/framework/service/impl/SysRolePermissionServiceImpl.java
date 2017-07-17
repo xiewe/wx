@@ -13,50 +13,51 @@ import com.framework.service.SysRolePermissionService;
 import com.framework.utils.pager.Pager;
 
 @Service
-@Transactional
 public class SysRolePermissionServiceImpl implements SysRolePermissionService {
 
-	@Autowired
-	private SysRolePermissionDAO oDao;
+    @Autowired
+    private SysRolePermissionDAO oDao;
 
-	@Override
-	public SysRolePermission get(Integer id) {
-		return oDao.findOne(id);
-	}
+    @Override
+    public SysRolePermission get(Integer id) {
+        return oDao.findOne(id);
+    }
 
-	@Override
-	public SysRolePermission saveOrUpdate(SysRolePermission o) {
-		return oDao.save(o);
-	}
+    @Transactional
+    @Override
+    public SysRolePermission saveOrUpdate(SysRolePermission o) {
+        return oDao.save(o);
+    }
 
-	@Override
-	public void delete(Integer id) {
-		oDao.delete(id);
-	}
+    @Transactional
+    @Override
+    public void delete(Integer id) {
+        oDao.delete(id);
+    }
 
-	@Override
-	public List<SysRolePermission> findAll(Pager pager) {
-		org.springframework.data.domain.Page<SysRolePermission> springDataPage = oDao.findAll(pager.parsePageable());
-		pager.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
-	}
+    @Override
+    public List<SysRolePermission> findAll(Pager pager) {
+        org.springframework.data.domain.Page<SysRolePermission> springDataPage = oDao.findAll(pager.parsePageable());
+        pager.setTotalCount(springDataPage.getTotalElements());
+        return springDataPage.getContent();
+    }
 
-	@Override
-	public List<SysRolePermission> findByPageable(Specification<SysRolePermission> specification, Pager pager) {
-		org.springframework.data.domain.Page<SysRolePermission> springDataPage = oDao.findAll(specification,
-		        pager.parsePageable());
-		pager.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
-	}
+    @Override
+    public List<SysRolePermission> findByPageable(Specification<SysRolePermission> specification, Pager pager) {
+        org.springframework.data.domain.Page<SysRolePermission> springDataPage = oDao.findAll(specification,
+                pager.parsePageable());
+        pager.setTotalCount(springDataPage.getTotalElements());
+        return springDataPage.getContent();
+    }
 
-	@Override
-	public List<SysRolePermission> findAll() {
-		return oDao.findAll();
-	}
+    @Override
+    public List<SysRolePermission> findAll() {
+        return oDao.findAll();
+    }
 
-	@Override
-	public List<SysRolePermission> findAll(Specification<SysRolePermission> specification) {
-		return oDao.findAll(specification);
-	}
+    @Override
+    public List<SysRolePermission> findAll(Specification<SysRolePermission> specification) {
+        return oDao.findAll(specification);
+    }
 
 }

@@ -177,7 +177,7 @@ function loadContent(url) {
         $('.main').html(result);
     }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus + " - " + errorThrown);
-        showAlert('错误', '加载错误');
+        showAlert('错误', '加载错误:' + errorThrown);
     }).always(function() {
     });
 }
@@ -232,13 +232,13 @@ function _doSave(form, listUrl) {
         if (result.status == 0) {
             loadContent(listUrl);
             $("#indexModal").modal('hide');
+            $('.main').html(result);
         } else {
-            showAlert('错误', '创建错误');
+            showAlert('错误', '创建错误 - ' + result.errMsg);
         }
-        $('.main').html(result);
     }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus + " - " + errorThrown);
-        showAlert('错误', '创建错误：' + errorThrown);
+        showAlert('错误', '创建错误:' + errorThrown);
     }).always(function() {
     });
 
@@ -258,7 +258,7 @@ function doSearch(form) {
         $('.main').html(result);
     }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus + " - " + errorThrown);
-        showAlert('错误', '查询错误');
+        showAlert('错误', '查询错误:' + errorThrown);
     }).always(function() {
     });
 

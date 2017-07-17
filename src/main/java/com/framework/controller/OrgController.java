@@ -13,7 +13,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,6 +62,15 @@ public class OrgController extends BaseController {
     public @ResponseBody String create(@Valid SysOrganization org) throws JsonProcessingException {
         GeneralResponseData<SysOrganization> ret = new GeneralResponseData<SysOrganization>();
 
+        SysOrganization tmp = sysOrganizationService.findByName(org.getName());
+        if (tmp != null) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.ORG_NAME_DUPLICATE);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.ORG_NAME_DUPLICATE));
+
+            return mapper.writeValueAsString(ret);
+        }
+
         org.setCreateTime(new Date());
         SysOrganization o = sysOrganizationService.saveOrUpdate(org);
         if (o == null) {
@@ -89,7 +97,7 @@ public class OrgController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
-    @ModelAttribute("preload")
+    // @ModelAttribute("preload")
     public SysOrganization preload(@RequestParam(value = "id", required = false) Integer id) {
         if (id != null) {
             SysOrganization org = sysOrganizationService.get(id);
@@ -112,9 +120,18 @@ public class OrgController extends BaseController {
     @Log(message = "修改了{0}组织的信息。", level = LogLevel.INFO)
     @RequiresPermissions("SysOrganization:update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public @ResponseBody String update(@Valid @ModelAttribute("preload") SysOrganization org)
+    public @ResponseBody String update(@Valid SysOrganization org) // @ModelAttribute("preload")
             throws JsonProcessingException {
         GeneralResponseData<SysOrganization> ret = new GeneralResponseData<SysOrganization>();
+
+        SysOrganization tmp = sysOrganizationService.findByName(org.getName());
+        if (tmp != null && tmp.getId() != org.getId()) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.ORG_NAME_DUPLICATE);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.ORG_NAME_DUPLICATE));
+
+            return mapper.writeValueAsString(ret);
+        }
 
         org.setModifyTime(new Date());
         SysOrganization o = sysOrganizationService.saveOrUpdate(org);

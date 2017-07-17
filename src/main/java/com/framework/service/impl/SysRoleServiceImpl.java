@@ -14,54 +14,60 @@ import com.framework.shiro.ShiroRealm;
 import com.framework.utils.pager.Pager;
 
 @Service
-@Transactional
 public class SysRoleServiceImpl implements SysRoleService {
 
-	@Autowired
-	private SysRoleDAO oDao;
+    @Autowired
+    private SysRoleDAO oDao;
 
-	@Autowired
-	private ShiroRealm shiroRealm;
+    @Autowired
+    private ShiroRealm shiroRealm;
 
-	@Override
-	public SysRole get(Integer id) {
-		return oDao.findOne(id);
-	}
+    @Override
+    public SysRole get(Integer id) {
+        return oDao.findOne(id);
+    }
 
-	@Override
-	public SysRole saveOrUpdate(SysRole o) {
-		shiroRealm.clearAllCachedAuthorizationInfo();
-		return oDao.save(o);
-	}
+    @Transactional
+    @Override
+    public SysRole saveOrUpdate(SysRole o) {
+        shiroRealm.clearAllCachedAuthorizationInfo();
+        return oDao.save(o);
+    }
 
-	@Override
-	public void delete(Integer id) {
-		oDao.delete(id);
-		shiroRealm.clearAllCachedAuthorizationInfo();
-	}
+    @Transactional
+    @Override
+    public void delete(Integer id) {
+        oDao.delete(id);
+        shiroRealm.clearAllCachedAuthorizationInfo();
+    }
 
-	@Override
-	public List<SysRole> findAll(Pager pager) {
-		org.springframework.data.domain.Page<SysRole> springDataPage = oDao.findAll(pager.parsePageable());
-		pager.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
-	}
+    @Override
+    public List<SysRole> findAll(Pager pager) {
+        org.springframework.data.domain.Page<SysRole> springDataPage = oDao.findAll(pager.parsePageable());
+        pager.setTotalCount(springDataPage.getTotalElements());
+        return springDataPage.getContent();
+    }
 
-	@Override
-	public List<SysRole> findByPageable(Specification<SysRole> specification, Pager pager) {
-		org.springframework.data.domain.Page<SysRole> springDataPage = oDao.findAll(specification,
-		        pager.parsePageable());
-		pager.setTotalCount(springDataPage.getTotalElements());
-		return springDataPage.getContent();
-	}
+    @Override
+    public List<SysRole> findByPageable(Specification<SysRole> specification, Pager pager) {
+        org.springframework.data.domain.Page<SysRole> springDataPage = oDao.findAll(specification,
+                pager.parsePageable());
+        pager.setTotalCount(springDataPage.getTotalElements());
+        return springDataPage.getContent();
+    }
 
-	@Override
-	public List<SysRole> findAll() {
-		return oDao.findAll();
-	}
+    @Override
+    public List<SysRole> findAll() {
+        return oDao.findAll();
+    }
 
-	@Override
-	public List<SysRole> findAll(Specification<SysRole> specification) {
-		return oDao.findAll(specification);
-	}
+    @Override
+    public List<SysRole> findAll(Specification<SysRole> specification) {
+        return oDao.findAll(specification);
+    }
+
+    @Override
+    public SysRole findByName(String name) {
+        return oDao.findByName(name);
+    }
 }

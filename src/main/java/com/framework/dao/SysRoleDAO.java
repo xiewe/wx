@@ -8,5 +8,5 @@ import com.framework.entity.SysRole;
 public interface SysRoleDAO extends
 		JpaRepository<SysRole, Integer>,
 		JpaSpecificationExecutor<SysRole> {
-
+    SysRole findByName(String name);
 }

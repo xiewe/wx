@@ -70,11 +70,20 @@ public class RoleController extends BaseController {
     public @ResponseBody String create(@Valid SysRole role) throws JsonProcessingException {
         GeneralResponseData<SysRole> ret = new GeneralResponseData<SysRole>();
 
+        SysRole tmp = sysRoleService.findByName(role.getName());
+        if (tmp != null) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.ROLE_NAME_DUPLICATE);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.ROLE_NAME_DUPLICATE));
+
+            return mapper.writeValueAsString(ret);
+        }
+
         SysRole o = sysRoleService.saveOrUpdate(role);
         if (o == null) {
             ret.setStatus(AppConstants.FAILED);
-            ret.setErrCode("1001");
-            ret.setErrMsg(SysErrorCode.MAP.get("1001"));
+            ret.setErrCode(SysErrorCode.SAVE_FAILED);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.SAVE_FAILED));
         } else {
             ret.setStatus(AppConstants.SUCCESS);
             ret.setData(o);
@@ -125,11 +134,20 @@ public class RoleController extends BaseController {
     public @ResponseBody String update(@Valid @ModelAttribute("preload") SysRole role) throws JsonProcessingException {
         GeneralResponseData<SysRole> ret = new GeneralResponseData<SysRole>();
 
+        SysRole tmp = sysRoleService.findByName(role.getName());
+        if (tmp != null && tmp.getId() != role.getId()) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.ROLE_NAME_DUPLICATE);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.ROLE_NAME_DUPLICATE));
+
+            return mapper.writeValueAsString(ret);
+        }
+
         SysRole o = sysRoleService.saveOrUpdate(role);
         if (o == null) {
             ret.setStatus(AppConstants.FAILED);
-            ret.setErrCode("1001");
-            ret.setErrMsg(SysErrorCode.MAP.get("1001"));
+            ret.setErrCode(SysErrorCode.SAVE_FAILED);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.SAVE_FAILED));
         } else {
             ret.setStatus(AppConstants.SUCCESS);
             ret.setData(o);

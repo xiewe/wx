@@ -23,4 +23,6 @@ public interface SysOrganizationService {
     List<SysOrganization> findByPageable(Specification<SysOrganization> specification, Pager page);
 
     List<SysOrganization> findByIdIn(List<Integer> ids);
+
+    SysOrganization findByName(String name);
 }

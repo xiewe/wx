@@ -28,13 +28,13 @@
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label for="search_LIKE_sysRole.id" class="control-label col-md-1 col-sm-6">角色:</label>
+                <label for="search_EQ_sysRole.id" class="control-label col-md-1 col-sm-6">角色:</label>
                 <div class="col-md-3 col-sm-6">
-                    <input type="text" class="form-control" placeholder="请输入角色" name="search_LIKE_sysRole.id" value="${param.search_LIKE_sysRole.id}" />
+                    <input type="text" class="form-control" placeholder="请输入角色" name="search_EQ_sysRole.id" value="${param.search_EQ_sysRole.id}" />
                 </div>
-                <label for="search_LIKE_sysOrganization.id" class="control-label col-md-1 col-sm-6">部门:</label>
+                <label for="search_EQ_sysOrganization.id" class="control-label col-md-1 col-sm-6">部门:</label>
                 <div class="col-md-3 col-sm-6">
-                    <input type="text" class="form-control" placeholder="请输入部门" name="search_LIKE_sysOrganization.id" value="${param.search_LIKE_sysOrganization.id}" />
+                    <input type="text" class="form-control" placeholder="请输入部门" name="search_EQ_sysOrganization.id" value="${param.search_EQ_sysOrganization.id}" />
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <button type="submit" class="btn btn-default btn-sm doSearch">查询</button>

@@ -8,17 +8,19 @@ import com.framework.entity.SysRole;
 import com.framework.utils.pager.Pager;
 
 public interface SysRoleService {
-	SysRole get(Integer id);
+    SysRole get(Integer id);
 
-	SysRole saveOrUpdate(SysRole o);
+    SysRole saveOrUpdate(SysRole o);
 
-	void delete(Integer id);
+    void delete(Integer id);
 
-	List<SysRole> findAll();
+    List<SysRole> findAll();
 
-	List<SysRole> findAll(Specification<SysRole> specification);
+    List<SysRole> findAll(Specification<SysRole> specification);
 
-	List<SysRole> findAll(Pager page);
+    List<SysRole> findAll(Pager page);
 
-	List<SysRole> findByPageable(Specification<SysRole> specification, Pager page);
+    List<SysRole> findByPageable(Specification<SysRole> specification, Pager page);
+
+    SysRole findByName(String name);
 }
