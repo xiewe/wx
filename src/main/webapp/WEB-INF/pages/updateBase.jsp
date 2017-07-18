@@ -120,6 +120,11 @@
                     validators : {
                         emailAddress : {}
                     }
+                },
+                'sysRole.id' : {
+                    validators : {
+                        notEmpty : {}
+                    }
                 }
             }
         }).on('success.form.bv', function(e) {

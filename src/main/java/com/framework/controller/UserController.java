@@ -1,5 +1,6 @@
 package com.framework.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +87,12 @@ public class UserController extends BaseController {
         if (user.getSysOrganization().getId() == null) {
             user.setSysOrganization(null);
         }
+        if (user.getSysRole().getId() == null) {
+            user.setSysRole(null);
+        }
+        user.setStatus(0);
+        user.setCreateTime(new Date());
+        user.setPlainPassword(user.getPassword());
         SysUser o = sysUserService.saveOrUpdate(user);
         if (o == null) {
             ret.setStatus(AppConstants.FAILED);
@@ -94,7 +101,7 @@ public class UserController extends BaseController {
         } else {
             ret.setStatus(AppConstants.SUCCESS);
             ret.setData(o);
-            setLogObject(new Object[] { user.getUid() + "-" + user.getUsername() });
+            setLogObject(new Object[] { user.getUsername() });
         }
 
         return mapper.writeValueAsString(ret);
@@ -165,6 +172,10 @@ public class UserController extends BaseController {
         if (user.getSysOrganization().getId() == null) {
             user.setSysOrganization(null);
         }
+        if (user.getSysRole().getId() == null) {
+            user.setSysRole(null);
+        }
+        user.setModifyTime(new Date());
         SysUser o = sysUserService.saveOrUpdate(user);
         if (o == null) {
             ret.setStatus(AppConstants.FAILED);
@@ -173,7 +184,7 @@ public class UserController extends BaseController {
         } else {
             ret.setStatus(AppConstants.SUCCESS);
             ret.setData(o);
-            setLogObject(new Object[] { user.getUid() + "-" + user.getUsername() });
+            setLogObject(new Object[] { user.getUsername() });
         }
 
         shiroRealm.clearAllCachedAuthorizationInfo();

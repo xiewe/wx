@@ -32,7 +32,15 @@
                 <div class="col-md-3 col-sm-6">
                     <input type="text" class="form-control" placeholder="请输入日志关键字" name="search_LIKE_message" value="${param.search_LIKE_message}" />
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <label for="search_GTE_createTime" class="control-label col-md-1 col-sm-6">开始时间:</label>
+                <div class="col-md-2 col-sm-6">
+                    <input type="text" name="search_GTE_createTime" value="${param.search_GTE_createTime}" readonly class="form-control datetime_start" data-date-format="yyyy-mm-dd hh:ii:ss">
+                </div>
+                <label for="search_LTE_createTime" class="control-label col-md-1 col-sm-6">结束时间:</label>
+                <div class="col-md-2 col-sm-6">
+                    <input type="text" name="search_LTE_createTime" value="${param.search_LTE_createTime}" readonly class="form-control datetime_end" data-date-format="yyyy-mm-dd hh:ii:ss">
+                </div>
+                <div class="col-md-2 col-sm-6">
                     <button type="submit" class="btn btn-default btn-sm doSearch">查询</button>
                     <button type="submit" class="btn btn-default btn-sm" onclick="javascript:clearAllSearchContent('searchDiv');return false;">清除</button>
                 </div>
@@ -75,5 +83,25 @@
 <script type="text/javascript">
     $(function() {
         $("[data-toggle='tooltip']").tooltip();
+
+        $(".datetime_start").datetimepicker({
+            language:  'zh-CN',
+            weekStart : 1,
+            todayBtn : 1,
+            autoclose : 1,
+            todayHighlight : 1,
+            startView : 2,
+            forceParse : 0
+        });
+        $(".datetime_end").datetimepicker({
+            language:  'zh-CN',
+            weekStart : 1,
+            todayBtn : 1,
+            autoclose : 1,
+            todayHighlight : 1,
+            startView : 2,
+            forceParse : 0
+        });
+
     });
 </script>

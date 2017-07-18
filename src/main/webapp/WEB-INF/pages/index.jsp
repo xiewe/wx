@@ -14,6 +14,7 @@
 <!-- Bootstrap core CSS -->
 <link href="${contextPath}/styles/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${contextPath}/styles/bootstrapvalidator/css/bootstrapValidator.min.css" rel="stylesheet">
+<link href="${contextPath}/styles/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <link href="${contextPath}/styles/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -125,6 +126,8 @@
     <script src="${contextPath}/styles/bootstrap/js/bootstrap.min.js"></script>
     <script src="${contextPath}/styles/bootstrapvalidator/js/bootstrapValidator.min.js"></script>
     <script src="${contextPath}/styles/bootstrapvalidator/js/language/zh_CN.js"></script>
+    <script src="${contextPath}/styles/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="${contextPath}/styles/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
     <script src="${contextPath}/styles/utils/common.js?v=${date}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

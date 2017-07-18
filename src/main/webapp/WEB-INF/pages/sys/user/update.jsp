@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="sysRole.id" class="col-sm-2 control-label">角色</label>
+            <label for="sysRole.id" class="col-sm-2 control-label">角色 *</label>
             <div class="col-sm-10">
                 <select class="form-control" name="sysRole.id">
                     <option value=""></option>
@@ -119,6 +119,11 @@
                 email : {
                     validators : {
                         emailAddress : {}
+                    }
+                },
+                'sysRole.id' : {
+                    validators : {
+                        notEmpty : {}
                     }
                 }
             }
