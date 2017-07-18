@@ -16,99 +16,145 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.framework.AppConstants;
+import com.framework.SysErrorCode;
+import com.framework.entity.GeneralResponseData;
 import com.framework.entity.SysMenu;
+import com.framework.entity.SysOrganization;
+import com.framework.entity.SysRole;
 import com.framework.entity.SysUser;
 import com.framework.exception.ServiceException;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
 import com.framework.service.SysMenuService;
+import com.framework.service.SysOrganizationService;
+import com.framework.service.SysRoleService;
 import com.framework.service.SysUserService;
 
 @Controller
 @RequestMapping("/")
 public class IndexController extends BaseController {
 
-	@Autowired
-	private SysMenuService sysMenuService;
+    @Autowired
+    private SysMenuService sysMenuService;
 
-	@Autowired
-	private SysUserService sysUserService;
+    @Autowired
+    private SysUserService sysUserService;
 
-	private static final String INDEX = "index";
-	private static final String UPDATE_PASSWORD = "updatePwd";
-	private static final String UPDATE_BASE = "updateBase";
+    @Autowired
+    private SysRoleService sysRoleService;
 
-	@RequiresUser
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index(ServletRequest request, Map<String, Object> map) {
-		SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
-		map.put(AppConstants.LOGIN_USER, user);
+    @Autowired
+    private SysOrganizationService sysOrganizationService;
 
-		List<SysMenu> listMenu = new ArrayList<SysMenu>();
-		listMenu = sysMenuService.findByRoleId(user.getSysRole().getId());
+    ObjectMapper mapper = new ObjectMapper();
+    private static final String INDEX = "index";
+    private static final String UPDATE_PASSWORD = "updatePwd";
+    private static final String UPDATE_BASE = "updateBase";
 
-		listMenu.sort(new Comparator<SysMenu>() {
+    @RequiresUser
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index(ServletRequest request, Map<String, Object> map) {
+        SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        map.put(AppConstants.LOGIN_USER, user);
 
-			@Override
-			public int compare(SysMenu o1, SysMenu o2) {
-				return o1.getId() - o2.getId();
-			}
+        List<SysMenu> listMenu = new ArrayList<SysMenu>();
+        listMenu = sysMenuService.findByRoleId(user.getSysRole().getId());
 
-		});
-		map.put("menu", listMenu);
-		map.put("date", new Date().getTime());
+        listMenu.sort(new Comparator<SysMenu>() {
 
-		return INDEX;
-	}
+            @Override
+            public int compare(SysMenu o1, SysMenu o2) {
+                return o1.getId() - o2.getId();
+            }
 
-	@RequiresUser
-	@RequestMapping(value = "/updatePwd", method = RequestMethod.GET)
-	public String preUpdatePassword() {
-		return UPDATE_PASSWORD;
-	}
+        });
+        map.put("menu", listMenu);
+        map.put("date", new Date().getTime());
 
-	@Log(message = "{0}用户修改密码成功！", level = LogLevel.DEBUG)
-	@RequiresUser
-	@RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
-	public @ResponseBody String updatePassword(ServletRequest request, String plainPassword, String newPassword,
-	        String rPassword) {
+        return INDEX;
+    }
 
-		SysUser loginUser = (SysUser) org.apache.shiro.SecurityUtils.getSubject().getPrincipal();
+    @RequiresUser
+    @RequestMapping(value = "/updatePwd", method = RequestMethod.GET)
+    public String preUpdatePassword() {
+        return UPDATE_PASSWORD;
+    }
 
-		if (newPassword != null && newPassword.equals(rPassword)) {
-			loginUser.setPlainPassword(plainPassword);
-			try {
-				sysUserService.updatePwd(loginUser, newPassword);
-			} catch (ServiceException e) {
-				return "failed";
-			}
+    @Log(message = "{0}用户修改密码成功！", level = LogLevel.DEBUG)
+    @RequiresUser
+    @RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
+    public @ResponseBody String updatePassword(ServletRequest request, String plainPassword, String newPassword,
+            String rPassword) throws JsonProcessingException {
+        GeneralResponseData<SysUser> ret = new GeneralResponseData<SysUser>();
+        SysUser loginUser = (SysUser) org.apache.shiro.SecurityUtils.getSubject().getPrincipal();
 
-			setLogObject(new Object[] { loginUser.getUsername() });
-			return "success";
-		}
+        if (newPassword != null && newPassword.equals(rPassword)) {
+            loginUser.setPlainPassword(plainPassword);
+            try {
+                sysUserService.updatePwd(loginUser, newPassword);
+                setLogObject(new Object[] { loginUser.getUsername() });
+                ret.setStatus(AppConstants.SUCCESS);
+                ret.setData(null);
+                setLogObject(new Object[] { loginUser.getUid() + "-" + loginUser.getUsername() });
+            } catch (ServiceException e) {
+                ret.setStatus(AppConstants.FAILED);
+                ret.setErrCode(SysErrorCode.USER_PASSWORD_ERROR);
+                ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.USER_PASSWORD_ERROR));
+            }
+        } else {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.SAVE_FAILED);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.SAVE_FAILED));
+        }
 
-		return "failed";
-	}
+        return mapper.writeValueAsString(ret);
+    }
 
-	@RequiresUser
-	@RequestMapping(value = "/updateBase", method = RequestMethod.GET)
-	public String preUpdateBase(Map<String, Object> map) {
-		map.put(AppConstants.LOGIN_USER, ((SysUser) org.apache.shiro.SecurityUtils.getSubject().getPrincipal()));
-		return UPDATE_BASE;
-	}
+    @RequiresUser
+    @RequestMapping(value = "/updateBase", method = RequestMethod.GET)
+    public String preUpdateBase(Map<String, Object> map) {
+        SysUser user = (SysUser) org.apache.shiro.SecurityUtils.getSubject().getPrincipal();
+        map.put(AppConstants.LOGIN_USER, user);
+        map.put("user", user);
+        List<SysRole> roles = sysRoleService.findAll();
+        map.put("roles", roles);
 
-	@Log(message = "{0}修改详细信息成功！", level = LogLevel.DEBUG)
-	@RequiresUser
-	@RequestMapping(value = "/updateBase", method = RequestMethod.POST)
-	public @ResponseBody String updateBase(SysUser user, ServletRequest request) {
-		SysUser loginUser = (SysUser) org.apache.shiro.SecurityUtils.getSubject().getPrincipal();
+        List<SysOrganization> orgs = sysOrganizationService.findAll();
+        map.put("orgs", orgs);
+        return UPDATE_BASE;
+    }
 
-		loginUser.setPhone(user.getPhone());
-		loginUser.setEmail(user.getEmail());
+    @Log(message = "{0}修改详细信息成功！", level = LogLevel.DEBUG)
+    @RequiresUser
+    @RequestMapping(value = "/updateBase", method = RequestMethod.POST)
+    public @ResponseBody String updateBase(SysUser user, ServletRequest request) throws JsonProcessingException {
+        GeneralResponseData<SysUser> ret = new GeneralResponseData<SysUser>();
+        SysUser loginUser = (SysUser) org.apache.shiro.SecurityUtils.getSubject().getPrincipal();
 
-		sysUserService.saveOrUpdate(loginUser);
-		setLogObject(new Object[] { loginUser.getUsername() });
-		return "success";
-	}
+        loginUser.setPhone(user.getPhone());
+        loginUser.setEmail(user.getEmail());
+
+        if (user.getSysRole().getId() == null) {
+            loginUser.setSysRole(null);
+        }
+        if (user.getSysOrganization().getId() == null) {
+            loginUser.setSysOrganization(null);
+        }
+
+        SysUser o = sysUserService.saveOrUpdate(loginUser);
+        if (o == null) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.SAVE_FAILED);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.SAVE_FAILED));
+        } else {
+            ret.setStatus(AppConstants.SUCCESS);
+            ret.setData(o);
+            setLogObject(new Object[] { user.getUid() + "-" + user.getUsername() });
+        }
+
+        return mapper.writeValueAsString(ret);
+    }
 }

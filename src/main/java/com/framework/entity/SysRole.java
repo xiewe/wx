@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -85,6 +86,7 @@ public class SysRole implements java.io.Serializable {
 		this.description = description;
 	}
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysRole", cascade = { CascadeType.ALL })
 	public Set<SysUser> getSysUsers() {
 		return this.sysUsers;

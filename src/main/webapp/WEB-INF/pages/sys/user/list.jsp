@@ -30,11 +30,35 @@
             <div class="form-group form-group-sm">
                 <label for="search_EQ_sysRole.id" class="control-label col-md-1 col-sm-6">角色:</label>
                 <div class="col-md-3 col-sm-6">
-                    <input type="text" class="form-control" placeholder="请输入角色" name="search_EQ_sysRole.id" value="${param.search_EQ_sysRole.id}" />
+                    <select class="form-control" name="search_EQ_sysRole.id">
+                        <option value=""></option>
+                        <c:forEach var="item" items="${roles}">
+                            <c:choose>
+                                <c:when test="${param.search_EQ_sysRole.id == item.id }">
+                                    <option value="${item.id }" selected>${item.name}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${item.id }">${item.name}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
                 </div>
-                <label for="search_EQ_sysOrganization.id" class="control-label col-md-1 col-sm-6">部门:</label>
+                <label for="search_EQ_sysOrganization.id" class="control-label col-md-1 col-sm-6">组织:</label>
                 <div class="col-md-3 col-sm-6">
-                    <input type="text" class="form-control" placeholder="请输入部门" name="search_EQ_sysOrganization.id" value="${param.search_EQ_sysOrganization.id}" />
+                    <select class="form-control" name="search_EQ_sysOrganization.id">
+                        <option value=""></option>
+                        <c:forEach var="item" items="${orgs}">
+                            <c:choose>
+                                <c:when test="${param.search_EQ_sysOrganization.id == item.id }">
+                                    <option value="${item.id }" selected>${item.name}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${item.id }">${item.name}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <button type="submit" class="btn btn-default btn-sm doSearch">查询</button>
@@ -56,6 +80,9 @@
         </shiro:hasPermission>
         <shiro:hasPermission name="SysUser:view">
             <a href="#" class="btn btn-default doView">查看</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="SysUser:update">
+            <a href="#" class="btn btn-default doResetPwd">重置密码</a>
         </shiro:hasPermission>
     </p>
 
@@ -125,6 +152,10 @@
             } else if ($(this).hasClass('doView')) {
                 url = "${contextPath }/user/view/" + id;
                 action = "view";
+            } else if ($(this).hasClass('doResetPwd')) {
+                url = "${contextPath }/user/reset/password/" + id;
+                type = "post";
+                action = "resetpwd";
             } else {
                 console.log('not supported');
                 return;
@@ -156,13 +187,19 @@
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
+                } else if (action == "resetpwd") {
+                    if (result == "success") {
+                        showAlert('提示', "操作成功");
+                        loadContent("${contextPath }/user/list");
+                    } else {
+                        showAlert('提示', "操作失败");
+                    }
                 }
-            }).fail(function(result) {
-                showAlert('错误', '失败原因：' + result);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                showAlert('错误', '失败原因：' + textStatus + " - " + errorThrown);
             }).always(function() {
             });
 
         })
-
     })
 </script>

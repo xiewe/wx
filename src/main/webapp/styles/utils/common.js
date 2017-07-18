@@ -230,9 +230,10 @@ function _doSave(form, listUrl) {
         dataType : 'json'
     }).done(function(result, textStatus, jqXHR) {
         if (result.status == 0) {
-            loadContent(listUrl);
+            if (listUrl != undefined) {
+                loadContent(listUrl);
+            }
             $("#indexModal").modal('hide');
-            $('.main').html(result);
         } else {
             showAlert('错误', '创建错误 - ' + result.errMsg);
         }

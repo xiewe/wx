@@ -5,28 +5,36 @@
     <table class="table table-hover table-condensed" id="tabData">
         <tbody>
             <tr>
-                <td class="text-right">名称</td>
-                <td>${role.name}</td>
+                <td class="text-right">用户名</td>
+                <td>${user.username}</td>
             </tr>
             <tr>
-                <td class="text-right">父组织</td>
-                <td>${role.parentName}</td>
+                <td class="text-right">电话</td>
+                <td>${user.phone}</td>
             </tr>
             <tr>
-                <td class="text-right">描述</td>
-                <td>${role.description}</td>
+                <td class="text-right">邮箱</td>
+                <td>${user.email}</td>
+            </tr>
+            <tr>
+                <td class="text-right">角色</td>
+                <td>${user.sysRole.name}</td>
+            </tr>
+            <tr>
+                <td class="text-right">组织</td>
+                <td>${user.sysOrganization.name}</td>
             </tr>
             <tr>
                 <td class="text-right">创建时间</td>
-                <td><fmt:formatDate value="${role.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                <td><fmt:formatDate value="${user.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
             </tr>
             <tr>
                 <td class="text-right">修改时间</td>
-                <td><fmt:formatDate value="${role.modifyTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                <td><fmt:formatDate value="${user.modifyTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
             </tr>
         </tbody>
     </table>
-    <div class="col-sm-offset-2 col-sm-10 text-right" style="margin-bottom:20px;">
+    <div class="col-sm-offset-2 col-sm-10 text-right" style="margin-bottom: 20px;">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
     </div>
 </div>

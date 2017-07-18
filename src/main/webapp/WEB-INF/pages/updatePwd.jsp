@@ -2,35 +2,23 @@
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
 <div class="row main-content">
-    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/org/update" onsubmit="return doSave(this, '${contextPath }/org/list');">
+    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/updatePwd" onsubmit="return doSave(this);">
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">名称 *</label>
+            <label for="plainPassword" class="col-sm-2 control-label">老密码 *</label>
             <div class="col-sm-10">
-                <input type="hidden" name="id" value="${org.id}"> <input type="text" class="form-control" name="name" value="${org.name }" placeholder="请输入组织名字">
+                <input type="password" class="form-control" name="plainPassword" placeholder="请输入老密码">
             </div>
         </div>
         <div class="form-group">
-            <label for="parentId" class="col-sm-2 control-label">父组织</label>
+            <label for="newPassword" class="col-sm-2 control-label">新密码 *</label>
             <div class="col-sm-10">
-                <select class="form-control" name="parentId">
-                    <option value=""></option>
-                    <c:forEach var="item" items="${orgs}">
-                        <c:choose>
-                            <c:when test="${org.parentId == item.id }">
-                                <option value="${item.id }" selected>${item.name}</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="${item.id }">${item.name}</option>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </select>
+                <input type="password" class="form-control" name="newPassword" placeholder="请输入新密码">
             </div>
         </div>
         <div class="form-group">
-            <label for="description" class="col-sm-2 control-label">描述 *</label>
+            <label for="rPassword" class="col-sm-2 control-label">重复新密码 *</label>
             <div class="col-sm-10">
-                <textarea class="form-control" rows="3" name="description" placeholder="请输入描述">${org.description }</textarea>
+                <input type="password" class="form-control" name="rPassword" placeholder="请重复输入新密码">
             </div>
         </div>
         <div class="form-group">
@@ -42,11 +30,11 @@
     </form>
 </div>
 <script type="text/javascript">
-    function doSave(form, listUrl) {
+    function doSave(form) {
         $(form).data("bootstrapValidator").validate();
         var flag = $(form).data("bootstrapValidator").isValid();
         if (flag) {
-            _doSave(form, listUrl);
+            _doSave(form);
         }
         return false;
     }
@@ -60,20 +48,24 @@
                 validating : 'glyphicon glyphicon-refresh'
             },
             fields : {
-                name : {
+                plainPassword : {
+                    validators : {
+                        notEmpty : {}
+                    }
+                },
+                newPassword : {
                     validators : {
                         notEmpty : {},
-                        stringLength : {
-                            min : 1,
-                            max : 45
+                        identical : {
+                            field : 'rPassword'
                         }
                     }
                 },
-                description : {
+                rPassword : {
                     validators : {
                         notEmpty : {},
-                        stringLength : {
-                            max : 128
+                        identical : {
+                            field : 'newPassword'
                         }
                     }
                 }
@@ -82,5 +74,4 @@
             e.preventDefault();
         });
     });
-    
 </script>

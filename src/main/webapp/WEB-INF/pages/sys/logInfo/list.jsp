@@ -59,7 +59,7 @@
                         <td>${item.category}</td>
                         <td>${item.username}</td>
                         <td>${item.ip}</td>
-                        <td>${item.userAgent}</td>
+                        <td><a href="#" style="width: 150px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block;" data-toggle="tooltip" title="${item.userAgent}">${item.userAgent}</a></td>
                         <td>${item.message}</td>
                         <td><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                     </tr>
@@ -73,5 +73,7 @@
 </div>
 
 <script type="text/javascript">
-    
+    $(function() {
+        $("[data-toggle='tooltip']").tooltip();
+    });
 </script>

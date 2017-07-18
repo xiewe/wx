@@ -2,21 +2,33 @@
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
 <div class="row main-content">
-    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/role/update" onsubmit="return doSave(this, '${contextPath }/role/list');">
+    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/user/update" onsubmit="return doSave(this, '${contextPath }/user/list');">
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">名称</label>
+            <label for="username" class="col-sm-2 control-label">用户名 *</label>
             <div class="col-sm-10">
-                <input type="hidden" name="id" value="${role.id}"> <input type="text" class="form-control" name="name" value="${role.name }" placeholder="请输入组织名字">
+                <input type="hidden" name="id" value="${user.id}"> <input type="text" class="form-control" name="username" value="${user.username }" placeholder="请输入用户名">
             </div>
         </div>
         <div class="form-group">
-            <label for="parentId" class="col-sm-2 control-label">父组织</label>
+            <label for="phone" class="col-sm-2 control-label">电话</label>
             <div class="col-sm-10">
-                <select class="form-control" name="parentId">
+                <input type="text" class="form-control" name="phone" value="${user.phone }" placeholder="请输入电话">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">邮箱</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="email" value="${user.email }" placeholder="请输入邮箱">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sysRole.id" class="col-sm-2 control-label">角色</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="sysRole.id">
                     <option value=""></option>
                     <c:forEach var="item" items="${roles}">
                         <c:choose>
-                            <c:when test="${role.parentId == item.id }">
+                            <c:when test="${user.sysRole.id == item.id }">
                                 <option value="${item.id }" selected>${item.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -28,9 +40,21 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="description" class="col-sm-2 control-label">描述</label>
+            <label for="sysOrganization.id" class="col-sm-2 control-label">组织</label>
             <div class="col-sm-10">
-                <textarea class="form-control" rows="3" name="description" placeholder="请输入描述" >${role.description }</textarea>
+                <select class="form-control" name="sysOrganization.id">
+                    <option value=""></option>
+                    <c:forEach var="item" items="${orgs}">
+                        <c:choose>
+                            <c:when test="${user.sysOrganization.id == item.id }">
+                                <option value="${item.id }" selected>${item.name}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${item.id }">${item.name}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -60,21 +84,41 @@
                 validating : 'glyphicon glyphicon-refresh'
             },
             fields : {
-                name : {
+                username : {
                     validators : {
                         notEmpty : {},
                         stringLength : {
                             min : 1,
-                            max : 45
+                            max : 32
                         }
                     }
                 },
-                description : {
+                password : {
                     validators : {
                         notEmpty : {},
-                        stringLength : {
-                            max : 128
+                        identical : {
+                            field : 'confirmPassword'
                         }
+                    }
+                },
+                confirmPassword : {
+                    validators : {
+                        notEmpty : {},
+                        identical : {
+                            field : 'password'
+                        }
+                    }
+                },
+                phone : {
+                    validators : {
+                        phone : {
+                            country : 'CN'
+                        }
+                    }
+                },
+                email : {
+                    validators : {
+                        emailAddress : {}
                     }
                 }
             }
@@ -82,5 +126,4 @@
             e.preventDefault();
         });
     });
-    
 </script>

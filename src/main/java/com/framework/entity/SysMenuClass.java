@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -71,6 +72,7 @@ public class SysMenuClass implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "menu_id", nullable = false)
 	public SysMenu getSysMenu() {
@@ -108,6 +110,7 @@ public class SysMenuClass implements java.io.Serializable {
 		this.method = method;
 	}
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sysMenuClass", cascade = { CascadeType.ALL })
 	public Set<SysRolePermission> getSysRolePermissions() {
 		return this.sysRolePermissions;

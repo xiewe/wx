@@ -41,8 +41,8 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="${contextPath}/updateBase"><span>欢迎您，${login_user.username}</span></a></li>
-                    <li><a href="${contextPath}/updatePwd"><span>修改密码</span></a></li>
+                    <li><a href="${contextPath}/updateBase" class="updateSelf"><span>欢迎您，${login_user.username}</span></a></li>
+                    <li><a href="${contextPath}/updatePwd" class="updateSelf"><span>修改密码</span></a></li>
                     <li><a href="${contextPath}/logout"><span style="padding-right: 50px; border-right: 0px">退出</span></a></li>
                 </ul>
             </div>
@@ -130,8 +130,35 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <%-- <script src="${contextPath}/styles/bootstrap/js/ie10-viewport-bug-workaround.js"></script> --%>
     <script type="text/javascript">
-                    
-                </script>
+        $(function() {
+            $('.panel-group .panel-heading span').eq(0).removeClass('glyphicon-plus');
+            $('.panel-group .panel-heading span').eq(0).addClass('glyphicon-minus');
+            $('.panel-group .panel-collapse').eq(0).addClass('in');
+            $('.panel-group .panel-collapse .list-group a').eq(0).addClass('active');
+            loadContent("${contextPath }/org/list");
+            
+            $('.updateSelf').on('click', function(e) {
+                stopBubble(e);
+                stopDefault(e);
+                
+                url = $(this).attr('href');
+                
+                $.ajax({
+                    type : 'get',
+                    url : url
+                }).done(function(result) {
+                    $("#indexModal .modal-header h4").text("修改资料");
+                    $("#indexModal .modal-body").html(result);
+                    $("#indexModal .modal-footer").css('display', 'none');
+                    $("#indexModal").modal('show');
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    showAlert('错误', '失败原因：' + textStatus + " - " + errorThrown);
+                }).always(function() {
+                });
+            })
+            
+        })
+    </script>
 
 </body>
 </html>
