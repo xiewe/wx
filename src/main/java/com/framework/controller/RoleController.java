@@ -29,8 +29,10 @@ import com.framework.AppConstants;
 import com.framework.SysErrorCode;
 import com.framework.entity.GeneralResponseData;
 import com.framework.entity.SysRole;
+import com.framework.entity.SysRolePermission;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
+import com.framework.service.SysRolePermissionService;
 import com.framework.service.SysRoleService;
 import com.framework.utils.pager.Dictionary.OperatorEum;
 import com.framework.utils.pager.DynamicSpecifications;
@@ -45,6 +47,9 @@ public class RoleController extends BaseController {
 
     @Autowired
     private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysRolePermissionService sysRolePermissionService;
 
     ObjectMapper mapper = new ObjectMapper();
     private static final String CREATE = "sys/role/create";
@@ -188,6 +193,19 @@ public class RoleController extends BaseController {
         } else {
             list = sysRoleService.findAll();
         }
+
+        ret.setStatus(AppConstants.SUCCESS);
+        ret.setData(list);
+
+        return mapper.writeValueAsString(ret);
+    }
+
+    @RequiresPermissions("SysRole:view")
+    @RequestMapping(value = "/privs/{rid}", method = RequestMethod.GET)
+    public @ResponseBody String privs(@PathVariable Integer rid) throws JsonProcessingException {
+        GeneralResponseData<List<SysRolePermission>> ret = new GeneralResponseData<List<SysRolePermission>>();
+
+        List<SysRolePermission> list = sysRolePermissionService.findByRoleId(rid);
 
         ret.setStatus(AppConstants.SUCCESS);
         ret.setData(list);

@@ -22,4 +22,5 @@ public interface SysRolePermissionService {
 
 	List<SysRolePermission> findByPageable(Specification<SysRolePermission> specification, Pager page);
 
+    List<SysRolePermission> findByRoleId(Integer rid);
 }

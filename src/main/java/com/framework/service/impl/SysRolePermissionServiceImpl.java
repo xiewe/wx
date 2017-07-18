@@ -60,4 +60,9 @@ public class SysRolePermissionServiceImpl implements SysRolePermissionService {
         return oDao.findAll(specification);
     }
 
+    @Override
+    public List<SysRolePermission> findByRoleId(Integer rid) {
+        return oDao.findByRoleId(rid);
+    }
+
 }
