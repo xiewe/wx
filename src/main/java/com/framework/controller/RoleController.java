@@ -16,7 +16,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,10 +27,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.framework.AppConstants;
 import com.framework.SysErrorCode;
 import com.framework.entity.GeneralResponseData;
+import com.framework.entity.SysMenu;
 import com.framework.entity.SysRole;
 import com.framework.entity.SysRolePermission;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
+import com.framework.service.SysMenuClassService;
+import com.framework.service.SysMenuService;
 import com.framework.service.SysRolePermissionService;
 import com.framework.service.SysRoleService;
 import com.framework.utils.pager.Dictionary.OperatorEum;
@@ -50,6 +52,12 @@ public class RoleController extends BaseController {
 
     @Autowired
     private SysRolePermissionService sysRolePermissionService;
+
+    @Autowired
+    private SysMenuService sysMenuService;
+
+    @Autowired
+    private SysMenuClassService sysMenuClassService;
 
     ObjectMapper mapper = new ObjectMapper();
     private static final String CREATE = "sys/role/create";
@@ -72,7 +80,7 @@ public class RoleController extends BaseController {
     @Log(message = "添加了{0}角色。", level = LogLevel.INFO)
     @RequiresPermissions("SysRole:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public @ResponseBody String create(@Valid SysRole role) throws JsonProcessingException {
+    public @ResponseBody String create(@Valid SysRole role, String ids) throws JsonProcessingException {
         GeneralResponseData<SysRole> ret = new GeneralResponseData<SysRole>();
 
         SysRole tmp = sysRoleService.findByName(role.getName());
@@ -90,8 +98,28 @@ public class RoleController extends BaseController {
             ret.setErrCode(SysErrorCode.SAVE_FAILED);
             ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.SAVE_FAILED));
         } else {
+            // save permissions
+            String[] arrStr = ids.split("=");
+            for (String s : arrStr) {
+                String[] ts = s.split("-");
+                SysRolePermission p = new SysRolePermission();
+                if (ts[1] == null || ts[1].equals("null")) {
+                    p.setSysMenu(sysMenuService.get(Integer.valueOf(ts[0])));
+                    p.setSysMenuClass(null);
+                    p.setSysRole(o);
+                    sysRolePermissionService.saveOrUpdate(p);
+                } else {
+                    if (Integer.valueOf(ts[0]) > 1000) {
+                        p.setSysMenu(sysMenuService.get(Integer.valueOf(ts[1])));
+                        p.setSysMenuClass(sysMenuClassService.get(Integer.valueOf(ts[0])));
+                        p.setSysRole(o);
+                        sysRolePermissionService.saveOrUpdate(p);
+                    }
+                }
+
+            }
+
             ret.setStatus(AppConstants.SUCCESS);
-            ret.setData(o);
             setLogObject(new Object[] { role.getName() });
         }
 
@@ -116,7 +144,7 @@ public class RoleController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
-    @ModelAttribute("preload")
+    // @ModelAttribute("preload")
     public SysRole preload(@RequestParam(value = "id", required = false) Integer id) {
         if (id != null) {
             SysRole role = sysRoleService.get(id);
@@ -136,8 +164,14 @@ public class RoleController extends BaseController {
     @Log(message = "修改了{0}角色的信息。", level = LogLevel.INFO)
     @RequiresPermissions("SysRole:update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public @ResponseBody String update(@Valid @ModelAttribute("preload") SysRole role) throws JsonProcessingException {
+    public @ResponseBody String update(@Valid SysRole role, String ids) throws JsonProcessingException {
         GeneralResponseData<SysRole> ret = new GeneralResponseData<SysRole>();
+        if (role.getId() == 1) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.ADMIN_CANNOT_UPDATE);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.ADMIN_CANNOT_UPDATE));
+            return mapper.writeValueAsString(ret);
+        }
 
         SysRole tmp = sysRoleService.findByName(role.getName());
         if (tmp != null && tmp.getId() != role.getId()) {
@@ -154,8 +188,29 @@ public class RoleController extends BaseController {
             ret.setErrCode(SysErrorCode.SAVE_FAILED);
             ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.SAVE_FAILED));
         } else {
+            sysRolePermissionService.deleteBySysRole(o);
+            // save permissions
+            String[] arrStr = ids.split("=");
+            for (String s : arrStr) {
+                String[] ts = s.split("-");
+                SysRolePermission p = new SysRolePermission();
+                if (ts[1] == null || ts[1].equals("null")) {
+                    p.setSysMenu(sysMenuService.get(Integer.valueOf(ts[0])));
+                    p.setSysMenuClass(null);
+                    p.setSysRole(o);
+                    sysRolePermissionService.saveOrUpdate(p);
+                } else {
+                    if (Integer.valueOf(ts[0]) > 1000) {
+                        p.setSysMenu(sysMenuService.get(Integer.valueOf(ts[1])));
+                        p.setSysMenuClass(sysMenuClassService.get(Integer.valueOf(ts[0])));
+                        p.setSysRole(o);
+                        sysRolePermissionService.saveOrUpdate(p);
+                    }
+                }
+
+            }
+
             ret.setStatus(AppConstants.SUCCESS);
-            ret.setData(o);
             setLogObject(new Object[] { role.getName() });
         }
 
@@ -203,9 +258,9 @@ public class RoleController extends BaseController {
     @RequiresPermissions("SysRole:view")
     @RequestMapping(value = "/privs/{rid}", method = RequestMethod.GET)
     public @ResponseBody String privs(@PathVariable Integer rid) throws JsonProcessingException {
-        GeneralResponseData<List<SysRolePermission>> ret = new GeneralResponseData<List<SysRolePermission>>();
+        GeneralResponseData<List<SysMenu>> ret = new GeneralResponseData<List<SysMenu>>();
 
-        List<SysRolePermission> list = sysRolePermissionService.findByRoleId(rid);
+        List<SysMenu> list = sysMenuService.findByRoleId(rid);
 
         ret.setStatus(AppConstants.SUCCESS);
         ret.setData(list);

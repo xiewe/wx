@@ -171,9 +171,19 @@ public class UserController extends BaseController {
 
         if (user.getSysOrganization().getId() == null) {
             user.setSysOrganization(null);
+        } else {
+            user.setSysOrganization(sysOrganizationService.get(user.getSysOrganization().getId()));
         }
+
         if (user.getSysRole().getId() == null) {
             user.setSysRole(null);
+        } else {
+            SysRole newRole = new SysRole();
+            SysRole oldRole = sysRoleService.get(user.getSysRole().getId());
+            newRole.setId(oldRole.getId());
+            newRole.setName(oldRole.getName());
+            newRole.setDescription(oldRole.getDescription());
+            user.setSysRole(newRole);
         }
         user.setModifyTime(new Date());
         SysUser o = sysUserService.saveOrUpdate(user);

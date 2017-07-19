@@ -138,7 +138,8 @@
             $('.panel-group .panel-heading span').eq(0).addClass('glyphicon-minus');
             $('.panel-group .panel-collapse').eq(0).addClass('in');
             $('.panel-group .panel-collapse .list-group a').eq(0).addClass('active');
-            loadContent("${contextPath }/org/list");
+            var initurl = $('.panel-group .panel-collapse .list-group a').eq(0).data('url');
+            loadContent(initurl);
             
             $('.updateSelf').on('click', function(e) {
                 stopBubble(e);

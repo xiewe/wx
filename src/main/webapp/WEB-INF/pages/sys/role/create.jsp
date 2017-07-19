@@ -19,7 +19,7 @@
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">请选择权限 *</label>
             <div class="col-sm-10">
-                <div class="zTreeDemoBackground" style="width: 400px; overflow: auto; height: 330px;">
+                <div class="zTreeDemoBackground" style="overflow: auto; height: 330px;">
                     <div style="display: none" class="alert alert-danger">权限不能为空，请选择权限！</div>
                     <ul id="treeDemo" class="ztree"></ul>
                     <input type="hidden" name="ids" value="">
@@ -38,9 +38,6 @@
 <script src="${contextPath}/styles/zTree/js/jquery.ztree.excheck.min.js"></script>
 <script type="text/javascript">
     function doSave(form, listUrl) {
-        $(form).data("bootstrapValidator").validate();
-        var flag = $(form).data("bootstrapValidator").isValid();
-
         // tree 
         var zTree = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = zTree.getCheckedNodes();
@@ -51,7 +48,7 @@
         } else {
             $('.alert-danger').css('display', 'none');
             for (var i = 0; i < nodes.length; i++) {
-                ids += nodes[i].id + '-';
+                ids += nodes[i].id + '-' + nodes[i].pId + '=';
             }
             if (ids.length > 0) {
                 ids = ids.substring(0, ids.length - 1);
@@ -59,6 +56,8 @@
             }
         }
 
+        $(form).data("bootstrapValidator").validate();
+        var flag = $(form).data("bootstrapValidator").isValid();
         if (flag) {
             _doSave(form, listUrl);
         }
@@ -111,8 +110,23 @@
             simpleData : {
                 enable : true
             }
+        },
+        callback : {
+            onCheck : zTreeOnCheck
         }
     };
+
+    function zTreeOnCheck() {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        var nodes = zTree.getCheckedNodes();
+        if (nodes.length == 0) {
+            $('.alert-danger').css('display', 'block');
+        } else {
+            $('.alert-danger').css('display', 'none');
+        }
+
+        $('#saveForm').data("bootstrapValidator").resetForm();
+    }
 
     var zNodes = new Array();
 
@@ -120,16 +134,26 @@
         $.ajax({
             type : "get",
             url : "${contextPath }/role/privs/1",
-            dataType : 'json'
+            dataType : 'json',
+            async : false
         }).done(function(result, textStatus, jqXHR) {
             var data = result.data;
             for (var i = 0; i < data.length; i++) {
                 var tmpObj = new Object();
-                tmpObj.id = data[i].sysMenu.id;
-                tmpObj.name = data[i].sysMenu.name;
+                tmpObj.id = data[i].id;
+                tmpObj.name = data[i].name;
                 tmpObj.open = true;
-                tmpObj.pId = data[i].sysMenu.parentId;
+                tmpObj.pId = data[i].parentId;
                 zNodes.push(tmpObj);
+
+                for (var j = 0; j < data[i].sysMenuClasses.length; j++) {
+                    var classObj = new Object();
+                    classObj.id = data[i].sysMenuClasses[j].id;
+                    classObj.name = data[i].sysMenuClasses[j].name;
+                    classObj.open = true;
+                    classObj.pId = data[i].id;
+                    zNodes.push(classObj);
+                }
             }
 
             initZtreeStatus();
@@ -137,29 +161,35 @@
         }).fail(function(jqXHR, textStatus, errorThrown) {
             console.log("initZTreeData error");
         }).always(function() {
-            console.log("initZTreeData complete");
         });
     }
 
     function initZtreeStatus() {
+        var rid = 9999;
         $.ajax({
             type : "get",
-            url : "${contextPath }/role/privs"+,
-            dataType : 'json'
+            url : "${contextPath }/role/privs/" + rid,
+            dataType : 'json',
+            async : false
         }).done(function(result, textStatus, jqXHR) {
             var data = result.data;
-            for (var i = 0; i < zNodes.length; i++) {
-                for (var j = 0; j < data.length; j++) {
+            for (var j = 0; j < data.length; j++) {
+                for (var i = 0; i < zNodes.length; i++) {
                     if (zNodes[i].id == data[j].id) {
                         zNodes[i].checked = true;
-                        break;
+                    }
+
+                    for (var k = 0; k < data[j].sysMenuClasses.length; k++) {
+                        if (zNodes[i].id == data[j].sysMenuClasses[k].id) {
+                            zNodes[i].checked = true;
+                            break;
+                        }
                     }
                 }
             }
         }).fail(function(jqXHR, textStatus, errorThrown) {
             console.log("initZtreeStatus error");
         }).always(function() {
-            console.log("initZtreeStatus complete");
         });
     }
 </script>
