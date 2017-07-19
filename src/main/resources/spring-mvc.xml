@@ -12,7 +12,6 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
 
-    <!-- 系统日志跟踪功能 -->
     <bean id="log4JDBCServiceImpl" class="com.framework.service.impl.Log4JDBCServiceImpl">
         <property name="sysLogService" ref="sysLogServiceImpl" />
         <property name="rootLogLevel" value="INFO" />
@@ -24,10 +23,7 @@
         </property>
     </bean>
 
-
-    <!-- 监控运行时间 ,日志拦截记录, 数据权限验证 -->
     <mvc:interceptors>
-        <!-- 日志拦截记录 -->
         <mvc:interceptor>
             <mvc:mapping path="/**" />
             <mvc:mapping path="/login/timeout/success" />
@@ -66,7 +62,6 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
-    <!-- 定义无Controller的path<->view直接映射 -->
     <mvc:view-controller path="/" view-name="redirect:/index" />
 
     <!-- 全局异常配置 start -->
@@ -94,7 +89,6 @@
     </bean>
     <!-- 全局异常配置 end -->
 
-    <!-- 支持 Shiro对Controller的方法级AOP安全控制 begin -->
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
         <property name="proxyTargetClass" value="true" />
     </bean>
@@ -102,9 +96,7 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager" />
     </bean>
-    <!-- 支持 Shiro对Controller的方法级AOP安全控制 end -->
 
-    <!-- MessageResolve -->
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>

@@ -11,7 +11,6 @@ public class PaginationTag extends SimpleTagSupport {
 
 	private Pager pager;
 
-	// 必须为偶数
 	private int pagerNumShown = 6;
 	private int begin = 10;
 	private int end = 50;

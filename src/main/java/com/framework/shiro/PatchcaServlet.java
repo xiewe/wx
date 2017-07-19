@@ -121,12 +121,6 @@ public class PatchcaServlet extends HttpServlet {
 		outputStream.close();
 	}
 
-	/**
-	 * 检查验证码是否正确
-	 * 
-	 * @param req
-	 * @return
-	 */
 	public static boolean validate(String sessionId, String code) {
 		Element element = cache.get(sessionId);
 		if (element != null) {

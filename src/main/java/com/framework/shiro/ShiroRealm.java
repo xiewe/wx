@@ -69,9 +69,6 @@ public class ShiroRealm extends AuthorizingRealm {
 		this.sysUserService = sysUserService;
 	}
 
-	/**
-	 * 给ShiroRealm提供编码信息，用于密码密码比对
-	 */
 	public ShiroRealm() {
 		super();
 		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(ALGORITHM);
@@ -93,11 +90,9 @@ public class ShiroRealm extends AuthorizingRealm {
 
 		SysRole userRole = sysUser.getSysRole();
 		if (userRole != null) {
-			// 获取角色: 对非系统角色需要获取原生的角色，以匹配java类shiro注解角色的拦截
 			info.addRole(userRole.getName());
 
 			List<SysMenuClass> listSMC = sysMenuClassService.findByRoleId(userRole.getId());
-			// 获取操作权限
 			Collection<String> permissions = new HashSet<String>();
 			for (SysMenuClass o : listSMC) {
 				permissions.add(o.getMethod());
@@ -146,27 +141,16 @@ public class ShiroRealm extends AuthorizingRealm {
 		}
 	}
 
-	/**
-	 * 更新用户授权信息缓存.参数为doGetAuthenticationInfo调用时return new
-	 * SimpleAuthenticationInfo传入类型
-	 */
 	public void clearCachedAuthorizationInfo(Object principal) {
 		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
 		clearCachedAuthorizationInfo(principals);
 	}
 
-	/**
-	 * 更新用户认证信息缓存.参数为doGetAuthenticationInfo调用时return new
-	 * SimpleAuthenticationInfo传入类型
-	 */
 	public void clearCachedAuthenticationInfo(Object principal) {
 		SimplePrincipalCollection principals = new SimplePrincipalCollection(principal, getName());
 		clearCachedAuthenticationInfo(principals);
 	}
 
-	/**
-	 * 清除所有用户授权信息缓存.
-	 */
 	public void clearAllCachedAuthorizationInfo() {
 		Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
 		if (cache != null) {
@@ -177,9 +161,6 @@ public class ShiroRealm extends AuthorizingRealm {
 		}
 	}
 
-	/**
-	 * 清除所有用户认证信息缓存.
-	 */
 	public void clearAllCachedAuthenticationCacheInfo() {
 		Cache<Object, AuthenticationInfo> cache = getAuthenticationCache();
 		if (cache != null) {
@@ -205,18 +186,6 @@ public class ShiroRealm extends AuthorizingRealm {
 		return result;
 	}
 
-	/**
-	 * 
-	 * 验证密码
-	 * 
-	 * @param plainPassword
-	 *            明文密码
-	 * @param password
-	 *            密文密码
-	 * @param salt
-	 *            Salt值
-	 * @return
-	 */
 	public static boolean validatePassword(String plainPassword, String password, String salt) {
 		byte[] hashPassword = Digests.sha1(plainPassword.getBytes(), EncodesUtil.decodeHex(salt), INTERATIONS);
 		String oldPassword = EncodesUtil.encodeHex(hashPassword);
