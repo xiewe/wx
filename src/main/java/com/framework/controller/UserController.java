@@ -178,14 +178,10 @@ public class UserController extends BaseController {
         if (user.getSysRole().getId() == null) {
             user.setSysRole(null);
         } else {
-            SysRole newRole = new SysRole();
-            SysRole oldRole = sysRoleService.get(user.getSysRole().getId());
-            newRole.setId(oldRole.getId());
-            newRole.setName(oldRole.getName());
-            newRole.setDescription(oldRole.getDescription());
-            user.setSysRole(newRole);
+            user.setSysRole(sysRoleService.get(user.getSysRole().getId()));
         }
         user.setModifyTime(new Date());
+
         SysUser o = sysUserService.saveOrUpdate(user);
         if (o == null) {
             ret.setStatus(AppConstants.FAILED);

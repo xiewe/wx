@@ -2,6 +2,9 @@ package com.framework.service.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,6 +30,9 @@ public class SysUserServiceImpl implements SysUserService {
     @Autowired
     private ShiroRealm shiroRealm;
 
+    @PersistenceContext
+    private EntityManager em;
+    
     @Override
     public SysUser get(Long id) {
         return oDao.findOne(id);
@@ -50,6 +56,7 @@ public class SysUserServiceImpl implements SysUserService {
 
         shiroRealm.clearCachedAuthorizationInfo(o);
 
+        em.clear();
         return oDao.save(o);
     }
 
@@ -58,7 +65,6 @@ public class SysUserServiceImpl implements SysUserService {
     public void delete(Long id) {
         SysUser user = oDao.findOne(id);
         oDao.delete(id);
-        // 从shiro中注销
         shiroRealm.clearCachedAuthorizationInfo(user);
     }
 
