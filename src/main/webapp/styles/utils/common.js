@@ -107,7 +107,6 @@ function keysrt(key, desc) {
     }
 }
 
-// ajax请求时发生session超时，跳转到登陆页
 $(document).ajaxComplete(function(event, xhr, settings) {
     if (xhr.responseText.indexOf('form-signin-heading') != -1) {
         window.location.href = window.location.href;
