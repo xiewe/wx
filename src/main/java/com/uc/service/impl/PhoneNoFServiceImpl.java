@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framework.service.RedisService;
 import com.framework.utils.JsonAndObjectUtils;
+import com.uc.entity.APNGroupTpl;
 import com.uc.entity.PhoneNoFInfo;
 import com.uc.service.PhoneNoFService;
 
@@ -74,7 +75,7 @@ public class PhoneNoFServiceImpl implements PhoneNoFService {
     }
 
     @Override
-    public PhoneNoFInfo findOne(int id) {
+    public PhoneNoFInfo findOne(double id) {
         Set<String> set = redisService.ZRANGEBYSCORE(PHONENOF_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
@@ -88,6 +89,16 @@ public class PhoneNoFServiceImpl implements PhoneNoFService {
     @Override
     public Long findCount() {
         return redisService.ZCARD(PHONENOF_KEY);
+    }
+
+    @Override
+    public Long delete(double id) {
+        PhoneNoFInfo o = findOne(id);
+        if (o != null) {
+            return delete(o);
+        }
+        return 0L;
+
     }
 
 }

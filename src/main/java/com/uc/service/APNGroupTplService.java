@@ -10,6 +10,8 @@ public interface APNGroupTplService {
 
     public Boolean add(APNGroupTpl o);
 
+    public Long delete(double id);
+    
     public Long delete(APNGroupTpl o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface APNGroupTplService {
 
     public List<APNGroupTpl> findAll();
 
-    public APNGroupTpl findOne(int id);
+    public APNGroupTpl findOne(double id);
 
     public Long findCount();
 }

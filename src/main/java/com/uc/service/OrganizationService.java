@@ -10,6 +10,8 @@ public interface OrganizationService {
 
     public Boolean add(Organization o);
 
+    public Long delete(double id);
+
     public Long delete(Organization o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface OrganizationService {
 
     public List<Organization> findAll();
 
-    public Organization findOne(int id);
+    public Organization findOne(double id);
 
     public Long findCount();
 }

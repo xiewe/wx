@@ -10,6 +10,8 @@ public interface APNTplService {
 
     public Boolean add(APNTpl o);
 
+    public Long delete(double id);
+
     public Long delete(APNTpl o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface APNTplService {
 
     public List<APNTpl> findAll();
 
-    public APNTpl findOne(int id);
+    public APNTpl findOne(double id);
 
     public Long findCount();
 }

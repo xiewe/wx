@@ -10,6 +10,8 @@ public interface UserAccountService {
 
     public Boolean add(UserAccount o);
 
+    public Long delete(double id);
+
     public Long delete(UserAccount o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface UserAccountService {
 
     public List<UserAccount> findAll();
 
-    public UserAccount findOne(int id);
+    public UserAccount findOne(double id);
 
     public Long findCount();
 }

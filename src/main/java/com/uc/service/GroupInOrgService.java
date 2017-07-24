@@ -10,6 +10,8 @@ public interface GroupInOrgService {
 
     public Boolean add(GroupInOrg o);
 
+    public Long delete(double id);
+
     public Long delete(GroupInOrg o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface GroupInOrgService {
 
     public List<GroupInOrg> findAll();
 
-    public GroupInOrg findOne(int id);
+    public GroupInOrg findOne(double id);
 
     public Long findCount();
 }

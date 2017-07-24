@@ -73,7 +73,7 @@ public class APNGroupTplServiceImpl implements APNGroupTplService {
     }
 
     @Override
-    public APNGroupTpl findOne(int id) {
+    public APNGroupTpl findOne(double id) {
         Set<String> set = redisService.ZRANGEBYSCORE(APNGRPTPL_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
@@ -87,6 +87,15 @@ public class APNGroupTplServiceImpl implements APNGroupTplService {
     @Override
     public Long findCount() {
         return redisService.ZCARD(APNGRPTPL_KEY);
+    }
+
+    @Override
+    public Long delete(double id) {
+        APNGroupTpl o = findOne(id);
+        if (o != null) {
+            return delete(o);
+        }
+        return 0L;
     }
 
 }

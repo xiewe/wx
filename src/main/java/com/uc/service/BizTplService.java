@@ -10,6 +10,8 @@ public interface BizTplService {
 
     public Boolean add(BizTpl o);
 
+    public Long delete(double id);
+
     public Long delete(BizTpl o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface BizTplService {
 
     public List<BizTpl> findAll();
 
-    public BizTpl findOne(int id);
+    public BizTpl findOne(double id);
 
     public Long findCount();
 }

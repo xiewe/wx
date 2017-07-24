@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framework.service.RedisService;
 import com.framework.utils.JsonAndObjectUtils;
+import com.uc.entity.APNGroupTpl;
 import com.uc.entity.UserStatusInfo;
 import com.uc.service.UserStatusInfoService;
 
@@ -74,7 +75,7 @@ public class UserStatusInfoServiceImpl implements UserStatusInfoService {
     }
 
     @Override
-    public UserStatusInfo findOne(int id) {
+    public UserStatusInfo findOne(double id) {
         Set<String> set = redisService.ZRANGEBYSCORE(OPTPL_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
@@ -88,6 +89,16 @@ public class UserStatusInfoServiceImpl implements UserStatusInfoService {
     @Override
     public Long findCount() {
         return redisService.ZCARD(OPTPL_KEY);
+    }
+
+    @Override
+    public Long delete(double id) {
+        UserStatusInfo o = findOne(id);
+        if (o != null) {
+            return delete(o);
+        }
+        return 0L;
+
     }
 
 }

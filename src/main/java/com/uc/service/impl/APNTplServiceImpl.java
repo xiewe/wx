@@ -73,7 +73,7 @@ public class APNTplServiceImpl implements APNTplService {
     }
 
     @Override
-    public APNTpl findOne(int id) {
+    public APNTpl findOne(double id) {
         Set<String> set = redisService.ZRANGEBYSCORE(APNTPL_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
@@ -87,6 +87,15 @@ public class APNTplServiceImpl implements APNTplService {
     @Override
     public Long findCount() {
         return redisService.ZCARD(APNTPL_KEY);
+    }
+
+    @Override
+    public Long delete(double id) {
+        APNTpl o = findOne(id);
+        if (o != null) {
+            return delete(o);
+        }
+        return 0L;
     }
 
 }

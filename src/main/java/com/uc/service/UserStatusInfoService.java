@@ -10,6 +10,8 @@ public interface UserStatusInfoService {
 
     public Boolean add(UserStatusInfo o);
 
+    public Long delete(double id);
+
     public Long delete(UserStatusInfo o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface UserStatusInfoService {
 
     public List<UserStatusInfo> findAll();
 
-    public UserStatusInfo findOne(int id);
+    public UserStatusInfo findOne(double id);
 
     public Long findCount();
 }

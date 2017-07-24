@@ -10,6 +10,8 @@ public interface OPTplService {
 
     public Boolean add(OPTpl o);
 
+    public Long delete(double id);
+
     public Long delete(OPTpl o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface OPTplService {
 
     public List<OPTpl> findAll();
 
-    public OPTpl findOne(int id);
+    public OPTpl findOne(double id);
 
     public Long findCount();
 }

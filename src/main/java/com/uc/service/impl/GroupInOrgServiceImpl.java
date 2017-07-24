@@ -74,7 +74,7 @@ public class GroupInOrgServiceImpl implements GroupInOrgService {
     }
 
     @Override
-    public GroupInOrg findOne(int id) {
+    public GroupInOrg findOne(double id) {
         Set<String> set = redisService.ZRANGEBYSCORE(GROUPINORG_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
@@ -88,6 +88,15 @@ public class GroupInOrgServiceImpl implements GroupInOrgService {
     @Override
     public Long findCount() {
         return redisService.ZCARD(GROUPINORG_KEY);
+    }
+
+    @Override
+    public Long delete(double id) {
+        GroupInOrg o = findOne(id);
+        if (o != null) {
+            return delete(o);
+        }
+        return 0L;
     }
 
 }

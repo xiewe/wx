@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framework.service.RedisService;
 import com.framework.utils.JsonAndObjectUtils;
+import com.uc.entity.APNGroupTpl;
 import com.uc.entity.IPFInfo;
 import com.uc.service.IPFInfoService;
 
@@ -74,7 +75,7 @@ public class IPFInfoServiceImpl implements IPFInfoService {
     }
 
     @Override
-    public IPFInfo findOne(int id) {
+    public IPFInfo findOne(double id) {
         Set<String> set = redisService.ZRANGEBYSCORE(OPTPL_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
@@ -88,6 +89,15 @@ public class IPFInfoServiceImpl implements IPFInfoService {
     @Override
     public Long findCount() {
         return redisService.ZCARD(OPTPL_KEY);
+    }
+
+    @Override
+    public Long delete(double id) {
+        IPFInfo o = findOne(id);
+        if (o != null) {
+            return delete(o);
+        }
+        return 0L;
     }
 
 }

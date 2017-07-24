@@ -10,6 +10,8 @@ public interface IMSIInfoService {
 
     public Boolean add(IMSIInfo o);
 
+    public Long delete(double id);
+
     public Long delete(IMSIInfo o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface IMSIInfoService {
 
     public List<IMSIInfo> findAll();
 
-    public IMSIInfo findOne(int id);
+    public IMSIInfo findOne(double id);
 
     public Long findCount();
 }

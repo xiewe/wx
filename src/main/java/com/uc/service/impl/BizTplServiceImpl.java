@@ -73,7 +73,7 @@ public class BizTplServiceImpl implements BizTplService {
     }
 
     @Override
-    public BizTpl findOne(int id) {
+    public BizTpl findOne(double id) {
         Set<String> set = redisService.ZRANGEBYSCORE(BIZTPL_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
@@ -87,6 +87,15 @@ public class BizTplServiceImpl implements BizTplService {
     @Override
     public Long findCount() {
         return redisService.ZCARD(BIZTPL_KEY);
+    }
+
+    @Override
+    public Long delete(double id) {
+        BizTpl o = findOne(id);
+        if (o != null) {
+            return delete(o);
+        }
+        return 0L;
     }
 
 }

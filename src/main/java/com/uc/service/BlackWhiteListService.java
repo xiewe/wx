@@ -10,6 +10,8 @@ public interface BlackWhiteListService {
 
     public Boolean add(BlackWhiteList o);
 
+    public Long delete(double id);
+
     public Long delete(BlackWhiteList o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface BlackWhiteListService {
 
     public List<BlackWhiteList> findAll();
 
-    public BlackWhiteList findOne(int id);
+    public BlackWhiteList findOne(double id);
 
     public Long findCount();
 }

@@ -10,6 +10,8 @@ public interface IPFInfoService {
 
     public Boolean add(IPFInfo o);
 
+    public Long delete(double id);
+
     public Long delete(IPFInfo o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface IPFInfoService {
 
     public List<IPFInfo> findAll();
 
-    public IPFInfo findOne(int id);
+    public IPFInfo findOne(double id);
 
     public Long findCount();
 }

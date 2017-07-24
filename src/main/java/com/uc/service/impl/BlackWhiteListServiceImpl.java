@@ -74,7 +74,7 @@ public class BlackWhiteListServiceImpl implements BlackWhiteListService {
     }
 
     @Override
-    public BlackWhiteList findOne(int id) {
+    public BlackWhiteList findOne(double id) {
         Set<String> set = redisService.ZRANGEBYSCORE(BWLIST_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
@@ -88,6 +88,15 @@ public class BlackWhiteListServiceImpl implements BlackWhiteListService {
     @Override
     public Long findCount() {
         return redisService.ZCARD(BWLIST_KEY);
+    }
+
+    @Override
+    public Long delete(double id) {
+        BlackWhiteList o = findOne(id);
+        if (o != null) {
+            return delete(o);
+        }
+        return 0L;
     }
 
 }

@@ -10,6 +10,8 @@ public interface PhoneNoFService {
 
     public Boolean add(PhoneNoFInfo o);
 
+    public Long delete(double id);
+
     public Long delete(PhoneNoFInfo o);
 
     public Long deleteAll();
@@ -20,7 +22,7 @@ public interface PhoneNoFService {
 
     public List<PhoneNoFInfo> findAll();
 
-    public PhoneNoFInfo findOne(int id);
+    public PhoneNoFInfo findOne(double id);
 
     public Long findCount();
 }

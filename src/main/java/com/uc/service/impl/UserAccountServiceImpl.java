@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.framework.service.RedisService;
 import com.framework.utils.JsonAndObjectUtils;
+import com.uc.entity.APNGroupTpl;
 import com.uc.entity.UserAccount;
 import com.uc.service.UserAccountService;
 
@@ -74,7 +75,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccount findOne(int id) {
+    public UserAccount findOne(double id) {
         Set<String> set = redisService.ZRANGEBYSCORE(USERACCOUNT_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
@@ -88,6 +89,16 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public Long findCount() {
         return redisService.ZCARD(USERACCOUNT_KEY);
+    }
+
+    @Override
+    public Long delete(double id) {
+        UserAccount o = findOne(id);
+        if (o != null) {
+            return delete(o);
+        }
+        return 0L;
+
     }
 
 }
