@@ -7,13 +7,14 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.framework.service.RedisService;
 import com.framework.utils.JsonAndObjectUtils;
-import com.uc.entity.APNGroupTpl;
 import com.uc.entity.UserAccount;
 import com.uc.service.UserAccountService;
 
+@Service
 public class UserAccountServiceImpl implements UserAccountService {
     private final static Logger logger = LoggerFactory.getLogger(UserAccountServiceImpl.class);
 
@@ -38,7 +39,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public Boolean update(UserAccount o) {
-        delete(o);
+        delete(Double.valueOf(o.getSubNo()));
         return add(o);
     }
 

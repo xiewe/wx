@@ -5,16 +5,16 @@
     <table class="table table-hover table-condensed" id="tabData">
         <tbody>
             <tr>
-                <td class="text-right">名称</td>
-                <td>${optpl.name}</td>
+                <td class="text-right">OP ID</td>
+                <td>${optpl.opId}</td>
             </tr>
             <tr>
-                <td class="text-right">父组织</td>
-                <td>${optpl.parentName}</td>
+                <td class="text-right">模板名称</td>
+                <td>${optpl.opName}</td>
             </tr>
             <tr>
-                <td class="text-right">描述</td>
-                <td>${optpl.description}</td>
+                <td class="text-right">运营商可变算法配置域</td>
+                <td>${optpl.opValue}</td>
             </tr>
             <tr>
                 <td class="text-right">创建时间</td>

@@ -2,7 +2,7 @@
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
 <div class="row main-content">
-    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/optpl/create" onsubmit="return doSave(this, '${contextPath }/optpl/list');">
+    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/op/create" onsubmit="return doSave(this, '${contextPath }/op/list');">
         <div class="form-group">
             <label for="opId" class="col-sm-2 control-label">OP ID *</label>
             <div class="col-sm-10">

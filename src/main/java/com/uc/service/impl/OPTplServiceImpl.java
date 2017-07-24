@@ -7,13 +7,14 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.framework.service.RedisService;
 import com.framework.utils.JsonAndObjectUtils;
-import com.uc.entity.APNGroupTpl;
 import com.uc.entity.OPTpl;
 import com.uc.service.OPTplService;
 
+@Service
 public class OPTplServiceImpl implements OPTplService {
     private final static Logger logger = LoggerFactory.getLogger(OPTplServiceImpl.class);
 
@@ -37,7 +38,7 @@ public class OPTplServiceImpl implements OPTplService {
 
     @Override
     public Boolean update(OPTpl o) {
-        delete(o);
+        delete(o.getOpId());
         return add(o);
     }
 

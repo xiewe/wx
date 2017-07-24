@@ -10,7 +10,7 @@
 </div>
 
 <div class="row main-content">
-    <form role="form" class="form-horizontal" method="post" action="${contextPath }/optpl/list" id="searchForm" onsubmit="return doSearch(this);">
+    <form role="form" class="form-horizontal" method="post" action="${contextPath }/op/list" id="searchForm" onsubmit="return doSearch(this);">
         <div class="form-group form-group-sm" id="searchDiv">
             <own:paginationHidden pager="${pager}" />
             <label for="search_LIKE_opId" class="control-label col-md-1 col-sm-6">OP ID:</label>
@@ -91,17 +91,17 @@
             var type = "get";
             var action = "";
             if ($(this).hasClass('doCreate')) {
-                url = "${contextPath }/optpl/create";
+                url = "${contextPath }/op/create";
                 action = "create";
             } else if ($(this).hasClass('doDelete')) {
-                url = "${contextPath }/optpl/delete/" + id;
+                url = "${contextPath }/op/delete/" + id;
                 type = "post";
                 action = "delete";
             } else if ($(this).hasClass('doUpdate')) {
-                url = "${contextPath }/optpl/update/" + id;
+                url = "${contextPath }/op/update/" + id;
                 action = "update";
             } else if ($(this).hasClass('doView')) {
-                url = "${contextPath }/optpl/view/" + id;
+                url = "${contextPath }/op/view/" + id;
                 action = "view";
             } else {
                 console.log('not supported');
@@ -118,7 +118,7 @@
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "delete") {
-                    loadContent("${contextPath }/optpl/list");
+                    loadContent("${contextPath }/op/list");
                 } else if (action == "update") {
                     $("#indexModal .modal-header h4").text("修改组织");
                     $("#indexModal .modal-body").html(result);

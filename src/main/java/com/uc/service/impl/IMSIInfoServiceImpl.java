@@ -7,13 +7,14 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.framework.service.RedisService;
 import com.framework.utils.JsonAndObjectUtils;
-import com.uc.entity.APNGroupTpl;
 import com.uc.entity.IMSIInfo;
 import com.uc.service.IMSIInfoService;
 
+@Service
 public class IMSIInfoServiceImpl implements IMSIInfoService {
     private final static Logger logger = LoggerFactory.getLogger(IMSIInfoServiceImpl.class);
 
@@ -38,7 +39,7 @@ public class IMSIInfoServiceImpl implements IMSIInfoService {
 
     @Override
     public Boolean update(IMSIInfo o) {
-        delete(o);
+        delete(o.getCreateTime() != null ? o.getCreateTime().getTime() : 1);
         return add(o);
     }
 

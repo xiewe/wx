@@ -32,7 +32,7 @@ import com.uc.entity.OPTpl;
 import com.uc.service.OPTplService;
 
 @Controller
-@RequestMapping("/optpl")
+@RequestMapping("/op")
 public class OPTplController extends BaseController {
 
     @Autowired
@@ -139,12 +139,14 @@ public class OPTplController extends BaseController {
     public String list(ServletRequest request, Pager pager, Map<String, Object> map) {
         List<OPTpl> optpls = new ArrayList<OPTpl>();
         SearchFilter filter = DynamicSpecifications.genSearchFilter(request);
-        if (filter != null && filter.getRules().size() > 0) {
+        if (filter != null && filter.getRules() != null && filter.getRules().size() > 0) {
             // hessian call
         } else {
             optpls = oPTplService.findByPage(pager.getPageSize(), pager.getCurrPage());
         }
-
+        
+        Long count = oPTplService.findCount();
+        pager.setTotalCount(count);
         map.put("pager", pager);
         map.put("optpls", optpls);
 

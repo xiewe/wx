@@ -7,12 +7,14 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.framework.service.RedisService;
 import com.framework.utils.JsonAndObjectUtils;
 import com.uc.entity.APNTpl;
 import com.uc.service.APNTplService;
 
+@Service
 public class APNTplServiceImpl implements APNTplService {
     private final static Logger logger = LoggerFactory.getLogger(APNTplServiceImpl.class);
 
@@ -36,7 +38,7 @@ public class APNTplServiceImpl implements APNTplService {
 
     @Override
     public Boolean update(APNTpl o) {
-        delete(o);
+        delete(o.getApnId());
         return add(o);
     }
 
