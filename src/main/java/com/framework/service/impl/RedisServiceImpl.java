@@ -8,8 +8,11 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.stereotype.Service;
 
 import com.framework.AppConstants;
@@ -126,13 +129,43 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void ZADD(String key, double score, String member) {
-        stringRedisTemplate.opsForZSet().add(key, member, score);
+    public Boolean ZADD(String key, double score, String member) {
+        return stringRedisTemplate.opsForZSet().add(key, member, score);
     }
 
     @Override
-    public Set<String> ZRANGE(String key, double start, double stop) {
+    public Set<String> ZRANGEBYSCORE(String key, double start, double stop) {
         return stringRedisTemplate.opsForZSet().rangeByScore(key, start, stop);
+    }
+
+    @Override
+    public Set<String> ZRANGE(String key, long start, long end) {
+        return stringRedisTemplate.opsForZSet().range(key, start, end);
+    }
+
+    @Override
+    public Long ZCARD(String key) {
+        return stringRedisTemplate.opsForZSet().zCard(key);
+    }
+
+    @Override
+    public Long ZCOUNT(String key, double start, double stop) {
+        return stringRedisTemplate.opsForZSet().count(key, start, stop);
+    }
+
+    @Override
+    public Cursor<TypedTuple<String>> ZSCAN(String key, ScanOptions options) {
+        return stringRedisTemplate.opsForZSet().scan(key, options);
+    }
+
+    @Override
+    public Long ZREMRANGEBYRANK(String key, long start, long end) {
+        return stringRedisTemplate.opsForZSet().removeRange(key, start, end);
+    }
+
+    @Override
+    public Long ZREMRANGEBYSCORE(String key, double min, double max) {
+        return stringRedisTemplate.opsForZSet().removeRangeByScore(key, min, max);
     }
 
     @Override

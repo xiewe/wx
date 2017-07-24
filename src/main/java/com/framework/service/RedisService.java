@@ -3,6 +3,10 @@ package com.framework.service;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
+
 public interface RedisService {
     /**
      * 为指定的KEY产生一个TOKEN设置有效期并缓存 ,TOKEN的有效期是固定的，即TOKEN产生的时间后7天内有效
@@ -171,7 +175,7 @@ public interface RedisService {
      * @param score
      * @param member
      */
-    public void ZADD(String key, double score, String member);
+    public Boolean ZADD(String key, double score, String member);
 
     /**
      * 实现命令：ZRANGE key start stop，返回有序集 key中，指定区间内的成员。
@@ -181,13 +185,25 @@ public interface RedisService {
      * @param stop
      * @return
      */
-    public Set<String> ZRANGE(String key, double start, double stop);
+    public Set<String> ZRANGEBYSCORE(String key, double start, double stop);
+
+    public Set<String> ZRANGE(String key, long start, long end);
+
+    public Long ZCARD(String key);
+
+    public Long ZCOUNT(String key, double start, double stop);
+
+    public Cursor<TypedTuple<String>> ZSCAN(String key, ScanOptions options);
+
+    public Long ZREMRANGEBYRANK(String key, long start, long end);
+    
+    public Long ZREMRANGEBYSCORE(String key, double min, double max);
 
     public Long ZREM(String key, String... members);
 
     public void vset(String key, String value);
-    
+
     public long vdel(final String... keys);
-    
+
     public Long dbSize();
 }
