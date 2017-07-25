@@ -4,32 +4,32 @@
 <div class="row main-content">
     <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/apngroup/create" onsubmit="return doSave(this, '${contextPath }/apngroup/list');">
         <div class="form-group">
-            <label for="apnGroupId" class="col-sm-2 control-label">APN组ID *</label>
-            <div class="col-sm-10">
+            <label for="apnGroupId" class="col-sm-4 control-label">APN组ID *</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="apnGroupId" placeholder="请输入APN组ID">
             </div>
         </div>
         <div class="form-group">
-            <label for="apnGroupName" class="col-sm-2 control-label">APN组名称 *</label>
-            <div class="col-sm-10">
+            <label for="apnGroupName" class="col-sm-4 control-label">APN组名称 *</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="apnGroupName" placeholder="请输入APN组名称">
             </div>
         </div>
         <div class="form-group">
-            <label for="maxRequestedBwUl" class="col-sm-2 control-label">上行最大带宽（kbps） *</label>
-            <div class="col-sm-10">
+            <label for="maxRequestedBwUl" class="col-sm-4 control-label">上行最大带宽（kbps） *</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="maxRequestedBwUl" placeholder="请输入上行最大带宽">
             </div>
         </div>
         <div class="form-group">
-            <label for="maxRequestedBwDl" class="col-sm-2 control-label">下行最大带宽（kbps） *</label>
-            <div class="col-sm-10">
+            <label for="maxRequestedBwDl" class="col-sm-4 control-label">下行最大带宽（kbps） *</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="maxRequestedBwDl" placeholder="请输入下行最大带宽">
             </div>
         </div>
         <div class="form-group">
-            <label for="apnNotifiedType" class="col-sm-2 control-label">APN模版配置通知类型 *</label>
-            <div class="col-sm-10">
+            <label for="apnNotifiedType" class="col-sm-4 control-label">APN模版配置通知类型 *</label>
+            <div class="col-sm-8">
                 <select class="form-control" name="apnNotifiedType">
                     <option value="0">通知所有APN</option>
                     <option value="1">通知被修改APN</option>
@@ -37,8 +37,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="apnIdList" class="col-sm-2 control-label">APN设置 *</label>
-            <div class="col-sm-10">
+            <label for="apnIdList" class="col-sm-4 control-label">APN设置 *</label>
+            <div class="col-sm-8">
                 <input type="hidden" name="apnIdList" value="">
                 <div class="checkbox">
                     <label><input type="checkbox" value="">选项 1</label>
@@ -49,8 +49,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="pgwAllocationType" class="col-sm-2 control-label">默认APN *</label>
-            <div class="col-sm-10">
+            <label for="pgwAllocationType" class="col-sm-4 control-label">默认APN *</label>
+            <div class="col-sm-8">
                 <div class="radio">
                     <label class="checkbox-inline"> <input type="radio" name="ci" id="optionsRadios1" value="0" checked> 静态
                     </label> <label class="checkbox-inline"> <input type="radio" name="ci" id="optionsRadios2" value="1"> 动态
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <div class="col-sm-offset-2 col-sm-8">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="submit" class="btn btn-primary">确定</button>
             </div>

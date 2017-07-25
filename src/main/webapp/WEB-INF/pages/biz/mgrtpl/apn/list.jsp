@@ -11,23 +11,27 @@
 
 <div class="row main-content">
     <form role="form" class="form-horizontal" method="post" action="${contextPath }/apn/list" id="searchForm" onsubmit="return doSearch(this);">
-        <div class="form-group form-group-sm" id="searchDiv">
-            <own:paginationHidden pager="${pager}" />
-            <label for="search_EQ_apnId" class="control-label col-md-1 col-sm-6">APN ID:</label>
-            <div class="col-md-3 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入APN ID" name="search_EQ_apnId" value="${param.search_EQ_apnId}" />
+        <div class="" id="searchDiv">
+            <div class="form-group form-group-sm">
+                <own:paginationHidden pager="${pager}" />
+                <label for="search_EQ_apnId" class="control-label col-md-1 col-sm-6">APN ID:</label>
+                <div class="col-md-3 col-sm-6">
+                    <input type="text" class="form-control" placeholder="请输入APN ID" name="search_EQ_apnId" value="${param.search_EQ_apnId}" />
+                </div>
+                <label for="search_EQ_oi" class="control-label col-md-1 col-sm-6">运营商标识:</label>
+                <div class="col-md-3 col-sm-6">
+                    <input type="text" class="form-control" placeholder="请输入运营商标识" name="search_EQ_oi" value="${param.search_EQ_oi}" />
+                </div>
+                <label for="search_EQ_ni" class="control-label col-md-1 col-sm-6">网络标识:</label>
+                <div class="col-md-3 col-sm-6">
+                    <input type="text" class="form-control" placeholder="请输入网络标识" name="search_EQ_ni" value="${param.search_EQ_ni}" />
+                </div>
             </div>
-            <label for="search_EQ_oi" class="control-label col-md-1 col-sm-6">运营商标识:</label>
-            <div class="col-md-3 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入运营商标识" name="search_EQ_oi" value="${param.search_EQ_oi}" />
-            </div>
-            <label for="search_EQ_ni" class="control-label col-md-1 col-sm-6">网络标识:</label>
-            <div class="col-md-3 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入网络标识" name="search_EQ_ni" value="${param.search_EQ_ni}" />
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <button type="submit" class="btn btn-default btn-sm doSearch">查询</button>
-                <button type="submit" class="btn btn-default btn-sm" onclick="javascript:clearAllSearchContent('searchDiv');return false;">清除</button>
+            <div class="form-group form-group-sm">
+                <div class="col-md-4 col-sm-6 text-right">
+                    <button type="submit" class="btn btn-default btn-sm doSearch">查询</button>
+                    <button type="submit" class="btn btn-default btn-sm" onclick="javascript:clearAllSearchContent('searchDiv');return false;">清除</button>
+                </div>
             </div>
         </div>
     </form>
@@ -127,19 +131,19 @@
                 url : url
             }).done(function(result) {
                 if (action == "create") {
-                    $("#indexModal .modal-header h4").text("创建组织");
+                    $("#indexModal .modal-header h4").text("创建APN模板");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "delete") {
                     loadContent("${contextPath }/apn/list");
                 } else if (action == "update") {
-                    $("#indexModal .modal-header h4").text("修改组织");
+                    $("#indexModal .modal-header h4").text("修改APN模板");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "view") {
-                    $("#indexModal .modal-header h4").text("组织详情");
+                    $("#indexModal .modal-header h4").text("APN模板详情");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');

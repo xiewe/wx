@@ -117,19 +117,19 @@
                 url : url
             }).done(function(result) {
                 if (action == "create") {
-                    $("#indexModal .modal-header h4").text("创建组织");
+                    $("#indexModal .modal-header h4").text("创建APN组模板");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "delete") {
                     loadContent("${contextPath }/apngroup/list");
                 } else if (action == "update") {
-                    $("#indexModal .modal-header h4").text("修改组织");
+                    $("#indexModal .modal-header h4").text("修改APN组模板");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "view") {
-                    $("#indexModal .modal-header h4").text("组织详情");
+                    $("#indexModal .modal-header h4").text("APN组模板详情");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');

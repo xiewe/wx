@@ -4,26 +4,26 @@
 <div class="row main-content">
     <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/apn/update" onsubmit="return doSave(this, '${contextPath }/apn/list');">
         <div class="form-group">
-            <label for="apnId" class="col-sm-2 control-label">APN ID *</label>
-            <div class="col-sm-10">
+            <label for="apnId" class="col-sm-4 control-label">APN ID *</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="apnId" value="${apntpl.apnId}" placeholder="请输入APN ID">
             </div>
         </div>
         <div class="form-group">
-            <label for="oi" class="col-sm-2 control-label">运营商标识（OI） *</label>
-            <div class="col-sm-10">
+            <label for="oi" class="col-sm-4 control-label">运营商标识（OI） *</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="oi" value="${apntpl.oi}" placeholder="请输入运营商标识">
             </div>
         </div>
         <div class="form-group">
-            <label for="ni" class="col-sm-2 control-label">网络标识（NI） *</label>
-            <div class="col-sm-10">
+            <label for="ni" class="col-sm-4 control-label">网络标识（NI） *</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="ni" value="${apntpl.ni}" placeholder="请输入网络标识">
             </div>
         </div>
         <div class="form-group">
-            <label for="qci" class="col-sm-2 control-label">QCI *</label>
-            <div class="col-sm-10">
+            <label for="qci" class="col-sm-4 control-label">QCI *</label>
+            <div class="col-sm-8">
                 <select class="form-control" name="qci">
                     <option value="5">5</option>
                     <option value="6">6</option>
@@ -34,8 +34,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="ARPPrio" class="col-sm-2 control-label">ARP优先级 *</label>
-            <div class="col-sm-10">
+            <label for="ARPPrio" class="col-sm-4 control-label">ARP优先级 *</label>
+            <div class="col-sm-8">
                 <select class="form-control" name="ARPPrio">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -56,8 +56,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="preEmptionCapability" class="col-sm-2 control-label">ARP抢占标识 *</label>
-            <div class="col-sm-10">
+            <label for="preEmptionCapability" class="col-sm-4 control-label">ARP抢占标识 *</label>
+            <div class="col-sm-8">
                 <select class="form-control" name="preEmptionCapability">
                     <option value="0">Enabled</option>
                     <option value="1">Disabled</option>
@@ -65,8 +65,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="preEmptionVulnerablity" class="col-sm-2 control-label">ARP允许抢占标识 *</label>
-            <div class="col-sm-10">
+            <label for="preEmptionVulnerablity" class="col-sm-4 control-label">ARP允许抢占标识 *</label>
+            <div class="col-sm-8">
                 <select class="form-control" name="preEmptionVulnerablity">
                     <option value="0">Enabled</option>
                     <option value="1">Disabled</option>
@@ -74,56 +74,53 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="maxBwUl" class="col-sm-2 control-label">上行最大带宽（kbps） *</label>
-            <div class="col-sm-10">
+            <label for="maxBwUl" class="col-sm-4 control-label">上行最大带宽（kbps） *</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="maxBwUl" value="${apntpl.maxBwUl}" placeholder="请输入上行最大带宽">
             </div>
         </div>
         <div class="form-group">
-            <label for="maxBwDl" class="col-sm-2 control-label">下行最大带宽（kbps） *</label>
-            <div class="col-sm-10">
+            <label for="maxBwDl" class="col-sm-4 control-label">下行最大带宽（kbps） *</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="maxBwDl" value="${apntpl.maxBwDl}" placeholder="请输入下行最大带宽">
             </div>
         </div>
         <div class="form-group">
-            <label for="pgwAllocationType" class="col-sm-2 control-label">PDN GW分配类型 *</label>
-            <div class="col-sm-10">
+            <label for="pgwAllocationType" class="col-sm-4 control-label">PDN GW分配类型 *</label>
+            <div class="col-sm-8">
                 <div class="radio">
-                    <label class="checkbox-inline">
-                        <input type="radio" name="pgwAllocationType" id="optionsRadios1" value="0" checked> 静态
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="radio" name="pgwAllocationType" id="optionsRadios2" value="1"> 动态
+                    <label class="checkbox-inline"> <input type="radio" name="pgwAllocationType" id="optionsRadios1" value="0" checked> 静态
+                    </label> <label class="checkbox-inline"> <input type="radio" name="pgwAllocationType" id="optionsRadios2" value="1"> 动态
                     </label>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="ipv4" class="col-sm-2 control-label">IPv4</label>
-            <div class="col-sm-10">
+            <label for="ipv4" class="col-sm-4 control-label">IPv4</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="ipv4" value="${apntpl.ipv4}" placeholder="请输入ip">
             </div>
         </div>
         <div class="form-group">
-            <label for="ipv6" class="col-sm-2 control-label">IPv6</label>
-            <div class="col-sm-10">
+            <label for="ipv6" class="col-sm-4 control-label">IPv6</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="ipv6" value="${apntpl.ipv6}" placeholder="请输入ip">
             </div>
         </div>
         <div class="form-group">
-            <label for="MIPHomeAgentHost" class="col-sm-2 control-label">目的主机</label>
-            <div class="col-sm-10">
+            <label for="MIPHomeAgentHost" class="col-sm-4 control-label">目的主机</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="MIPHomeAgentHost" value="${apntpl.MIPHomeAgentHost}" placeholder="请输入目的主机">
             </div>
         </div>
         <div class="form-group">
-            <label for="MIPHomeAgentRealm" class="col-sm-2 control-label">目的Realm</label>
-            <div class="col-sm-10">
+            <label for="MIPHomeAgentRealm" class="col-sm-4 control-label">目的Realm</label>
+            <div class="col-sm-8">
                 <input type="text" class="form-control" name="MIPHomeAgentRealm" value="${apntpl.MIPHomeAgentRealm}" placeholder="请输入目的Realm">
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <div class="col-sm-offset-2 col-sm-8">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="submit" class="btn btn-primary">确定</button>
             </div>
@@ -185,12 +182,18 @@
                 },
                 ipv4 : {
                     validators : {
-                        ipv4 : {}
+                        ip : {
+                            ipv4 : true,
+                            ipv6 : false
+                        }
                     }
                 },
                 ipv6 : {
                     validators : {
-                        ipv6 : {}
+                        ip : {
+                            ipv4 : false,
+                            ipv6 : true
+                        }
                     }
                 },
                 MIPHomeAgentRealm : {
