@@ -5,21 +5,25 @@
     <ol class="breadcrumb">
         <li><span class="glyphicon glyphicon-home"></span> 主页</li>
         <li>模板管理</li>
-        <li>OP模板</li>
+        <li>APN模板</li>
     </ol>
 </div>
 
 <div class="row main-content">
-    <form role="form" class="form-horizontal" method="post" action="${contextPath }/op/list" id="searchForm" onsubmit="return doSearch(this);">
+    <form role="form" class="form-horizontal" method="post" action="${contextPath }/apn/list" id="searchForm" onsubmit="return doSearch(this);">
         <div class="form-group form-group-sm" id="searchDiv">
             <own:paginationHidden pager="${pager}" />
-            <label for="search_EQ_opId" class="control-label col-md-1 col-sm-6">OP ID:</label>
+            <label for="search_EQ_apnId" class="control-label col-md-1 col-sm-6">APN ID:</label>
             <div class="col-md-3 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入名称" name="search_EQ_opId" value="${param.search_EQ_opId}" />
+                <input type="text" class="form-control" placeholder="请输入APN ID" name="search_EQ_apnId" value="${param.search_EQ_apnId}" />
             </div>
-            <label for="search_LIKE_opName" class="control-label col-md-1 col-sm-6">OP名称:</label>
+            <label for="search_EQ_oi" class="control-label col-md-1 col-sm-6">运营商标识:</label>
             <div class="col-md-3 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入名称" name="search_LIKE_opName" value="${param.search_LIKE_opName}" />
+                <input type="text" class="form-control" placeholder="请输入运营商标识" name="search_EQ_oi" value="${param.search_EQ_oi}" />
+            </div>
+            <label for="search_EQ_ni" class="control-label col-md-1 col-sm-6">网络标识:</label>
+            <div class="col-md-3 col-sm-6">
+                <input type="text" class="form-control" placeholder="请输入网络标识" name="search_EQ_ni" value="${param.search_EQ_ni}" />
             </div>
             <div class="col-md-4 col-sm-6">
                 <button type="submit" class="btn btn-default btn-sm doSearch">查询</button>
@@ -29,16 +33,16 @@
     </form>
     <hr class="clearfix">
     <p>
-        <shiro:hasPermission name="OPTpl:create">
+        <shiro:hasPermission name="APNTpl:create">
             <a href="#" class="btn btn-default doCreate">添加</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="OPTpl:delete">
+        <shiro:hasPermission name="APNTpl:delete">
             <a href="#" class="btn btn-default doDelete">删除</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="OPTpl:update">
+        <shiro:hasPermission name="APNTpl:update">
             <a href="#" class="btn btn-default doUpdate">修改</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="OPTpl:view">
+        <shiro:hasPermission name="APNTpl:view">
             <a href="#" class="btn btn-default doView">查看</a>
         </shiro:hasPermission>
     </p>
@@ -47,17 +51,27 @@
         <table class="table table-striped table-bordered table-hover table-condensed" id="tabData">
             <thead>
                 <tr>
-                    <th>OP ID</th>
-                    <th>运营商主密钥模板名称</th>
-                    <th>运营商可变算法配置域</th>
+                    <th>APN ID</th>
+                    <th>运营商标识</th>
+                    <th>网络标识</th>
+                    <th>QCI</th>
+                    <th>ARP优先级</th>
+                    <th>ARP抢占标识</th>
+                    <th>上行最大带宽（kbps）</th>
+                    <th>下行最大带宽（kbps）</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="item" items="${optpls}">
-                    <tr data-id="${item.opId}">
-                        <td>${item.opId}</td>
-                        <td>${item.opName}</td>
-                        <td>${item.opValue}</td>
+                <c:forEach var="item" items="${apntpls}">
+                    <tr data-id="${item.apnId}">
+                        <td>${item.apnId}</td>
+                        <td>${item.oi}</td>
+                        <td>${item.ni}</td>
+                        <td>${item.qci}</td>
+                        <td>${item.ARPPrio}</td>
+                        <td>${item.preEmptionCapability==0? Enabled : Disabled}</td>
+                        <td>${item.maxBwUl}</td>
+                        <td>${item.maxBwDl}</td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -91,17 +105,17 @@
             var type = "get";
             var action = "";
             if ($(this).hasClass('doCreate')) {
-                url = "${contextPath }/op/create";
+                url = "${contextPath }/apn/create";
                 action = "create";
             } else if ($(this).hasClass('doDelete')) {
-                url = "${contextPath }/op/delete/" + id;
+                url = "${contextPath }/apn/delete/" + id;
                 type = "post";
                 action = "delete";
             } else if ($(this).hasClass('doUpdate')) {
-                url = "${contextPath }/op/update/" + id;
+                url = "${contextPath }/apn/update/" + id;
                 action = "update";
             } else if ($(this).hasClass('doView')) {
-                url = "${contextPath }/op/view/" + id;
+                url = "${contextPath }/apn/view/" + id;
                 action = "view";
             } else {
                 console.log('not supported');
@@ -118,7 +132,7 @@
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "delete") {
-                    loadContent("${contextPath }/op/list");
+                    loadContent("${contextPath }/apn/list");
                 } else if (action == "update") {
                     $("#indexModal .modal-header h4").text("修改组织");
                     $("#indexModal .modal-body").html(result);
@@ -136,6 +150,6 @@
             });
 
         })
-        
+
     })
 </script>

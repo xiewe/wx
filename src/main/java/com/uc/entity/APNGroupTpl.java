@@ -23,7 +23,7 @@ public class APNGroupTpl implements java.io.Serializable {
     private String apnIdList;
 
     /**
-     * Default Context Identifier
+     * 默认APN ID
      */
     private int ci;
     /**
