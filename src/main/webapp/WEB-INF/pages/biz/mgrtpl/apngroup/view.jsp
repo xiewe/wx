@@ -22,7 +22,21 @@
             </tr>
             <tr>
                 <td class="text-right">APN模版配置通知类型</td>
-                <td>${apngrouptpl.apnNotifiedType}</td>
+                <td>${apngrouptpl.apnNotifiedType==0?'通知所有APN':'通知被修改APN'}</td>
+            </tr>
+            <tr>
+                <td class="text-right">APN配置</td>
+                <td><c:set var="sep" value=",${apngrouptpl.apnIdList},"></c:set> <c:forEach var="item" items="${apns}">
+                        <c:set var="tmp" value=",${item.apnId},"></c:set>
+                        <c:if test="${fn:contains(sep, tmp)}">${item.apnId } - ${item.oi } - ${item.ni } <br>
+                        </c:if>
+                    </c:forEach></td>
+            </tr>
+            <tr>
+                <td class="text-right">默认APN</td>
+                <td><c:forEach var="item" items="${apns}">
+                        <c:if test="${apngrouptpl.ci == item.apnId}">${item.apnId } - ${item.oi } - ${item.ni } </c:if>
+                    </c:forEach></td>
             </tr>
             <tr>
                 <td class="text-right">创建时间</td>

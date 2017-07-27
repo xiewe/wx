@@ -26,11 +26,11 @@
             </tr>
             <tr>
                 <td class="text-right">ARP抢占标识</td>
-                <td>${apntpl.preEmptionCapability}</td>
+                <td>${apntpl.preEmptionCapability==0? 'Enabled' : 'Disabled'}</td>
             </tr>
             <tr>
                 <td class="text-right">ARP允许抢占标识</td>
-                <td>${apntpl.preEmptionVulnerablity}</td>
+                <td>${apntpl.preEmptionVulnerablity==0? 'Enabled' : 'Disabled'}</td>
             </tr>
             <tr>
                 <td class="text-right">上行最大带宽（kbps）</td>
@@ -42,7 +42,7 @@
             </tr>
             <tr>
                 <td class="text-right">PDN GW分配类型</td>
-                <td>${apntpl.pgwAllocationType}</td>
+                <td>${apntpl.pgwAllocationType==0? '静态' : '动态'}</td>
             </tr>
             <tr>
                 <td class="text-right">IPv4</td>

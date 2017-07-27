@@ -39,23 +39,20 @@
         <div class="form-group">
             <label for="apnIdList" class="col-sm-4 control-label">APN设置 *</label>
             <div class="col-sm-8">
+                <div style="display: none" class="alert alert-danger alert-checkbox">请至少选择一个！</div>
                 <input type="hidden" name="apnIdList" value="">
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">选项 1</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">选项 2</label>
-                </div>
+                <c:forEach var="item" items="${apns}">
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="${item.apnId }">${item.apnId } - ${item.oi } - ${item.ni }</label>
+                    </div>
+                </c:forEach>
             </div>
         </div>
         <div class="form-group">
             <label for="pgwAllocationType" class="col-sm-4 control-label">默认APN *</label>
             <div class="col-sm-8">
-                <div class="radio">
-                    <label class="checkbox-inline"> <input type="radio" name="ci" id="optionsRadios1" value="0" checked> 静态
-                    </label> <label class="checkbox-inline"> <input type="radio" name="ci" id="optionsRadios2" value="1"> 动态
-                    </label>
-                </div>
+                <div style="display: none" class="alert alert-danger alert-radio">请选择默认APN！</div>
+                <div class="radio"></div>
             </div>
         </div>
         <div class="form-group">
@@ -68,6 +65,22 @@
 </div>
 <script type="text/javascript">
     function doSave(form, listUrl) {
+
+        if ($('input[type="checkbox"]:checked').length == 0) {
+            $('.alert-checkbox').css('display', 'block');
+            return false;
+        } else {
+            $('.alert-checkbox').css('display', 'none');
+        }
+
+        if ($('input:radio:checked').length == 0) {
+            $('.alert-radio').css('display', 'block');
+            return false;
+        } else {
+            $('.alert-radio').css('display', 'none');
+        }
+
+        $(form).data("bootstrapValidator").validate();
         var flag = $(form).data("bootstrapValidator").isValid();
         if (flag) {
             _doSave(form, listUrl);
@@ -75,44 +88,68 @@
         return false;
     }
 
-    $(document).ready(function() {
+    $(document).ready(
+            function() {
+                $('input[type="checkbox"]').on(
+                        'change',
+                        function(e) {
+                            var apnidlist = '';
+                            $('div.radio').html('');
+                            $('input[type="checkbox"]:checked').each(
+                                    function() {
+                                        apnidlist += $(this).val() + ',';
+                                        $('div.radio').append(
+                                                '<label class="checkbox-inline">'
+                                                        + '<input type="radio" name="ci" value="' + $(this).val()
+                                                        + '">' + $(this).parent().text() + '</label> ')
+                                    });
+                            apnidlist = trimT(apnidlist, 1);
+                            $('input[name="apnIdList"]').val(apnidlist);
 
-        $('#saveForm').bootstrapValidator({
-            feedbackIcons : {
-                valid : 'glyphicon glyphicon-ok',
-                invalid : 'glyphicon glyphicon-remove',
-                validating : 'glyphicon glyphicon-refresh'
-            },
-            fields : {
-                apnGroupId : {
-                    validators : {
-                        notEmpty : {},
-                        digits : {}
-                    }
-                },
-                apnGroupName : {
-                    validators : {
-                        notEmpty : {},
-                        stringLength : {
-                            max : 32
+                            $('#saveForm').data("bootstrapValidator").resetForm();
+                        })
+
+                $('input:radio').on('change', function(e) {
+                    $('#saveForm').data("bootstrapValidator").resetForm();
+                })
+
+                $('#saveForm').bootstrapValidator({
+                    feedbackIcons : {
+                        valid : 'glyphicon glyphicon-ok',
+                        invalid : 'glyphicon glyphicon-remove',
+                        validating : 'glyphicon glyphicon-refresh'
+                    },
+                    fields : {
+                        apnGroupId : {
+                            validators : {
+                                notEmpty : {},
+                                digits : {}
+                            }
+                        },
+                        apnGroupName : {
+                            validators : {
+                                notEmpty : {},
+                                stringLength : {
+                                    max : 32
+                                }
+                            }
+                        },
+                        maxRequestedBwUl : {
+                            validators : {
+                                notEmpty : {},
+                                digits : {}
+                            }
+                        },
+                        maxRequestedBwDl : {
+                            validators : {
+                                notEmpty : {},
+                                digits : {}
+                            }
                         }
                     }
-                },
-                maxRequestedBwUl : {
-                    validators : {
-                        notEmpty : {},
-                        digits : {}
-                    }
-                },
-                maxRequestedBwDl : {
-                    validators : {
-                        notEmpty : {},
-                        digits : {}
-                    }
-                }
-            }
-        }).on('success.form.bv', function(e) {
-            e.preventDefault();
-        });
-    });
+                }).on('success.form.bv', function(e) {
+                    e.preventDefault();
+                });
+
+            });
 </script>

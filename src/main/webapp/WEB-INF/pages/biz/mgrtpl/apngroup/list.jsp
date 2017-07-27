@@ -61,7 +61,7 @@
                         <td>${item.apnGroupName}</td>
                         <td>${item.maxRequestedBwUl}</td>
                         <td>${item.maxRequestedBwDl}</td>
-                        <td>${item.apnNotifiedType}</td>
+                        <td>${item.apnNotifiedType==0?'通知所有APN':'通知被修改APN'}</td>
                     </tr>
                 </c:forEach>
             </tbody>

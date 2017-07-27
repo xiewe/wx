@@ -2,6 +2,7 @@ package com.uc.service;
 
 import java.util.List;
 
+import com.uc.entity.BizEntity;
 import com.uc.entity.BizTpl;
 
 public interface BizTplService {
@@ -25,4 +26,6 @@ public interface BizTplService {
     public BizTpl findOne(double id);
 
     public Long findCount();
+
+    public List<BizEntity> getAllBizEntities();
 }

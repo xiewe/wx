@@ -129,6 +129,7 @@
 </div>
 <script type="text/javascript">
     function doSave(form, listUrl) {
+        $(form).data("bootstrapValidator").validate();
         var flag = $(form).data("bootstrapValidator").isValid();
         if (flag) {
             _doSave(form, listUrl);

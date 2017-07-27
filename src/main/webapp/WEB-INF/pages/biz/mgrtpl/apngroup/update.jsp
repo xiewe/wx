@@ -6,56 +6,53 @@
         <div class="form-group">
             <label for="apnGroupId" class="col-sm-4 control-label">APN组ID *</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" name="apnGroupId" placeholder="请输入APN组ID">
+                <input type="text" class="form-control" name="apnGroupId" value="${apngrouptpl.apnGroupId}" placeholder="请输入APN组ID">
             </div>
         </div>
         <div class="form-group">
             <label for="apnGroupName" class="col-sm-4 control-label">APN组名称 *</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" name="apnGroupName" placeholder="请输入APN组名称">
+                <input type="text" class="form-control" name="apnGroupName" value="${apngrouptpl.apnGroupName}" placeholder="请输入APN组名称">
             </div>
         </div>
         <div class="form-group">
             <label for="maxRequestedBwUl" class="col-sm-4 control-label">上行最大带宽（kbps） *</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" name="maxRequestedBwUl" placeholder="请输入上行最大带宽">
+                <input type="text" class="form-control" name="maxRequestedBwUl" value="${apngrouptpl.maxRequestedBwUl}" placeholder="请输入上行最大带宽">
             </div>
         </div>
         <div class="form-group">
             <label for="maxRequestedBwDl" class="col-sm-4 control-label">下行最大带宽（kbps） *</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" name="maxRequestedBwDl" placeholder="请输入下行最大带宽">
+                <input type="text" class="form-control" name="maxRequestedBwDl" value="${apngrouptpl.maxRequestedBwDl}" placeholder="请输入下行最大带宽">
             </div>
         </div>
         <div class="form-group">
             <label for="apnNotifiedType" class="col-sm-4 control-label">APN模版配置通知类型 *</label>
             <div class="col-sm-8">
                 <select class="form-control" name="apnNotifiedType">
-                    <option value="0">通知所有APN</option>
-                    <option value="1">通知被修改APN</option>
+                    <option value="0" <c:if test="${apngrouptpl.apnNotifiedType == 0}">selected</c:if>>通知所有APN</option>
+                    <option value="1" <c:if test="${apngrouptpl.apnNotifiedType == 1}">selected</c:if>>通知被修改APN</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
             <label for="apnIdList" class="col-sm-4 control-label">APN设置 *</label>
             <div class="col-sm-8">
+                <div style="display: none" class="alert alert-danger alert-checkbox">请至少选择一个！</div>
                 <input type="hidden" name="apnIdList" value="">
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">选项 1</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">选项 2</label>
-                </div>
+                <c:forEach var="item" items="${apns}">
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="${item.apnId }">${item.apnId } - ${item.oi } - ${item.ni }</label>
+                    </div>
+                </c:forEach>
             </div>
         </div>
         <div class="form-group">
             <label for="pgwAllocationType" class="col-sm-4 control-label">默认APN *</label>
             <div class="col-sm-8">
-                <div class="radio">
-                    <label class="checkbox-inline"> <input type="radio" name="ci" id="optionsRadios1" value="0" checked> 静态
-                    </label> <label class="checkbox-inline"> <input type="radio" name="ci" id="optionsRadios2" value="1"> 动态
-                    </label>
-                </div>
+                <div style="display: none" class="alert alert-danger alert-radio">请选择默认APN！</div>
+                <div class="radio"></div>
             </div>
         </div>
         <div class="form-group">
@@ -68,6 +65,21 @@
 </div>
 <script type="text/javascript">
     function doSave(form, listUrl) {
+
+        if ($('input[type="checkbox"]:checked').length == 0) {
+            $('.alert-checkbox').css('display', 'block');
+            return false;
+        } else {
+            $('.alert-checkbox').css('display', 'none');
+        }
+
+        if ($('input:radio:checked').length == 0) {
+            $('.alert-radio').css('display', 'block');
+            return false;
+        } else {
+            $('.alert-radio').css('display', 'none');
+        }
+
         $(form).data("bootstrapValidator").validate();
         var flag = $(form).data("bootstrapValidator").isValid();
         if (flag) {
@@ -76,44 +88,91 @@
         return false;
     }
 
-    $(document).ready(function() {
-
-        $('#saveForm').bootstrapValidator({
-            feedbackIcons : {
-                valid : 'glyphicon glyphicon-ok',
-                invalid : 'glyphicon glyphicon-remove',
-                validating : 'glyphicon glyphicon-refresh'
-            },
-            fields : {
-                apnGroupId : {
-                    validators : {
-                        notEmpty : {},
-                        digits : {}
-                    }
-                },
-                apnGroupName : {
-                    validators : {
-                        notEmpty : {},
-                        stringLength : {
-                            max : 32
-                        }
-                    }
-                },
-                maxRequestedBwUl : {
-                    validators : {
-                        notEmpty : {},
-                        digits : {}
-                    }
-                },
-                maxRequestedBwDl : {
-                    validators : {
-                        notEmpty : {},
-                        digits : {}
-                    }
+    function initData() {
+        var apnidlist = '${apngrouptpl.apnIdList}';
+        var ids = apnidlist.split(',');
+        $('input[type="checkbox"]').each(function() {
+            for (var i = 0; i < ids.length; i++) {
+                if ($(this).val() == ids[i]) {
+                    $(this).prop('checked', true);
                 }
             }
-        }).on('success.form.bv', function(e) {
-            e.preventDefault();
         });
-    });
+
+        $('input[type="checkbox"]:checked').each(
+                function() {
+                    apnidlist += $(this).val() + ',';
+                    $('div.radio').append(
+                            '<label class="checkbox-inline">' + '<input type="radio" name="ci" value="' + $(this).val()
+                                    + '">' + $(this).parent().text() + '</label> ')
+                });
+
+        $("input:radio[value='${apngrouptpl.ci}']").prop('checked', true);
+    }
+
+    $(document).ready(
+            function() {
+                $('input[type="checkbox"]').on(
+                        'change',
+                        function(e) {
+                            var apnidlist = '';
+                            $('div.radio').html('');
+                            $('input[type="checkbox"]:checked').each(
+                                    function() {
+                                        apnidlist += $(this).val() + ',';
+                                        $('div.radio').append(
+                                                '<label class="checkbox-inline">'
+                                                        + '<input type="radio" name="ci" value="' + $(this).val()
+                                                        + '">' + $(this).parent().text() + '</label> ')
+                                    });
+                            apnidlist = trimT(apnidlist, 1);
+                            $('input[name="apnIdList"]').val(apnidlist);
+
+                            $('#saveForm').data("bootstrapValidator").resetForm();
+                        })
+
+                $('input:radio').on('change', function(e) {
+                    $('#saveForm').data("bootstrapValidator").resetForm();
+                })
+
+                initData();
+
+                $('#saveForm').bootstrapValidator({
+                    feedbackIcons : {
+                        valid : 'glyphicon glyphicon-ok',
+                        invalid : 'glyphicon glyphicon-remove',
+                        validating : 'glyphicon glyphicon-refresh'
+                    },
+                    fields : {
+                        apnGroupId : {
+                            validators : {
+                                notEmpty : {},
+                                digits : {}
+                            }
+                        },
+                        apnGroupName : {
+                            validators : {
+                                notEmpty : {},
+                                stringLength : {
+                                    max : 32
+                                }
+                            }
+                        },
+                        maxRequestedBwUl : {
+                            validators : {
+                                notEmpty : {},
+                                digits : {}
+                            }
+                        },
+                        maxRequestedBwDl : {
+                            validators : {
+                                notEmpty : {},
+                                digits : {}
+                            }
+                        }
+                    }
+                }).on('success.form.bv', function(e) {
+                    e.preventDefault();
+                });
+            });
 </script>

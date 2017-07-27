@@ -57,7 +57,35 @@
                     <tr data-id="${item.bizTplId}">
                         <td>${item.bizTplId}</td>
                         <td>${item.bizTplName}</td>
-                        <td>${item.userType}</td>
+                        <td><c:choose>
+                                <c:when test="${item.userType == 1 }">
+                                SIP
+                            </c:when>
+                                <c:when test="${item.userType == 2 }">
+                                DC
+                            </c:when>
+                                <c:when test="${item.userType == 3 }">
+                                VoLTE
+                            </c:when>
+                                <c:when test="${item.userType == 4 }">
+                                摄像头
+                            </c:when>
+                                <c:when test="${item.userType == 5 }">
+                                PDT
+                            </c:when>
+                                <c:when test="${item.userType == 6 }">
+                                POC
+                            </c:when>
+                                <c:when test="${item.userType == 7 }">
+                                LTE数据终端
+                            </c:when>
+                                <c:when test="${item.userType == 8 }">
+                                无线集群终端
+                            </c:when>
+                                <c:otherwise>
+                                Unknown
+                            </c:otherwise>
+                            </c:choose></td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -113,19 +141,19 @@
                 url : url
             }).done(function(result) {
                 if (action == "create") {
-                    $("#indexModal .modal-header h4").text("创建组织");
+                    $("#indexModal .modal-header h4").text("创建业务模板");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "delete") {
                     loadContent("${contextPath }/biz/list");
                 } else if (action == "update") {
-                    $("#indexModal .modal-header h4").text("修改组织");
+                    $("#indexModal .modal-header h4").text("修改业务模板");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "view") {
-                    $("#indexModal .modal-header h4").text("组织详情");
+                    $("#indexModal .modal-header h4").text("业务模板详情");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
@@ -136,6 +164,6 @@
             });
 
         })
-        
+
     })
 </script>

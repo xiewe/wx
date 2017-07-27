@@ -30,7 +30,9 @@ import com.framework.utils.pager.DynamicSpecifications;
 import com.framework.utils.pager.Pager;
 import com.framework.utils.pager.SearchFilter;
 import com.uc.entity.APNGroupTpl;
+import com.uc.entity.APNTpl;
 import com.uc.service.APNGroupTplService;
+import com.uc.service.APNTplService;
 
 @Controller
 @RequestMapping("/apngroup")
@@ -38,6 +40,9 @@ public class APNGroupTplController extends BaseController {
 
     @Autowired
     private APNGroupTplService aPNGroupTplService;
+    
+    @Autowired
+    private APNTplService aPNTplService;
 
     ObjectMapper mapper = new ObjectMapper();
     private static final String CREATE = "biz/mgrtpl/apngroup/create";
@@ -48,6 +53,9 @@ public class APNGroupTplController extends BaseController {
     @RequiresPermissions("APNGroupTpl:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String preCreate(Map<String, Object> map) {
+        List<APNTpl> apns = aPNTplService.findAll();
+        map.put("apns", apns);
+        
         return CREATE;
     }
 
@@ -100,6 +108,10 @@ public class APNGroupTplController extends BaseController {
     public String preUpdate(@PathVariable Integer id, Map<String, Object> map) {
         APNGroupTpl apngrouptpl = aPNGroupTplService.findOne(id);
         map.put("apngrouptpl", apngrouptpl);
+        
+        List<APNTpl> apns = aPNTplService.findAll();
+        map.put("apns", apns);
+        
         return UPDATE;
     }
 
@@ -161,6 +173,10 @@ public class APNGroupTplController extends BaseController {
     public String view(@PathVariable Integer id, Map<String, Object> map) {
         APNGroupTpl apngrouptpl = aPNGroupTplService.findOne(id);
         map.put("apngrouptpl", apngrouptpl);
+        
+        List<APNTpl> apns = aPNTplService.findAll();
+        map.put("apns", apns);
+        
         return VIEW;
     }
 }

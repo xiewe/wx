@@ -33,23 +33,23 @@
         <div class="form-group">
             <label for="bizIdList" class="col-sm-2 control-label">请选择业务 *</label>
             <div class="col-sm-10">
+                <div style="display: none" class="alert alert-danger alert-checkbox">请至少选择一个！</div>
                 <input type="hidden" name="bizIdList" value="">
                 <div class="checkbox">
                     <label><input type="checkbox" name="bizSwitcher" value="">集群业务（开关）</label>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="100100">语音单呼</label>
-                    <label><input type="checkbox" value="100200">视频单呼</label>
-                    <label><input type="checkbox" value="100301" class="level_low">本地呼出</label>
-                    <label><input type="checkbox" value="100302" class="level_mid">国内呼出</label>
-                    <label><input type="checkbox" value="100303" class="level_high">国际呼出</label>
-                    <label><input type="checkbox" value="100400">短数据</label>
-                    <label><input type="checkbox" value="100500">短信</label>
-                    <label><input type="checkbox" value="100600">即时消息</label>
-                    <label><input type="checkbox" value="100700">录音</label>
-                    <label><input type="checkbox" value="100800">录像</label>
-                    <label><input type="checkbox" value="100900">语音组呼</label>
-                    <label><input type="checkbox" value="101000">可视组呼</label>
+                <div class="checkbox lowlevel">
+                    <label><input type="checkbox" value="100100">语音单呼</label> <label><input type="checkbox" value="100200">视频单呼</label> <label><input type="checkbox" value="100301" class="level_low">本地呼出</label> <label><input type="checkbox" value="100302"
+                        class="level_mid">国内呼出</label> <label><input type="checkbox" value="100303" class="level_high">国际呼出</label>
+                </div>
+                <div class="checkbox lowlevel">
+                    <label><input type="checkbox" value="100400">短数据</label> <label><input type="checkbox" value="100500">短信</label> <label><input type="checkbox" value="100600">即时消息</label>
+                </div>
+                <div class="checkbox lowlevel">
+                    <label><input type="checkbox" value="100700">录音</label> <label><input type="checkbox" value="100800">录像</label>
+                </div>
+                <div class="checkbox lowlevel">
+                    <label><input type="checkbox" value="100900">语音组呼</label> <label><input type="checkbox" value="101000">可视组呼</label>
                 </div>
             </div>
         </div>
@@ -63,6 +63,14 @@
 </div>
 <script type="text/javascript">
     function doSave(form, listUrl) {
+        if ($('input[type="checkbox"]:checked').length == 0) {
+            $('.alert-checkbox').css('display', 'block');
+            return false;
+        } else {
+            $('.alert-checkbox').css('display', 'none');
+        }
+        
+        $(form).data("bootstrapValidator").validate();
         var flag = $(form).data("bootstrapValidator").isValid();
         if (flag) {
             _doSave(form, listUrl);
@@ -71,6 +79,52 @@
     }
 
     $(document).ready(function() {
+        $('input[name="bizSwitcher"]').on('click', function(e) {
+            if (true == $(this).prop('checked')) {
+                $('.lowlevel').css('display', 'none');
+                $(this).val(1);
+            } else {
+                $('.lowlevel').css('display', 'block');
+                $(this).val(0);
+            }
+            
+            $('#saveForm').data("bootstrapValidator").resetForm();
+        });
+
+        $('.level_low').on('click', function(e) {
+            if (false == $(this).prop('checked')) {
+                $('.level_mid').prop('checked', false);
+                $('.level_high').prop('checked', false);
+            }
+        });
+
+        $('.level_mid').on('click', function(e) {
+            if (true == $(this).prop('checked')) {
+                $('.level_low').prop('checked', true);
+                $('.level_high').prop('checked', false);
+            } else {
+                $('.level_low').prop('checked', false);
+                $('.level_high').prop('checked', false);
+            }
+        });
+
+        $('.level_high').on('click', function(e) {
+            if (true == $(this).prop('checked')) {
+                $('.level_mid').prop('checked', true);
+                $('.level_low').prop('checked', true);
+            }
+        });
+
+        $('.lowlevel input:checkbox').on('change', function(e) {
+            var bizidlist = '';
+            $('.lowlevel input:checkbox:checked').each(function() {
+                bizidlist += $(this).val() + ',';
+            });
+            bizidlist = trimT(bizidlist, 1);
+            $('input[name="bizIdList"]').val(bizidlist);
+
+            $('#saveForm').data("bootstrapValidator").resetForm();
+        })
 
         $('#saveForm').bootstrapValidator({
             feedbackIcons : {

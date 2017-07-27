@@ -25,11 +25,16 @@
             <label for="qci" class="col-sm-4 control-label">QCI *</label>
             <div class="col-sm-8">
                 <select class="form-control" name="qci">
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
+                    <c:forEach var="item" begin="5" end="9" step="1">
+                        <c:choose>
+                            <c:when test="${apntpl.qci == item }">
+                                <option value="${item }" selected>${item}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${item }">${item}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
                 </select>
             </div>
         </div>
@@ -37,21 +42,16 @@
             <label for="ARPPrio" class="col-sm-4 control-label">ARP优先级 *</label>
             <div class="col-sm-8">
                 <select class="form-control" name="ARPPrio">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
+                    <c:forEach var="item" begin="1" end="15" step="1">
+                        <c:choose>
+                            <c:when test="${apntpl.ARPPrio == item }">
+                                <option value="${item }" selected>${item}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${item }">${item}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
                 </select>
             </div>
         </div>
@@ -59,8 +59,8 @@
             <label for="preEmptionCapability" class="col-sm-4 control-label">ARP抢占标识 *</label>
             <div class="col-sm-8">
                 <select class="form-control" name="preEmptionCapability">
-                    <option value="0">Enabled</option>
-                    <option value="1">Disabled</option>
+                    <option value="0" <c:if test="${apntpl.preEmptionCapability == 0}">selected</c:if>>Enabled</option>
+                    <option value="1" <c:if test="${apntpl.preEmptionCapability == 1}">selected</c:if>>Disabled</option>
                 </select>
             </div>
         </div>
@@ -68,8 +68,8 @@
             <label for="preEmptionVulnerablity" class="col-sm-4 control-label">ARP允许抢占标识 *</label>
             <div class="col-sm-8">
                 <select class="form-control" name="preEmptionVulnerablity">
-                    <option value="0">Enabled</option>
-                    <option value="1">Disabled</option>
+                    <option value="0" <c:if test="${apntpl.preEmptionVulnerablity == 0}">selected</c:if>>Enabled</option>
+                    <option value="1" <c:if test="${apntpl.preEmptionVulnerablity == 1}">selected</c:if>>Disabled</option>
                 </select>
             </div>
         </div>
@@ -89,8 +89,11 @@
             <label for="pgwAllocationType" class="col-sm-4 control-label">PDN GW分配类型 *</label>
             <div class="col-sm-8">
                 <div class="radio">
-                    <label class="checkbox-inline"> <input type="radio" name="pgwAllocationType" id="optionsRadios1" value="0" checked> 静态
-                    </label> <label class="checkbox-inline"> <input type="radio" name="pgwAllocationType" id="optionsRadios2" value="1"> 动态
+                    <label class="checkbox-inline"> 
+                    <input type="radio" name="pgwAllocationType" id="optionsRadios1" value="0" <c:if test="${apntpl.pgwAllocationType == 0}">checked</c:if>> 静态
+                    </label> 
+                    <label class="checkbox-inline"> 
+                    <input type="radio" name="pgwAllocationType" id="optionsRadios2" value="1" <c:if test="${apntpl.pgwAllocationType == 1}">checked</c:if>> 动态
                     </label>
                 </div>
             </div>

@@ -29,6 +29,7 @@ import com.framework.log4jdbc.LogLevel;
 import com.framework.utils.pager.DynamicSpecifications;
 import com.framework.utils.pager.Pager;
 import com.framework.utils.pager.SearchFilter;
+import com.uc.entity.BizEntity;
 import com.uc.entity.BizTpl;
 import com.uc.service.BizTplService;
 
@@ -57,8 +58,7 @@ public class BizTplController extends BaseController {
     public @ResponseBody String create(@Valid BizTpl biztpl) throws JsonProcessingException {
         GeneralResponseData<BizTpl> ret = new GeneralResponseData<BizTpl>();
 
-        if (biztpl.getBizTplId() <= 0 || StringUtils.isEmpty(biztpl.getBizTplName())
-                || StringUtils.isEmpty(biztpl.getBizIdList())) {
+        if (biztpl.getBizTplId() <= 8 || StringUtils.isEmpty(biztpl.getBizTplName())) {
             ret.setStatus(AppConstants.FAILED);
             ret.setErrCode(SysErrorCode.DATA_INVALID);
             ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.DATA_INVALID));
@@ -109,8 +109,7 @@ public class BizTplController extends BaseController {
     public @ResponseBody String update(@Valid BizTpl biztpl) throws JsonProcessingException {
         GeneralResponseData<BizTpl> ret = new GeneralResponseData<BizTpl>();
 
-        if (biztpl.getBizTplId() <= 0 || StringUtils.isEmpty(biztpl.getBizTplName())
-                || StringUtils.isEmpty(biztpl.getBizIdList())) {
+        if (biztpl.getBizTplId() <= 8 || StringUtils.isEmpty(biztpl.getBizTplName())) {
             ret.setStatus(AppConstants.FAILED);
             ret.setErrCode(SysErrorCode.DATA_INVALID);
             ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.DATA_INVALID));
@@ -160,7 +159,10 @@ public class BizTplController extends BaseController {
     @RequestMapping(value = "/view/{id}", method = { RequestMethod.GET })
     public String view(@PathVariable Integer id, Map<String, Object> map) {
         BizTpl biztpl = bizTplService.findOne(id);
+        List<BizEntity> bizs = bizTplService.getAllBizEntities();
         map.put("biztpl", biztpl);
+        map.put("bizs", bizs);
+
         return VIEW;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.framework.service.RedisService;
 import com.framework.utils.JsonAndObjectUtils;
+import com.uc.entity.BizEntity;
 import com.uc.entity.BizTpl;
 import com.uc.service.BizTplService;
 
@@ -100,4 +101,21 @@ public class BizTplServiceImpl implements BizTplService {
         return 0L;
     }
 
+    @Override
+    public List<BizEntity> getAllBizEntities() {
+        List<BizEntity> list = new ArrayList<BizEntity>();
+        list.add(new BizEntity(BizEntity.VoiceSingleCall, "语音单呼"));
+        list.add(new BizEntity(BizEntity.VideoSingleCall, "视频单呼"));
+        list.add(new BizEntity(BizEntity.LocalCallOut, "本地呼出"));
+        list.add(new BizEntity(BizEntity.CountryCallOut, "国内呼出"));
+        list.add(new BizEntity(BizEntity.InternationalCallOut, "国际呼出"));
+        list.add(new BizEntity(BizEntity.ShortMessage, "短数据"));
+        list.add(new BizEntity(BizEntity.ShortData, "短信"));
+        list.add(new BizEntity(BizEntity.InstantMessage, "即时消息"));
+        list.add(new BizEntity(BizEntity.VoiceRecording, "录音"));
+        list.add(new BizEntity(BizEntity.VideoRecording, "录像"));
+        list.add(new BizEntity(BizEntity.VoiceGroupCall, "语音组呼"));
+        list.add(new BizEntity(BizEntity.VideoGroupCall, "可视组呼"));
+        return list;
+    }
 }

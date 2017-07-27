@@ -73,7 +73,7 @@
                         <td>${item.ni}</td>
                         <td>${item.qci}</td>
                         <td>${item.ARPPrio}</td>
-                        <td>${item.preEmptionCapability==0? Enabled : Disabled}</td>
+                        <td>${item.preEmptionCapability==0? 'Enabled' : 'Disabled'}</td>
                         <td>${item.maxBwUl}</td>
                         <td>${item.maxBwDl}</td>
                     </tr>
