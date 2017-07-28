@@ -1,5 +1,12 @@
 package com.uc.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +23,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,11 +35,17 @@ import com.framework.controller.BaseController;
 import com.framework.entity.GeneralResponseData;
 import com.framework.log4jdbc.Log;
 import com.framework.log4jdbc.LogLevel;
+import com.framework.utils.DateUtils;
+import com.framework.utils.FileUtils;
+import com.framework.utils.IDUtil;
+import com.framework.utils.PropertiesUtil;
 import com.framework.utils.pager.DynamicSpecifications;
 import com.framework.utils.pager.Pager;
 import com.framework.utils.pager.SearchFilter;
 import com.uc.entity.IMSIInfo;
+import com.uc.entity.OPTpl;
 import com.uc.service.IMSIInfoService;
+import com.uc.service.OPTplService;
 
 @Controller
 @RequestMapping("/imsi")
@@ -39,15 +54,22 @@ public class IMSIInfoController extends BaseController {
     @Autowired
     private IMSIInfoService iMSIInfoService;
 
+    @Autowired
+    private OPTplService oPTplService;
+
     ObjectMapper mapper = new ObjectMapper();
     private static final String CREATE = "biz/mgrres/imsi/create";
     private static final String UPDATE = "biz/mgrres/imsi/update";
     private static final String LIST = "biz/mgrres/imsi/list";
     private static final String VIEW = "biz/mgrres/imsi/view";
+    private static final String IMPORT = "biz/mgrres/imsi/import";
 
     @RequiresPermissions("IMSIInfo:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String preCreate(Map<String, Object> map) {
+        List<OPTpl> optpls = oPTplService.findAll();
+        map.put("optpls", optpls);
+
         return CREATE;
     }
 
@@ -66,6 +88,7 @@ public class IMSIInfoController extends BaseController {
         }
 
         // hessian call
+        imsiinfo.setStatus(0);
         imsiinfo.setCreateTime(new Date());
         Boolean b = iMSIInfoService.add(imsiinfo);
         if (!b) {
@@ -151,6 +174,9 @@ public class IMSIInfoController extends BaseController {
         map.put("pager", pager);
         map.put("imsiinfos", imsiinfos);
 
+        List<OPTpl> optpls = oPTplService.findAll();
+        map.put("optpls", optpls);
+
         return LIST;
     }
 
@@ -160,5 +186,118 @@ public class IMSIInfoController extends BaseController {
         IMSIInfo imsiinfo = iMSIInfoService.findOne(id);
         map.put("imsiinfo", imsiinfo);
         return VIEW;
+    }
+
+    @RequiresPermissions("IMSIInfo:create")
+    @RequestMapping(value = "/import", method = { RequestMethod.GET })
+    public String preImportImsi(Map<String, Object> map) {
+        List<OPTpl> optpls = oPTplService.findAll();
+        map.put("optpls", optpls);
+
+        return IMPORT;
+    }
+
+    @Log(message = "导入IMSI，文件:{0}，结果:{1}", level = LogLevel.INFO)
+    @RequiresPermissions("IMSIInfo:create")
+    @RequestMapping(value = "/import", method = { RequestMethod.POST })
+    public @ResponseBody String importImsi(@RequestParam("file") MultipartFile file, @RequestParam("opId") int opId,
+            @RequestParam("imsifilename") String imsifilename) throws JsonProcessingException {
+        GeneralResponseData<IMSIInfo> ret = new GeneralResponseData<IMSIInfo>();
+
+        if (!"xls".equals(FileUtils.getFileExt(imsifilename)) || !"xlsx".equals(FileUtils.getFileExt(imsifilename))) {
+            ret.setStatus(AppConstants.FAILED);
+            ret.setErrCode(SysErrorCode.FILE_FORMAT_INVALID);
+            ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.FILE_FORMAT_INVALID));
+
+            return mapper.writeValueAsString(ret);
+        }
+
+        String folder = DateUtils.getTodayString();
+        String path = PropertiesUtil.getInstance().getKeyValue(AppConstants.DOWNLOAD_PATH) + File.separator + folder;
+        String newfilename = IDUtil.getSN() + "_" + imsifilename;
+        String newfilenameWithPath = path + File.separator + newfilename;
+        String logfilename = newfilename + ".log";
+        String logfilenameWithPath = path + File.separator + logfilename;
+
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
+        BufferedInputStream in = null;
+        BufferedOutputStream out = null;
+        FileWriter logout = null;
+        try {
+            in = new BufferedInputStream(file.getInputStream());
+            out = new BufferedOutputStream(new FileOutputStream(newfilenameWithPath));
+            logout = new FileWriter(new File(logfilenameWithPath));
+            byte[] data = new byte[1024];
+            int len = 0;
+            while (-1 != (len = in.read(data, 0, data.length))) {
+                out.write(data, 0, len);
+            }
+            out.flush();
+
+            // parse excel
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+                if (logout != null) {
+                    logout.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        setLogObject(new Object[] {
+                "<a target=\"_blank\" href=\"/" + AppConstants.SERVER_PROJECT + "/file/" + folder + "/" + newfilename
+                        + "\">" + newfilename + "</a>",
+                "<a target=\"_blank\" href=\"/" + AppConstants.SERVER_PROJECT + "/file/" + folder + "/" + logfilename
+                        + "\">" + logfilename + "</a>" });
+        return mapper.writeValueAsString(ret);
+    }
+
+    @RequiresPermissions("IMSIInfo:create")
+    @RequestMapping(value = "/download", method = { RequestMethod.GET })
+    public String downloadImsiTemplate(Map<String, Object> map) {
+        BufferedInputStream in = null;
+        BufferedOutputStream out = null;
+        try {
+            response.setContentType("application/x-excel;charset=utf-8");
+            response.setHeader("Content-disposition", "attachment;filename=imsiimport.xls");
+            String path = this.getClass().getClassLoader().getResource("template").getPath();
+            in = new BufferedInputStream(new FileInputStream(path + File.separator + "imsiimport.xls"));
+            out = new BufferedOutputStream(response.getOutputStream());
+            byte[] data = new byte[1024];
+            int len = 0;
+            while (-1 != (len = in.read(data, 0, data.length))) {
+                out.write(data, 0, len);
+            }
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "";
     }
 }

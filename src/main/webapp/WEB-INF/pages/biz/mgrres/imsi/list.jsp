@@ -45,20 +45,30 @@
         </div>
     </form>
     <hr class="clearfix">
-    <p>
-        <shiro:hasPermission name="IMSIInfo:create">
-            <a href="#" class="btn btn-default doCreate">添加</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="IMSIInfo:delete">
-            <a href="#" class="btn btn-default doDelete">删除</a>
-        </shiro:hasPermission>
-        <shiro:hasPermission name="IMSIInfo:update">
+    <div class="row">
+        <p class="col-md-6 col-sm-12">
+            <shiro:hasPermission name="IMSIInfo:create">
+                <a href="#" class="btn btn-default doCreate">添加</a>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="IMSIInfo:delete">
+                <a href="#" class="btn btn-default doDelete">删除</a>
+            </shiro:hasPermission>
+            <%--         <shiro:hasPermission name="IMSIInfo:update">
             <a href="#" class="btn btn-default doUpdate">修改</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="IMSIInfo:view">
             <a href="#" class="btn btn-default doView">查看</a>
-        </shiro:hasPermission>
-    </p>
+        </shiro:hasPermission> --%>
+            <shiro:hasPermission name="IMSIInfo:create">
+                <a href="#" class="btn btn-default doImport">导入</a>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="IMSIInfo:create">
+                <p class="col-md-6 col-sm-12 text-right">
+                    <a href="${contextPath }/imsi/download" class="doDownload">模板下载</a>
+                </p>
+            </shiro:hasPermission>
+        </p>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-condensed" id="tabData">
@@ -66,15 +76,22 @@
                 <tr>
                     <th>IMSI</th>
                     <th>密钥</th>
+                    <th>OP模板</th>
                     <th>号码状态</th>
+                    <th>创建时间</th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach var="item" items="${imsiinfos}">
-                    <tr data-id="${item.imsi}">
+                    <tr data-id="${item.createTime.time}">
                         <td>${item.imsi}</td>
                         <td>${item.k}</td>
-                        <td>${item.status}</td>
+                        <td><c:forEach var="op" items="${optpls}">
+                                <c:if test="${op.opId == item.opId}">${op.opName }<br>
+                                </c:if>
+                            </c:forEach></td>
+                        <td>${item.status==0?'未分配':'已分配'}</td>
+                        <td><fmt:formatDate value="${item.createTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -90,12 +107,17 @@
         loadListener();
 
         $('a.btn').on('click', function(e) {
+            if ($(this).hasClass('doDownload')) {
+                console.log('download');
+                return false;
+            }
+            
             stopBubble(e);
             stopDefault(e);
 
             var id = "";
 
-            if (!$(this).hasClass('doCreate')) {
+            if (!$(this).hasClass('doCreate') && !$(this).hasClass('doImport')) {
                 if ($('table tbody').find('tr.success').length == 0 || $('table tbody').find('tr.success').length > 1) {
                     showAlert('提示', '请选择并仅选择一条记录');
                     return;
@@ -120,6 +142,12 @@
             } else if ($(this).hasClass('doView')) {
                 url = "${contextPath }/imsi/view/" + id;
                 action = "view";
+            } else if ($(this).hasClass('doImport')) {
+                url = "${contextPath }/imsi/import";
+                action = "import";
+            } else if ($(this).hasClass('doDownload')) {
+                url = "${contextPath }/imsi/download";
+                action = "download";
             } else {
                 console.log('not supported');
                 return;
@@ -130,19 +158,24 @@
                 url : url
             }).done(function(result) {
                 if (action == "create") {
-                    $("#indexModal .modal-header h4").text("创建组织");
+                    $("#indexModal .modal-header h4").text("创建IMSI");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "delete") {
                     loadContent("${contextPath }/imsi/list");
                 } else if (action == "update") {
-                    $("#indexModal .modal-header h4").text("修改组织");
+                    $("#indexModal .modal-header h4").text("修改IMSI");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "view") {
-                    $("#indexModal .modal-header h4").text("组织详情");
+                    $("#indexModal .modal-header h4").text("IMSI详情");
+                    $("#indexModal .modal-body").html(result);
+                    $("#indexModal .modal-footer").css('display', 'none');
+                    $("#indexModal").modal('show');
+                } else if (action == "import") {
+                    $("#indexModal .modal-header h4").text("IMSI导入");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');

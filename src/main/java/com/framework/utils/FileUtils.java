@@ -7,12 +7,8 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.framework.AppConstants;
 
 public class FileUtils {
 	public static Logger log = LoggerFactory.getLogger(FileUtils.class);

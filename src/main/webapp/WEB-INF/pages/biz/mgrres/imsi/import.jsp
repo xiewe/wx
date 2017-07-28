@@ -2,7 +2,7 @@
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
 <div class="row main-content">
-    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/imsi/create" onsubmit="return doSave(this, '${contextPath }/imsi/list');">
+    <form id="saveForm" class="form-horizontal" role="form" enctype="multipart/form-data" method="post" action="${contextPath }/imsi/import" onsubmit="return doSave(this, '${contextPath }/imsi/list');">
         <div class="form-group">
             <label for="opId" class="col-sm-4 control-label">运用商主密钥模板名称 *</label>
             <div class="col-sm-8">
@@ -14,15 +14,14 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="imsi" class="col-sm-4 control-label">IMSI *</label>
+            <label for="imsi" class="col-sm-4 control-label">导入文件 *</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" name="imsi" placeholder="请输入imsi">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="k" class="col-sm-4 control-label">密钥 *</label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" name="k" placeholder="请输入密钥">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="imsifilename"> <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary">浏览</button>
+                    </span>
+                </div>
+                <input type="file" class="form-control" name="imsifile" id="imsifile" style="position: absolute; right: 0px !important; width: 100%; top: 0; opacity: 0; z-index: 999;" onchange="document.getElementById('imsifilename').value=this.value;">
             </div>
         </div>
         <div class="form-group">
@@ -51,22 +50,9 @@
                 validating : 'glyphicon glyphicon-refresh'
             },
             fields : {
-                imsi : {
+                imsifile : {
                     validators : {
-                        notEmpty : {},
-                        hex : {},
-                        stringLength : {
-                            max : 16
-                        }
-                    }
-                },
-                k : {
-                    validators : {
-                        notEmpty : {},
-                        hex : {},
-                        stringLength : {
-                            max : 32
-                        }
+                        notEmpty : {}
                     }
                 }
             }

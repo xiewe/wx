@@ -1,13 +1,30 @@
 package com.framework.utils;
 
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 封装各种生成唯一性ID算法的工具类.
  * 
  */
 public class IDUtil {
+    private static AtomicInteger i = new AtomicInteger(1);
+    private static final int I_MAX = 10000;
+
+    private static int getNumber() {
+        int ret = i.getAndIncrement();
+        if (ret >= I_MAX) {
+            i.set(ret / I_MAX);
+        }
+        return 10000 + ret;
+    }
+
+    public static String getSN() {
+        return new SimpleDateFormat("yyyyMMdd").format(new Date()) + getNumber();
+    }
 
 	private static SecureRandom random = new SecureRandom();
 

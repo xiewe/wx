@@ -3,7 +3,7 @@ package com.framework.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringUtils {
+public class StringValidationUtils {
 
 	/**
 	 * 判断字符串是否为数字

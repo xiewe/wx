@@ -313,6 +313,10 @@ public class DateUtils {
 		return formatDate(null, "yyyy-MM-dd");
 	}
 
+    public static String getTodayString() {
+        return formatDate(null, "yyyyMMdd");
+    }
+    
 	/**
 	 * 得到现在小时
 	 */
