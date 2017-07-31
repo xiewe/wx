@@ -6,7 +6,7 @@ import com.uc.entity.UserStatusInfo;
 
 public interface UserStatusInfoService {
 
-    public static final String OPTPL_KEY = "optpl";
+    public static final String USERSTATUS_KEY = "userstatus";
 
     public Boolean add(UserStatusInfo o);
 

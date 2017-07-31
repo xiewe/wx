@@ -23,18 +23,18 @@ public class IPFInfoServiceImpl implements IPFInfoService {
 
     @Override
     public Boolean add(IPFInfo o) {
-        return redisService.ZADD(OPTPL_KEY, o.getCreateTime() != null ? o.getCreateTime().getTime() : 1,
+        return redisService.ZADD(IPFINFO_KEY, o.getCreateTime() != null ? o.getCreateTime().getTime() : 1,
                 JsonAndObjectUtils.getJson(o, IPFInfo.class));
     }
 
     @Override
     public Long delete(IPFInfo o) {
-        return redisService.ZREM(OPTPL_KEY, JsonAndObjectUtils.getJson(o, IPFInfo.class));
+        return redisService.ZREM(IPFINFO_KEY, JsonAndObjectUtils.getJson(o, IPFInfo.class));
     }
 
     @Override
     public Long deleteAll() {
-        return redisService.ZREMRANGEBYRANK(OPTPL_KEY, 0, -1);
+        return redisService.ZREMRANGEBYRANK(IPFINFO_KEY, 0, -1);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class IPFInfoServiceImpl implements IPFInfoService {
         }
         start = (pageNum - 1) * pageSize;
         end = start + pageSize - 1;
-        Set<String> set = redisService.ZRANGE(OPTPL_KEY, start, end);
+        Set<String> set = redisService.ZRANGE(IPFINFO_KEY, start, end);
         List<IPFInfo> list = new ArrayList<IPFInfo>();
         for (String s : set) {
             list.add(JsonAndObjectUtils.getObject(s, IPFInfo.class));
@@ -66,7 +66,7 @@ public class IPFInfoServiceImpl implements IPFInfoService {
 
     @Override
     public List<IPFInfo> findAll() {
-        Set<String> set = redisService.ZRANGE(OPTPL_KEY, 0, -1);
+        Set<String> set = redisService.ZRANGE(IPFINFO_KEY, 0, -1);
         List<IPFInfo> list = new ArrayList<IPFInfo>();
         for (String s : set) {
             list.add(JsonAndObjectUtils.getObject(s, IPFInfo.class));
@@ -77,7 +77,7 @@ public class IPFInfoServiceImpl implements IPFInfoService {
 
     @Override
     public IPFInfo findOne(double id) {
-        Set<String> set = redisService.ZRANGEBYSCORE(OPTPL_KEY, id, id);
+        Set<String> set = redisService.ZRANGEBYSCORE(IPFINFO_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
                 return JsonAndObjectUtils.getObject(s, IPFInfo.class);
@@ -89,7 +89,7 @@ public class IPFInfoServiceImpl implements IPFInfoService {
 
     @Override
     public Long findCount() {
-        return redisService.ZCARD(OPTPL_KEY);
+        return redisService.ZCARD(IPFINFO_KEY);
     }
 
     @Override

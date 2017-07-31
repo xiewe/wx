@@ -6,7 +6,7 @@ import com.uc.entity.IPFInfo;
 
 public interface IPFInfoService {
 
-    public static final String OPTPL_KEY = "optpl";
+    public static final String IPFINFO_KEY = "ipfinfo";
 
     public Boolean add(IPFInfo o);
 

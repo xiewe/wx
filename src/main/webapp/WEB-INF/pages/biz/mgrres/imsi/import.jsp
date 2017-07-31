@@ -14,14 +14,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="imsi" class="col-sm-4 control-label">导入文件 *</label>
+            <label for="imsifilename" class="col-sm-4 control-label">上传文件 *</label>
             <div class="col-sm-8">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="imsifilename"> <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary">浏览</button>
+                    <input type="text" class="form-control" name="imsifilename" id="imsifilename"> <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary">上传</button>
                     </span>
                 </div>
-                <input type="file" class="form-control" name="imsifile" id="imsifile" style="position: absolute; right: 0px !important; width: 100%; top: 0; opacity: 0; z-index: 999;" onchange="document.getElementById('imsifilename').value=this.value;">
+                <input type="file" class="form-control" name="imsifile" id="imsifile" style="position: absolute; right: 0px !important; width: 100%; top: 0; opacity: 0; z-index: 999;">
+                <div class="clearfix progress" style="display:none;">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">0%</div>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -32,16 +35,44 @@
         </div>
     </form>
 </div>
+<script type="text/javascript" src="${contextPath}/styles/utils/ajaxfileupload.js"></script>
 <script type="text/javascript">
+    var progress = 0;
+    function updateProgress(i) {
+        var progress = i;
+        if (progress > 0 && progress <=100) { 
+            $('.progress').css('display', 'block');
+            $('.progress-bar').attr('aria-valuenow', progress);
+            $('.progress-bar').css('width', progress+'%');
+            $('.progress-bar').text(progress+'%');
+        }
+    }
+    
     function doSave(form, listUrl) {
-        var flag = $(form).data("bootstrapValidator").isValid();
+        var $form = $(form);
+        var flag = $form.data("bootstrapValidator").isValid();
         if (flag) {
-            _doSave(form, listUrl);
+            var url = $form.attr('action');
+            $.ajaxFileUpload({
+                url : url,
+                secureuri : false,
+                fileElementId : 'imsifile',
+                data : $form.serializeArray(),
+                dataType : 'json'
+            }).done(function(result, textStatus, jqXHR) {
+                console.log(result);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.log('failed');
+            });
         }
         return false;
     }
 
     $(document).ready(function() {
+
+        $('#imsifile').on('change', function(e) {
+            $('#imsifilename').val(this.value);
+        });
 
         $('#saveForm').bootstrapValidator({
             feedbackIcons : {
@@ -60,4 +91,6 @@
             e.preventDefault();
         });
     });
+
+    asdf;
 </script>

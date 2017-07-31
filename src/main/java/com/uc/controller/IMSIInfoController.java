@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
@@ -200,11 +201,12 @@ public class IMSIInfoController extends BaseController {
     @Log(message = "导入IMSI，文件:{0}，结果:{1}", level = LogLevel.INFO)
     @RequiresPermissions("IMSIInfo:create")
     @RequestMapping(value = "/import", method = { RequestMethod.POST })
-    public @ResponseBody String importImsi(@RequestParam("file") MultipartFile file, @RequestParam("opId") int opId,
-            @RequestParam("imsifilename") String imsifilename) throws JsonProcessingException {
+    public @ResponseBody String importImsi(@RequestParam("imsifile") MultipartFile imsifile) throws JsonProcessingException {
         GeneralResponseData<IMSIInfo> ret = new GeneralResponseData<IMSIInfo>();
+        
+        String imsifilename = imsifile.getOriginalFilename();
 
-        if (!"xls".equals(FileUtils.getFileExt(imsifilename)) || !"xlsx".equals(FileUtils.getFileExt(imsifilename))) {
+        if (!("xls".equals(FileUtils.getFileExt(imsifilename)) || "xlsx".equals(FileUtils.getFileExt(imsifilename)))) {
             ret.setStatus(AppConstants.FAILED);
             ret.setErrCode(SysErrorCode.FILE_FORMAT_INVALID);
             ret.setErrMsg(SysErrorCode.MAP.get(SysErrorCode.FILE_FORMAT_INVALID));
@@ -228,7 +230,7 @@ public class IMSIInfoController extends BaseController {
         BufferedOutputStream out = null;
         FileWriter logout = null;
         try {
-            in = new BufferedInputStream(file.getInputStream());
+            in = new BufferedInputStream(imsifile.getInputStream());
             out = new BufferedOutputStream(new FileOutputStream(newfilenameWithPath));
             logout = new FileWriter(new File(logfilenameWithPath));
             byte[] data = new byte[1024];
@@ -238,7 +240,7 @@ public class IMSIInfoController extends BaseController {
             }
             out.flush();
 
-            // parse excel
+            // parse excel in thread, notify progress
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -268,7 +270,7 @@ public class IMSIInfoController extends BaseController {
 
     @RequiresPermissions("IMSIInfo:create")
     @RequestMapping(value = "/download", method = { RequestMethod.GET })
-    public String downloadImsiTemplate(Map<String, Object> map) {
+    public @ResponseBody String downloadImsiTemplate(Map<String, Object> map) {
         BufferedInputStream in = null;
         BufferedOutputStream out = null;
         try {

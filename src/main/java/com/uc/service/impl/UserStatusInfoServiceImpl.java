@@ -23,18 +23,18 @@ public class UserStatusInfoServiceImpl implements UserStatusInfoService {
 
     @Override
     public Boolean add(UserStatusInfo o) {
-        return redisService.ZADD(OPTPL_KEY, Double.valueOf(o.getSubNo()),
+        return redisService.ZADD(USERSTATUS_KEY, Double.valueOf(o.getSubNo()),
                 JsonAndObjectUtils.getJson(o, UserStatusInfo.class));
     }
 
     @Override
     public Long delete(UserStatusInfo o) {
-        return redisService.ZREM(OPTPL_KEY, JsonAndObjectUtils.getJson(o, UserStatusInfo.class));
+        return redisService.ZREM(USERSTATUS_KEY, JsonAndObjectUtils.getJson(o, UserStatusInfo.class));
     }
 
     @Override
     public Long deleteAll() {
-        return redisService.ZREMRANGEBYRANK(OPTPL_KEY, 0, -1);
+        return redisService.ZREMRANGEBYRANK(USERSTATUS_KEY, 0, -1);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class UserStatusInfoServiceImpl implements UserStatusInfoService {
         }
         start = (pageNum - 1) * pageSize;
         end = start + pageSize - 1;
-        Set<String> set = redisService.ZRANGE(OPTPL_KEY, start, end);
+        Set<String> set = redisService.ZRANGE(USERSTATUS_KEY, start, end);
         List<UserStatusInfo> list = new ArrayList<UserStatusInfo>();
         for (String s : set) {
             list.add(JsonAndObjectUtils.getObject(s, UserStatusInfo.class));
@@ -66,7 +66,7 @@ public class UserStatusInfoServiceImpl implements UserStatusInfoService {
 
     @Override
     public List<UserStatusInfo> findAll() {
-        Set<String> set = redisService.ZRANGE(OPTPL_KEY, 0, -1);
+        Set<String> set = redisService.ZRANGE(USERSTATUS_KEY, 0, -1);
         List<UserStatusInfo> list = new ArrayList<UserStatusInfo>();
         for (String s : set) {
             list.add(JsonAndObjectUtils.getObject(s, UserStatusInfo.class));
@@ -77,7 +77,7 @@ public class UserStatusInfoServiceImpl implements UserStatusInfoService {
 
     @Override
     public UserStatusInfo findOne(double id) {
-        Set<String> set = redisService.ZRANGEBYSCORE(OPTPL_KEY, id, id);
+        Set<String> set = redisService.ZRANGEBYSCORE(USERSTATUS_KEY, id, id);
         if (set.size() > 0) {
             for (String s : set) {
                 return JsonAndObjectUtils.getObject(s, UserStatusInfo.class);
@@ -89,7 +89,7 @@ public class UserStatusInfoServiceImpl implements UserStatusInfoService {
 
     @Override
     public Long findCount() {
-        return redisService.ZCARD(OPTPL_KEY);
+        return redisService.ZCARD(USERSTATUS_KEY);
     }
 
     @Override
