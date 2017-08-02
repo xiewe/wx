@@ -50,7 +50,7 @@ public class WhiteListController extends BaseController {
         return CREATE;
     }
 
-    @Log(message = "添加了白名单:{0}", level = LogLevel.INFO)
+    @Log(message = "添加了白名单:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("BlackWhiteList:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public @ResponseBody String create(@Valid BlackWhiteList blackwhitelist) throws JsonProcessingException {
@@ -72,7 +72,7 @@ public class WhiteListController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
-    @Log(message = "删除了白名单:{0}", level = LogLevel.INFO)
+    @Log(message = "删除了白名单:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("BlackWhiteList:delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public @ResponseBody String delete(@PathVariable double id) throws JsonProcessingException {
@@ -93,7 +93,7 @@ public class WhiteListController extends BaseController {
         return UPDATE;
     }
 
-    @Log(message = "修改了白名单:{0}的信息", level = LogLevel.INFO)
+    @Log(message = "修改了白名单:{0}的信息", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("BlackWhiteList:update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody String update(@Valid BlackWhiteList blackwhitelist) throws JsonProcessingException {

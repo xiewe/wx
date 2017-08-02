@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.framework.AppConstants;
 import com.framework.SysErrorCode;
+import com.framework.concurrency.ExecutorServiceManage;
 import com.framework.controller.BaseController;
 import com.framework.entity.GeneralResponseData;
 import com.framework.log4jdbc.Log;
@@ -47,6 +47,8 @@ import com.uc.entity.IMSIInfo;
 import com.uc.entity.OPTpl;
 import com.uc.service.IMSIInfoService;
 import com.uc.service.OPTplService;
+import com.uc.task.BatchIMSIThread;
+import com.uc.task.UCExcelHandler;
 
 @Controller
 @RequestMapping("/imsi")
@@ -74,7 +76,7 @@ public class IMSIInfoController extends BaseController {
         return CREATE;
     }
 
-    @Log(message = "添加了IMSI:{0}", level = LogLevel.INFO)
+    @Log(message = "添加了IMSI:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("IMSIInfo:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public @ResponseBody String create(@Valid IMSIInfo imsiinfo) throws JsonProcessingException {
@@ -105,7 +107,7 @@ public class IMSIInfoController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
-    @Log(message = "删除了IMSI:{0}", level = LogLevel.INFO)
+    @Log(message = "删除了IMSI:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("IMSIInfo:delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public @ResponseBody String delete(@PathVariable double id) throws JsonProcessingException {
@@ -126,7 +128,7 @@ public class IMSIInfoController extends BaseController {
         return UPDATE;
     }
 
-    @Log(message = "修改了IMSI:{0}的信息", level = LogLevel.INFO)
+    @Log(message = "修改了IMSI:{0}的信息", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("IMSIInfo:update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody String update(@Valid IMSIInfo imsiinfo) throws JsonProcessingException {
@@ -198,12 +200,26 @@ public class IMSIInfoController extends BaseController {
         return IMPORT;
     }
 
-    @Log(message = "导入IMSI，文件:{0}，结果:{1}", level = LogLevel.INFO)
+    @RequiresPermissions("IMSIInfo:create")
+    @RequestMapping(value = "/import/progress", method = { RequestMethod.POST })
+    public @ResponseBody String importImsiProgress(@RequestParam("filename") String filename)
+            throws JsonProcessingException {
+        GeneralResponseData<Integer> ret = new GeneralResponseData<Integer>();
+
+        int progress = UCExcelHandler.getInstance().getParseProgress(filename);
+
+        ret.setStatus(AppConstants.SUCCESS);
+        ret.setData(progress);
+        return mapper.writeValueAsString(ret);
+    }
+
+    @Log(message = "导入IMSI，文件:{0}，结果:{1}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("IMSIInfo:create")
     @RequestMapping(value = "/import", method = { RequestMethod.POST })
-    public @ResponseBody String importImsi(@RequestParam("imsifile") MultipartFile imsifile) throws JsonProcessingException {
-        GeneralResponseData<IMSIInfo> ret = new GeneralResponseData<IMSIInfo>();
-        
+    public @ResponseBody String importImsi(@RequestParam("imsifile") MultipartFile imsifile)
+            throws JsonProcessingException {
+        GeneralResponseData<String> ret = new GeneralResponseData<String>();
+
         String imsifilename = imsifile.getOriginalFilename();
 
         if (!("xls".equals(FileUtils.getFileExt(imsifilename)) || "xlsx".equals(FileUtils.getFileExt(imsifilename)))) {
@@ -228,11 +244,9 @@ public class IMSIInfoController extends BaseController {
 
         BufferedInputStream in = null;
         BufferedOutputStream out = null;
-        FileWriter logout = null;
         try {
             in = new BufferedInputStream(imsifile.getInputStream());
             out = new BufferedOutputStream(new FileOutputStream(newfilenameWithPath));
-            logout = new FileWriter(new File(logfilenameWithPath));
             byte[] data = new byte[1024];
             int len = 0;
             while (-1 != (len = in.read(data, 0, data.length))) {
@@ -241,6 +255,7 @@ public class IMSIInfoController extends BaseController {
             out.flush();
 
             // parse excel in thread, notify progress
+            ExecutorServiceManage.execute(new BatchIMSIThread(newfilenameWithPath));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -252,19 +267,16 @@ public class IMSIInfoController extends BaseController {
                 if (out != null) {
                     out.close();
                 }
-                if (logout != null) {
-                    logout.close();
-                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
+        ret.setStatus(AppConstants.SUCCESS);
+        ret.setData(newfilenameWithPath);
         setLogObject(new Object[] {
-                "<a target=\"_blank\" href=\"/" + AppConstants.SERVER_PROJECT + "/file/" + folder + "/" + newfilename
-                        + "\">" + newfilename + "</a>",
-                "<a target=\"_blank\" href=\"/" + AppConstants.SERVER_PROJECT + "/file/" + folder + "/" + logfilename
-                        + "\">" + logfilename + "</a>" });
+                "<a target=\"_blank\" href=\"/file/" + folder + "/" + newfilename + "\">" + newfilename + "</a>",
+                "<a target=\"_blank\" href=\"/file/" + folder + "/" + logfilename + "\">" + logfilename + "</a>" });
         return mapper.writeValueAsString(ret);
     }
 

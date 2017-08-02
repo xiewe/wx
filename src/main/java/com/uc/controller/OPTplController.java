@@ -50,7 +50,7 @@ public class OPTplController extends BaseController {
         return CREATE;
     }
 
-    @Log(message = "添加了OP模板:{0}", level = LogLevel.INFO)
+    @Log(message = "添加了OP模板:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("OPTpl:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public @ResponseBody String create(@Valid OPTpl optpl) throws JsonProcessingException {
@@ -80,7 +80,7 @@ public class OPTplController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
-    @Log(message = "删除了OP模板:{0}", level = LogLevel.INFO)
+    @Log(message = "删除了OP模板:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("OPTpl:delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public @ResponseBody String delete(@PathVariable double id) throws JsonProcessingException {
@@ -101,7 +101,7 @@ public class OPTplController extends BaseController {
         return UPDATE;
     }
 
-    @Log(message = "修改了OP模板:{0}的信息", level = LogLevel.INFO)
+    @Log(message = "修改了OP模板:{0}的信息", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("OPTpl:update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody String update(@Valid OPTpl optpl) throws JsonProcessingException {
@@ -144,7 +144,7 @@ public class OPTplController extends BaseController {
         } else {
             optpls = oPTplService.findByPage(pager.getPageSize(), pager.getCurrPage());
         }
-        
+
         Long count = oPTplService.findCount();
         pager.setTotalCount(count);
         map.put("pager", pager);

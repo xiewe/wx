@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="apnGroupId" class="col-sm-4 control-label">APN组ID *</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" name="apnGroupId" value="${apngrouptpl.apnGroupId}" placeholder="请输入APN组ID">
+                <input type="text" class="form-control" name="apnGroupId" value="${apngrouptpl.apnGroupId}" placeholder="请输入APN组ID" disabled>
             </div>
         </div>
         <div class="form-group">

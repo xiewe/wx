@@ -21,10 +21,10 @@ public class RedisTest extends BaseTest {
     // redisService.vdel("xie");
     // }
 
-    // @Test
-    // public void testSet() throws Exception {
-    // redisService.SET("wen", "xiebao");
-    // }
+     @Test
+     public void testSet() throws Exception {
+     redisService.SET("wen", "xiebao");
+     }
 
     @Test
     public void testDel() throws Exception {

@@ -51,13 +51,19 @@
                 ipFragment : {
                     validators : {
                         notEmpty : {},
-                        ipv4 : {}
+                        ip : {
+                            ipv4 : true,
+                            ipv6 : true
+                        }
                     }
                 },
                 ipMask : {
                     validators : {
                         notEmpty : {},
-                        ipv4 : {}
+                        ip : {
+                            ipv4 : true,
+                            ipv6 : true
+                        }
                     }
                 },
                 desc : {

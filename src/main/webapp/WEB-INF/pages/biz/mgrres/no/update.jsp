@@ -2,27 +2,48 @@
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
 <div class="row main-content">
-    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/op/update" onsubmit="return doSave(this, '${contextPath }/op/list');">
+    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/no/update" onsubmit="return doSave(this, '${contextPath }/no/list');">
         <div class="form-group">
-            <label for="opId" class="col-sm-2 control-label">OP ID *</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="opId" value="${optpl.opId}" placeholder="请输入OP ID">
+            <label for="orgId" class="col-sm-4 control-label">组织名称 *</label>
+            <div class="col-sm-8">
+                <input type="hidden" name="createTime" value="${phonenofinfo.createTime}"> 
+                 <select class="form-control" name="orgId">
+                    <c:forEach var="item" items="${resorgs}">
+                        <c:choose>
+                            <c:when test="${phonenofinfo.orgId == item.orgId }">
+                                <option value="${item.orgId }" selected>${item.orgName}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${item.orgId }" >${item.orgName}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label for="opName" class="col-sm-2 control-label">模板名称 *</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="opName" value="${optpl.opName}" placeholder="请输入模板名称">
+            <label for="phoneNoType" class="col-sm-4 control-label">号码类型 *</label>
+            <div class="col-sm-8">
+                 <select class="form-control" name="phoneNoType">
+                    <option value="1" <c:if test="${phonenofinfo.phoneNoType == 1}">selected</c:if>>用户号码</option>
+                    <option value="2" <c:if test="${phonenofinfo.phoneNoType == 2}">selected</c:if>>组号码</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label for="opValue" class="col-sm-2 control-label">运营商可变算法配置域 *</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="opValue" value="${optpl.opValue}" placeholder="请输入运营商可变算法配置域">
+            <label for="phoneNoStart" class="col-sm-4 control-label">起始号码 *</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="phoneNoStart" value="${phonenofinfo.phoneNoStart }" placeholder="请输入起始号码">
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <label for="numbers" class="col-sm-4 control-label">号码个数 *</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="numbers" value="${phonenofinfo.numbers }" placeholder="请输入号码个数">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="submit" class="btn btn-primary">确定</button>
             </div>
@@ -48,27 +69,26 @@
                 validating : 'glyphicon glyphicon-refresh'
             },
             fields : {
-                opId : {
+                orgId : {
+                    validators : {
+                        notEmpty : {}
+                    }
+                },
+                phoneNoType : {
+                    validators : {
+                        notEmpty : {}
+                    }
+                },
+                phoneNoStart : {
                     validators : {
                         notEmpty : {},
                         digits : {}
                     }
                 },
-                opName : {
+                numbers : {
                     validators : {
                         notEmpty : {},
-                        stringLength : {
-                            max : 32
-                        }
-                    }
-                },
-                opValue : {
-                    validators : {
-                        notEmpty : {},
-                        hex : {},
-                        stringLength : {
-                            max : 32
-                        }
+                        digits : {}
                     }
                 }
             }

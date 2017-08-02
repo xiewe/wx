@@ -31,6 +31,7 @@
 </div>
 <script type="text/javascript">
     function doSave(form, listUrl) {
+        $(form).data("bootstrapValidator").validate();
         var flag = $(form).data("bootstrapValidator").isValid();
         if (flag) {
             _doSave(form, listUrl);
@@ -50,13 +51,19 @@
                 ipFragment : {
                     validators : {
                         notEmpty : {},
-                        ipv4 : {}
+                        ip : {
+                            ipv4 : true,
+                            ipv6 : true
+                        }
                     }
                 },
                 ipMask : {
                     validators : {
                         notEmpty : {},
-                        ipv4 : {}
+                        ip : {
+                            ipv4 : true,
+                            ipv6 : true
+                        }
                     }
                 },
                 desc : {

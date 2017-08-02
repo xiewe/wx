@@ -23,7 +23,7 @@ public class IDUtil {
     }
 
     public static String getSN() {
-        return new SimpleDateFormat("yyyyMMdd").format(new Date()) + getNumber();
+        return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + getNumber();
     }
 
 	private static SecureRandom random = new SecureRandom();

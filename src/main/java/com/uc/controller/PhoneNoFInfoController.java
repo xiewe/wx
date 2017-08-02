@@ -29,7 +29,9 @@ import com.framework.log4jdbc.LogLevel;
 import com.framework.utils.pager.DynamicSpecifications;
 import com.framework.utils.pager.Pager;
 import com.framework.utils.pager.SearchFilter;
+import com.uc.entity.Organization;
 import com.uc.entity.PhoneNoFInfo;
+import com.uc.service.OrganizationService;
 import com.uc.service.PhoneNoFService;
 
 @Controller
@@ -39,6 +41,9 @@ public class PhoneNoFInfoController extends BaseController {
     @Autowired
     private PhoneNoFService phoneNoFService;
 
+    @Autowired
+    private OrganizationService organizationService;
+    
     ObjectMapper mapper = new ObjectMapper();
     private static final String CREATE = "biz/mgrres/no/create";
     private static final String UPDATE = "biz/mgrres/no/update";
@@ -48,10 +53,13 @@ public class PhoneNoFInfoController extends BaseController {
     @RequiresPermissions("PhoneNoFInfo:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String preCreate(Map<String, Object> map) {
+        List<Organization> resorgs = organizationService.findAll();
+        map.put("resorgs", resorgs);
+        
         return CREATE;
     }
 
-    @Log(message = "添加了号段:{0}", level = LogLevel.INFO)
+    @Log(message = "添加了号段:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("PhoneNoFInfo:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public @ResponseBody String create(@Valid PhoneNoFInfo phonenofinfo) throws JsonProcessingException {
@@ -81,7 +89,7 @@ public class PhoneNoFInfoController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
-    @Log(message = "删除了号段:{0}", level = LogLevel.INFO)
+    @Log(message = "删除了号段:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("PhoneNoFInfo:delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public @ResponseBody String delete(@PathVariable double id) throws JsonProcessingException {
@@ -96,13 +104,16 @@ public class PhoneNoFInfoController extends BaseController {
 
     @RequiresPermissions("PhoneNoFInfo:update")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public String preUpdate(@PathVariable Integer id, Map<String, Object> map) {
+    public String preUpdate(@PathVariable double id, Map<String, Object> map) {
         PhoneNoFInfo phonenofinfo = phoneNoFService.findOne(id);
         map.put("phonenofinfo", phonenofinfo);
+        List<Organization> resorgs = organizationService.findAll();
+        map.put("resorgs", resorgs);
+        
         return UPDATE;
     }
 
-    @Log(message = "修改了号段:{0}的信息", level = LogLevel.INFO)
+    @Log(message = "修改了号段:{0}的信息", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("PhoneNoFInfo:update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody String update(@Valid PhoneNoFInfo phonenofinfo) throws JsonProcessingException {
@@ -152,15 +163,21 @@ public class PhoneNoFInfoController extends BaseController {
         map.put("pager", pager);
         map.put("phonenofinfos", phonenofinfos);
 
+        List<Organization> resorgs = organizationService.findAll();
+        map.put("resorgs", resorgs);
+        
         return LIST;
     }
 
     @RequiresPermissions(value = { "PhoneNoFInfo:view", "PhoneNoFInfo:create", "PhoneNoFInfo:update",
             "PhoneNoFInfo:delete" }, logical = Logical.OR)
     @RequestMapping(value = "/view/{id}", method = { RequestMethod.GET })
-    public String view(@PathVariable Integer id, Map<String, Object> map) {
+    public String view(@PathVariable double id, Map<String, Object> map) {
         PhoneNoFInfo phonenofinfo = phoneNoFService.findOne(id);
         map.put("phonenofinfo", phonenofinfo);
+        List<Organization> resorgs = organizationService.findAll();
+        map.put("resorgs", resorgs);
+        
         return VIEW;
     }
 }

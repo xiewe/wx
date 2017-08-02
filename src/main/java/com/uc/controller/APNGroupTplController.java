@@ -59,7 +59,7 @@ public class APNGroupTplController extends BaseController {
         return CREATE;
     }
 
-    @Log(message = "添加了APN组:{0}", level = LogLevel.INFO)
+    @Log(message = "添加了APN组:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("APNGroupTpl:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public @ResponseBody String create(@Valid APNGroupTpl apngrouptpl) throws JsonProcessingException {
@@ -90,7 +90,7 @@ public class APNGroupTplController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
-    @Log(message = "删除了APN组:{0}", level = LogLevel.INFO)
+    @Log(message = "删除了APN组:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("APNGroupTpl:delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public @ResponseBody String delete(@PathVariable double id) throws JsonProcessingException {
@@ -115,7 +115,7 @@ public class APNGroupTplController extends BaseController {
         return UPDATE;
     }
 
-    @Log(message = "修改了APN组:{0}的信息", level = LogLevel.INFO)
+    @Log(message = "修改了APN组:{0}的信息", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("APNGroupTpl:update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody String update(@Valid APNGroupTpl apngrouptpl) throws JsonProcessingException {

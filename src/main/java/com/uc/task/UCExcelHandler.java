@@ -39,7 +39,7 @@ public class UCExcelHandler {
 
         fileMap.put(filename, et);
     }
-    
+
     public void addOpenAccountFile(String filename) {
         ExcelType et = new ExcelType();
         et.filename = filename;
@@ -49,49 +49,25 @@ public class UCExcelHandler {
 
         fileMap.put(filename, et);
     }
-    
-    public void updateProgress(String filename, int progress) {
-        fileMap.get(filename).uploadProgress = progress;
-    }
-    
-    public int getProgress(String filename) {
-        return fileMap.get(filename).uploadProgress;
+
+    public void setUploadProgress(String filename, int progress) {
+        if (fileMap.get(filename) != null) {
+            fileMap.get(filename).uploadProgress = progress;
+        }
     }
 
-    class BatchIMSIThread implements Runnable {
-
-        @Override
-        public void run() {
-            try {
-                doWork();
-            } catch (Throwable e) {
-                logger.debug("Exception:" + e.getMessage());
-            }
-
-        }
-
-        private void doWork() throws InterruptedException {
-
-        }
-
+    public int getUploadProgress(String filename) {
+        return fileMap.get(filename) != null ? fileMap.get(filename).uploadProgress : 0;
     }
 
-    class BatchOpenAccountThread implements Runnable {
-
-        @Override
-        public void run() {
-            try {
-                doWork();
-            } catch (Throwable e) {
-                logger.debug("Exception:" + e.getMessage());
-            }
-
+    public void setPraseProgress(String filename, int progress) {
+        if (fileMap.get(filename) != null) {
+            fileMap.get(filename).parseProgress = progress;
         }
+    }
 
-        private void doWork() throws InterruptedException {
-
-        }
-
+    public int getParseProgress(String filename) {
+        return fileMap.get(filename) != null ? fileMap.get(filename).parseProgress : 0;
     }
 
     class CleanupThread implements Runnable {
@@ -108,17 +84,20 @@ public class UCExcelHandler {
 
         private void doWork() throws InterruptedException {
 
+            for (String key : fileMap.keySet()) {
+                if (fileMap.get(key).createTime.getTime() + expirePeriod > new Date().getTime()) {
+                    logger.debug("[CleanupThread] removed file:" + fileMap.get(key).toString());
+                    fileMap.remove(key);
+                }
+            }
         }
-
     }
 
     @PostConstruct
     private void init() {
         logger.debug("UCExcelHandler init method");
 
-        exec = Executors.newScheduledThreadPool(3);
-        exec.scheduleAtFixedRate(new BatchIMSIThread(), 0, 3, TimeUnit.SECONDS);
-        exec.scheduleAtFixedRate(new BatchOpenAccountThread(), 0, 3, TimeUnit.SECONDS);
+        exec = Executors.newScheduledThreadPool(1);
         exec.scheduleAtFixedRate(new CleanupThread(), 0, 600, TimeUnit.SECONDS);
     }
 
@@ -139,6 +118,15 @@ public class UCExcelHandler {
         int filetype;
         int uploadProgress;
         int parseStatus;
+        int parseProgress;
         Date createTime;
+
+        @Override
+        public String toString() {
+            return "ExcelType [filename=" + filename + ", filetype=" + filetype + ", uploadProgress=" + uploadProgress
+                    + ", parseStatus=" + parseStatus + ", parseProgress=" + parseProgress + ", createTime="
+                    + createTime + "]";
+        }
+
     }
 }

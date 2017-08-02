@@ -35,12 +35,12 @@
         <shiro:hasPermission name="IPFInfo:delete">
             <a href="#" class="btn btn-default doDelete">删除</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="IPFInfo:update">
+        <%-- <shiro:hasPermission name="IPFInfo:update">
             <a href="#" class="btn btn-default doUpdate">修改</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="IPFInfo:view">
             <a href="#" class="btn btn-default doView">查看</a>
-        </shiro:hasPermission>
+        </shiro:hasPermission> --%>
     </p>
 
     <div class="table-responsive">
@@ -55,7 +55,7 @@
             </thead>
             <tbody>
                 <c:forEach var="item" items="${ipfinfos}">
-                    <tr data-id="${item.ipFragment}">
+                    <tr data-id="${item.createTime.time}">
                         <td>${item.ipFragment}</td>
                         <td>${item.ipMask}</td>
                         <td>${item.usedCount}</td>
@@ -115,19 +115,19 @@
                 url : url
             }).done(function(result) {
                 if (action == "create") {
-                    $("#indexModal .modal-header h4").text("创建组织");
+                    $("#indexModal .modal-header h4").text("创建网段");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "delete") {
                     loadContent("${contextPath }/ip/list");
                 } else if (action == "update") {
-                    $("#indexModal .modal-header h4").text("修改组织");
+                    $("#indexModal .modal-header h4").text("修改网段");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');
                 } else if (action == "view") {
-                    $("#indexModal .modal-header h4").text("组织详情");
+                    $("#indexModal .modal-header h4").text("网段详情");
                     $("#indexModal .modal-body").html(result);
                     $("#indexModal .modal-footer").css('display', 'none');
                     $("#indexModal").modal('show');

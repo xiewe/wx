@@ -51,7 +51,7 @@ public class IPFInfoController extends BaseController {
         return CREATE;
     }
 
-    @Log(message = "添加了网段:{0}", level = LogLevel.INFO)
+    @Log(message = "添加了网段:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("IPFInfo:create")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public @ResponseBody String create(@Valid IPFInfo ipfinfo) throws JsonProcessingException {
@@ -81,7 +81,7 @@ public class IPFInfoController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
-    @Log(message = "删除了网段:{0}", level = LogLevel.INFO)
+    @Log(message = "删除了网段:{0}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("IPFInfo:delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public @ResponseBody String delete(@PathVariable double id) throws JsonProcessingException {
@@ -96,13 +96,13 @@ public class IPFInfoController extends BaseController {
 
     @RequiresPermissions("IPFInfo:update")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public String preUpdate(@PathVariable Integer id, Map<String, Object> map) {
+    public String preUpdate(@PathVariable double id, Map<String, Object> map) {
         IPFInfo ipfinfo = iPFInfoService.findOne(id);
         map.put("ipfinfo", ipfinfo);
         return UPDATE;
     }
 
-    @Log(message = "修改了网段:{0}的信息", level = LogLevel.INFO)
+    @Log(message = "修改了网段:{0}的信息", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("IPFInfo:update")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody String update(@Valid IPFInfo ipfinfo) throws JsonProcessingException {
@@ -156,7 +156,7 @@ public class IPFInfoController extends BaseController {
 
     @RequiresPermissions(value = { "IPFInfo:view", "IPFInfo:create", "IPFInfo:update", "IPFInfo:delete" }, logical = Logical.OR)
     @RequestMapping(value = "/view/{id}", method = { RequestMethod.GET })
-    public String view(@PathVariable Integer id, Map<String, Object> map) {
+    public String view(@PathVariable double id, Map<String, Object> map) {
         IPFInfo ipfinfo = iPFInfoService.findOne(id);
         map.put("ipfinfo", ipfinfo);
         return VIEW;
