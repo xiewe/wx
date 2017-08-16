@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="bizTplId" class="col-sm-2 control-label">业务模板ID *</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="bizTplId" value="${biztpl.bizTplId }" placeholder="请输入业务模板ID" disabled>
+                <input type="text" class="form-control" name="bizTplId" value="${biztpl.bizTplId }" placeholder="请输入业务模板ID" readonly>
             </div>
         </div>
         <div class="form-group">

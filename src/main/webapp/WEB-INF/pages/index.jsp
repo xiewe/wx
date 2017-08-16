@@ -35,16 +35,25 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fruid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">TCN2000用户中心</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="${contextPath}/updateBase" class="updateSelf"><span>欢迎您，${login_user.username}</span></a></li>
-                    <li><a href="${contextPath}/updatePwd" class="updateSelf"><span>修改密码</span></a></li>
-                    <li><a href="${contextPath}/logout"><span style="padding-right: 50px; border-right: 0px">退出</span></a></li>
+                    <c:choose>
+                        <c:when test="${inoms == '1' }">
+                            <li><a href="#"><span style="padding-right: 50px;">欢迎您，${login_user.username}</span></a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="${contextPath}/updateBase" class="updateSelf"><span>欢迎您，${login_user.username}</span></a></li>
+                            <li><a href="${contextPath}/updatePwd" class="updateSelf"><span>修改密码</span></a></li>
+                            <li><a href="${contextPath}/logout"><span style="padding-right: 50px; border-right: 0px">退出</span></a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
         </div>
@@ -53,7 +62,8 @@
     <div class="container-fruid">
         <div class="row index-row">
             <div class="col-md-2 col-sm-3 sideMenu">
-                <a href="#" class="btn btn-defaut" role="button"> <!-- <span class="glyphicon glyphicon-menu-left"></span> --><< TCN2000网管
+                <a href="/tcn2000/tcn2000/welcome.do" class="btn btn-defaut goToOms" role="button"> <!-- <span class="glyphicon glyphicon-menu-left"></span> --><<
+                    TCN2000网管
                 </a>
                 <div class="panel-group" id="accordion">
                     <c:set var="menuParentId" value="0" />
@@ -68,7 +78,8 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <span class="glyphicon-plus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapse${menuParentId}"> ${item.name} </a>
+                    <span class="glyphicon-plus glyphicon"></span> <a data-toggle="collapse" data-parent="#accordion" href="#collapse${menuParentId}">
+                        ${item.name} </a>
                 </h4>
             </div>
             <div id="collapse${menuParentId}" class="panel-collapse collapse">
@@ -133,36 +144,44 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <%-- <script src="${contextPath}/styles/bootstrap/js/ie10-viewport-bug-workaround.js"></script> --%>
     <script type="text/javascript">
-        $(function() {
-            $('.panel-group .panel-heading span').eq(0).removeClass('glyphicon-plus');
-            $('.panel-group .panel-heading span').eq(0).addClass('glyphicon-minus');
-            $('.panel-group .panel-collapse').eq(0).addClass('in');
-            $('.panel-group .panel-collapse .list-group a').eq(0).addClass('active');
-            var initurl = $('.panel-group .panel-collapse .list-group a').eq(0).data('url');
-            loadContent(initurl);
-            
-            $('.updateSelf').on('click', function(e) {
-                stopBubble(e);
-                stopDefault(e);
-                
-                url = $(this).attr('href');
-                
-                $.ajax({
-                    type : 'get',
-                    url : url
-                }).done(function(result) {
-                    $("#indexModal .modal-header h4").text("修改资料");
-                    $("#indexModal .modal-body").html(result);
-                    $("#indexModal .modal-footer").css('display', 'none');
-                    $("#indexModal").modal('show');
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    showAlert('错误', '失败原因：' + textStatus + " - " + errorThrown);
-                }).always(function() {
-                });
-            })
-            
-        })
-    </script>
+                    $(function() {
+                        $('.panel-group .panel-heading span').eq(0).removeClass('glyphicon-plus');
+                        $('.panel-group .panel-heading span').eq(0).addClass('glyphicon-minus');
+                        $('.panel-group .panel-collapse').eq(0).addClass('in');
+                        $('.panel-group .panel-collapse .list-group a').eq(0).addClass('active');
+                        var initurl = $('.panel-group .panel-collapse .list-group a').eq(0).data('url');
+                        loadContent(initurl);
+
+                        $('.updateSelf').on('click', function(e) {
+                            stopBubble(e);
+                            stopDefault(e);
+
+                            url = $(this).attr('href');
+
+                            $.ajax({
+                                type : 'get',
+                                url : url
+                            }).done(function(result) {
+                                $("#indexModal .modal-header h4").text("修改资料");
+                                $("#indexModal .modal-body").html(result);
+                                $("#indexModal .modal-footer").css('display', 'none');
+                                $("#indexModal").modal('show');
+                            }).fail(function(jqXHR, textStatus, errorThrown) {
+                                showAlert('错误', '失败原因：' + textStatus + " - " + errorThrown);
+                            }).always(function() {
+                            });
+                        })
+
+                        $('.goToOms').on('click', function(e) {
+                            stopBubble(e);
+                            stopDefault(e);
+
+                            url = $(this).attr('href');
+                            window.location.href = url;
+                        })
+
+                    })
+                </script>
 
 </body>
 </html>

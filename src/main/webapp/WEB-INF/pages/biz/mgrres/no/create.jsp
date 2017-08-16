@@ -74,7 +74,11 @@
                 phoneNoStart : {
                     validators : {
                         notEmpty : {},
-                        digits : {}
+                        digits : {},
+                        stringLength: {
+                        	min:1,
+                        	max:10
+                        }
                     }
                 },
                 numbers : {

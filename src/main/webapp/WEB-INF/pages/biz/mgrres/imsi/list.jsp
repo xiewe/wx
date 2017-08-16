@@ -20,6 +20,7 @@
             <label for="search_EQ_status" class="control-label col-md-1 col-sm-6">号码状态:</label>
             <div class="col-md-3 col-sm-6">
                 <select class="form-control" name="search_EQ_status">
+                    <option value=""></option>
                     <c:choose>
                         <c:when test="${param.search_EQ_status == 1 }">
                             <option value="1" selected>未分配</option>
@@ -83,7 +84,7 @@
             </thead>
             <tbody>
                 <c:forEach var="item" items="${imsiinfos}">
-                    <tr data-id="${item.createTime.time}">
+                    <tr data-id="${item.createTime.time}" data-imsi="${item.imsi}">
                         <td>${item.imsi}</td>
                         <td>${item.k}</td>
                         <td><c:forEach var="op" items="${optpls}">
@@ -116,6 +117,7 @@
             stopDefault(e);
 
             var id = "";
+            var imsi = "";
 
             if (!$(this).hasClass('doCreate') && !$(this).hasClass('doImport')) {
                 if ($('table tbody').find('tr.success').length == 0 || $('table tbody').find('tr.success').length > 1) {
@@ -123,6 +125,7 @@
                     return;
                 } else {
                     id = $('table tbody').find('tr.success').data("id");
+                    imsi = $('table tbody').find('tr.success').data("imsi");
                 }
             }
 
@@ -133,7 +136,7 @@
                 url = "${contextPath }/imsi/create";
                 action = "create";
             } else if ($(this).hasClass('doDelete')) {
-                url = "${contextPath }/imsi/delete/" + id;
+                url = "${contextPath }/imsi/delete/" + id+"/"+imsi;
                 type = "post";
                 action = "delete";
             } else if ($(this).hasClass('doUpdate')) {

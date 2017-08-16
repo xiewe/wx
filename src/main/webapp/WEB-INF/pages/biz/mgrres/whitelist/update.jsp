@@ -2,23 +2,27 @@
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
 
 <div class="row main-content">
-    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/op/update" onsubmit="return doSave(this, '${contextPath }/op/list');">
+    <form id="saveForm" class="form-horizontal" role="form" method="post" action="${contextPath }/whitelist/update" onsubmit="return doSave(this, '${contextPath }/whitelist/list');">
         <div class="form-group">
-            <label for="opId" class="col-sm-2 control-label">OP ID *</label>
+            <label for="imeisv" class="col-sm-2 control-label">IMEI/IMEISV *</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="opId" value="${optpl.opId}" placeholder="请输入OP ID">
+                <input type="hidden" name="createTime" value="<fmt:formatDate value="${blackwhitelist.createTime}" pattern="yyyy-MM-dd HH:mm:ss.S" />"> 
+                <input type="text" class="form-control" name="imeisv" value="${blackwhitelist.imeisv }" placeholder="请输入IMEI/IMEISV" readonly>
             </div>
         </div>
         <div class="form-group">
-            <label for="opName" class="col-sm-2 control-label">模板名称 *</label>
+            <label for="imsi" class="col-sm-2 control-label">IMSI *</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="opName" value="${optpl.opName}" placeholder="请输入模板名称">
+                <input type="text" class="form-control" name="imsi" value="${blackwhitelist.imsi }" placeholder="请输入模板名称" readonly>
             </div>
         </div>
         <div class="form-group">
-            <label for="opValue" class="col-sm-2 control-label">运营商可变算法配置域 *</label>
+            <label for="listType" class="col-sm-2 control-label">类型*</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="opValue" value="${optpl.opValue}" placeholder="请输入运营商可变算法配置域">
+                <select class="form-control" name="listType">
+                    <option value="0" <c:if test="${blackwhitelist.listType == 0}">selected</c:if>>白名单</option>
+                    <option value="1" <c:if test="${blackwhitelist.listType == 1}">selected</c:if>>黑名单</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -48,26 +52,22 @@
                 validating : 'glyphicon glyphicon-refresh'
             },
             fields : {
-                opId : {
-                    validators : {
-                        notEmpty : {},
-                        digits : {}
-                    }
-                },
-                opName : {
-                    validators : {
-                        notEmpty : {},
-                        stringLength : {
-                            max : 32
-                        }
-                    }
-                },
-                opValue : {
+                imeisv : {
                     validators : {
                         notEmpty : {},
                         hex : {},
                         stringLength : {
-                            max : 32
+                            max : 16,
+                            min : 14
+                        }
+                    }
+                },
+                imsi : {
+                    validators : {
+                        notEmpty : {},
+                        hex : {},
+                        stringLength : {
+                            max : 15
                         }
                     }
                 }

@@ -171,12 +171,10 @@ INSERT INTO `sys_menu` (`id`,`category`,`name`,`url`,`parent_id`,`flag`,`target`
 (23,'资源管理','静态IP管理','/ip/list',21,NULL,NULL,NULL),
 (24,'资源管理','组织管理','/resorg/list',21,NULL,NULL,NULL),
 (25,'资源管理','号段管理','/no/list',21,NULL,NULL,NULL),
-(26,'资源管理','白名单管理','/whitelist/list',21,NULL,NULL,NULL),
-(27,'资源管理','黑名单管理','/blacklist/list',21,NULL,NULL,NULL),
+(26,'资源管理','黑白名单管理','/whitelist/list',21,NULL,NULL,NULL),
 (31,'用户管理','用户管理',NULL,NULL,NULL,NULL,NULL),
 (32,'用户管理','用户信息','/userinfo/list',31,NULL,NULL,NULL),
-(33,'用户管理','用户开户','/openaccount/list',31,NULL,NULL,NULL),
-(34,'用户管理','批量开户','/importaccout/list',31,NULL,NULL,NULL),
+(34,'用户管理','批量开户','/importaccount/list',31,NULL,NULL,NULL),
 (35,'用户管理','用户状态','/userstatus/list',31,NULL,NULL,NULL),
 (36,'用户管理','组信息','/groupinfo/list',31,NULL,NULL,NULL);
 
@@ -215,56 +213,137 @@ INSERT INTO `sys_menu_class` (`id`,`menu_id`,`name`,`class_name`,`method`) VALUE
 (1032,15,'查（View）','com.uc.entity.BizTpl','BizTpl:view'),
 (1033,22,'增（Create）','com.uc.entity.IMSIInfo','IMSIInfo:create'),
 (1034,22,'删（Delete）','com.uc.entity.IMSIInfo','IMSIInfo:delete'),
-(1035,22,'改（Update）','com.uc.entity.IMSIInfo','IMSIInfo:update'),
-(1036,22,'查（View）','com.uc.entity.IMSIInfo','IMSIInfo:view'),
 (1037,23,'增（Create）','com.uc.entity.IPFInfo','IPFInfo:create'),
 (1038,23,'删（Delete）','com.uc.entity.IPFInfo','IPFInfo:delete'),
-(1039,23,'改（Update）','com.uc.entity.IPFInfo','IPFInfo:update'),
-(1040,23,'查（View）','com.uc.entity.IPFInfo','IPFInfo:view'),
 (1041,24,'增（Create）','com.uc.entity.Organization','Organization:create'),
 (1042,24,'删（Delete）','com.uc.entity.Organization','Organization:delete'),
 (1043,24,'改（Update）','com.uc.entity.Organization','Organization:update'),
 (1044,24,'查（View）','com.uc.entity.Organization','Organization:view'),
 (1045,25,'增（Create）','com.uc.entity.PhoneNoFInfo','PhoneNoFInfo:create'),
 (1046,25,'删（Delete）','com.uc.entity.PhoneNoFInfo','PhoneNoFInfo:delete'),
-(1047,25,'改（Update）','com.uc.entity.PhoneNoFInfo','PhoneNoFInfo:update'),
-(1048,25,'查（View）','com.uc.entity.PhoneNoFInfo','PhoneNoFInfo:view'),
 (1049,26,'增（Create）','com.uc.entity.BlackWhiteList','BlackWhiteList:create'),
 (1050,26,'删（Delete）','com.uc.entity.BlackWhiteList','BlackWhiteList:delete'),
 (1051,26,'改（Update）','com.uc.entity.BlackWhiteList','BlackWhiteList:update'),
 (1052,26,'查（View）','com.uc.entity.BlackWhiteList','BlackWhiteList:view'),
-(1053,27,'增（Create）','com.uc.entity.BlackWhiteList','BlackWhiteList:create'),
-(1054,27,'删（Delete）','com.uc.entity.BlackWhiteList','BlackWhiteList:delete'),
-(1055,27,'改（Update）','com.uc.entity.BlackWhiteList','BlackWhiteList:update'),
-(1056,27,'查（View）','com.uc.entity.BlackWhiteList','BlackWhiteList:view'),
 (1057,32,'增（Create）','com.uc.entity.UserAccount','UserAccount:create'),
 (1058,32,'删（Delete）','com.uc.entity.UserAccount','UserAccount:delete'),
 (1059,32,'改（Update）','com.uc.entity.UserAccount','UserAccount:update'),
 (1060,32,'查（View）','com.uc.entity.UserAccount','UserAccount:view'),
-(1061,33,'增（Create）','com.uc.entity.UserAccount','UserAccount:create'),
-(1062,33,'删（Delete）','com.uc.entity.UserAccount','UserAccount:delete'),
-(1063,33,'改（Update）','com.uc.entity.UserAccount','UserAccount:update'),
-(1064,33,'查（View）','com.uc.entity.UserAccount','UserAccount:view'),
 (1065,34,'增（Create）','com.uc.entity.UserAccount','UserAccount:create'),
-(1066,34,'删（Delete）','com.uc.entity.UserAccount','UserAccount:delete'),
-(1067,34,'改（Update）','com.uc.entity.UserAccount','UserAccount:update'),
-(1068,34,'查（View）','com.uc.entity.UserAccount','UserAccount:view'),
-(1069,35,'增（Create）','com.uc.entity.UserStatusInfo','UserStatusInfo:create'),
-(1070,35,'删（Delete）','com.uc.entity.UserStatusInfo','UserStatusInfo:delete'),
-(1071,35,'改（Update）','com.uc.entity.UserStatusInfo','UserStatusInfo:update'),
 (1072,35,'查（View）','com.uc.entity.UserStatusInfo','UserStatusInfo:view'),
-(1073,36,'增（Create）','com.uc.entity.GroupInOrg','GroupInOrg:create'),
-(1074,36,'删（Delete）','com.uc.entity.GroupInOrg','GroupInOrg:delete'),
-(1075,36,'改（Update）','com.uc.entity.GroupInOrg','GroupInOrg:update'),
 (1076,36,'查（View）','com.uc.entity.GroupInOrg','GroupInOrg:view');
 
 INSERT INTO `sys_role` (`id`,`name`,`description`) VALUES (1,'Admin','Admin');
+INSERT INTO `sys_role` (`id`,`name`,`description`) VALUES (2,'oms_int','oms integration');
 
-insert into sys_role_permission(role_id, menu_id, menu_class_id)
-(SELECT '1', m.id, c.id FROM sys_menu m left join sys_menu_class c on m.id = c.menu_id);
+--insert into sys_role_permission(role_id, menu_id, menu_class_id)
+--(SELECT '1', m.id, c.id FROM sys_menu m left join sys_menu_class c on m.id = c.menu_id);
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('1','1','1',NULL);
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('2','1','11',NULL);
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('3','1','21',NULL);
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('4','1','31',NULL);
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('5','1','2','1001');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('6','1','2','1002');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('7','1','2','1003');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('8','1','2','1004');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('9','1','3','1005');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('10','1','3','1006');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('11','1','3','1007');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('12','1','3','1008');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('13','1','4','1009');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('14','1','4','1010');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('15','1','4','1011');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('16','1','4','1012');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('17','1','5','1013');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('18','1','5','1014');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('19','1','5','1015');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('20','1','5','1016');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('21','1','12','1017');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('22','1','12','1018');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('23','1','12','1019');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('24','1','12','1020');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('25','1','13','1021');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('26','1','13','1022');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('27','1','13','1023');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('28','1','13','1024');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('29','1','14','1025');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('30','1','14','1026');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('31','1','14','1027');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('32','1','14','1028');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('33','1','15','1029');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('34','1','15','1030');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('35','1','15','1031');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('36','1','15','1032');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('37','1','22','1033');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('38','1','22','1034');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('39','1','23','1037');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('40','1','23','1038');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('41','1','24','1041');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('42','1','24','1042');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('43','1','24','1043');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('44','1','24','1044');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('45','1','25','1045');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('46','1','25','1046');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('47','1','26','1049');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('48','1','26','1050');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('49','1','26','1051');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('50','1','26','1052');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('51','1','32','1057');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('52','1','32','1058');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('53','1','32','1059');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('54','1','32','1060');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('55','1','34','1065');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('56','1','35','1072');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('57','1','36','1076');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('58','2','1',NULL);
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('59','2','5','1016');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('60','2','5','1013');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('61','2','5','1014');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('62','2','5','1015');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('63','2','11',NULL);
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('64','2','12','1020');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('65','2','12','1018');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('66','2','12','1019');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('67','2','12','1017');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('68','2','13','1021');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('69','2','13','1022');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('70','2','13','1023');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('71','2','13','1024');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('72','2','14','1027');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('73','2','14','1025');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('74','2','14','1028');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('75','2','14','1026');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('76','2','15','1031');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('77','2','15','1029');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('78','2','15','1030');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('79','2','15','1032');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('80','2','21',NULL);
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('81','2','22','1033');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('82','2','22','1034');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('83','2','23','1037');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('84','2','23','1038');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('85','2','24','1041');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('86','2','24','1044');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('87','2','24','1043');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('88','2','24','1042');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('89','2','25','1045');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('90','2','25','1046');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('91','2','26','1049');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('92','2','26','1051');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('93','2','26','1052');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('94','2','26','1050');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('95','2','31',NULL);
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('96','2','32','1059');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('97','2','32','1057');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('98','2','32','1058');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('99','2','32','1060');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('100','2','34','1065');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('101','2','35','1072');
+insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('102','2','36','1076');
 
 INSERT INTO `sys_user` (`id`, `uid`, `username`, `password`, `salt`, `realname`, `gender`, `photo`, `phone`, `country_code`, `nationality`, `individual_id`, `email`, `address`, `self_intro`, `is_vip`, `status`, `utype`, `org_id`, `role_id`, `gps`, `longitude`, `latitude`, `user_agent`, `last_login`, `create_time`, `modify_time`) 
-VALUES('1','10001','admin','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'xiewe9@163.com',NULL,'创建者','1','0','0',NULL,1,NULL,'0','0',NULL,NULL,NULL,NULL);
+VALUES('1','10001','admin','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'xiewe9@163.com',NULL,'创建者','1','0','0',NULL,1,NULL,'0','0',NULL,NULL,NULL,NULL),
+('2','10003','oms','f0850817aee6fcd981ec4578314ee3bc8afdc61c','f40eaf1c6ec3efaf','','0',NULL,NULL,'0086',NULL,NULL,'',NULL,'','1','0','0',NULL,1,NULL,'0','0',NULL,NULL,NULL,NULL);
 COMMIT;
 
 

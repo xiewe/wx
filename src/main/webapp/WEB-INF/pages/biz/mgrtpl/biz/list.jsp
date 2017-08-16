@@ -13,13 +13,23 @@
     <form role="form" class="form-horizontal" method="post" action="${contextPath }/biz/list" id="searchForm" onsubmit="return doSearch(this);">
         <div class="form-group form-group-sm" id="searchDiv">
             <own:paginationHidden pager="${pager}" />
-            <label for="search_EQ_bizTplId" class="control-label col-md-1 col-sm-6">业务模板ID:</label>
-            <div class="col-md-3 col-sm-6">
-                <input type="text" class="form-control" placeholder="请输入名称" name="search_EQ_bizTplId" value="${param.search_EQ_bizTplId}" />
-            </div>
-            <label for="search_LIKE_bizTplName" class="control-label col-md-1 col-sm-6">业务模板名称:</label>
+            <label for="search_LIKE_bizTplName" class="control-label col-md-1 col-sm-6">模板名称:</label>
             <div class="col-md-3 col-sm-6">
                 <input type="text" class="form-control" placeholder="请输入名称" name="search_LIKE_bizTplName" value="${param.search_LIKE_bizTplName}" />
+            </div>
+            <label for="search_EQ_userType" class="control-label col-md-1 col-sm-6">用户类型 *</label>
+            <div class="col-md-3 col-sm-6">
+                <select class="form-control" name="search_EQ_userType">
+                    <option value=""></option>
+                    <option value="1" <c:if test="${param.search_EQ_userType == 1}">selected</c:if>>SIP</option>
+                    <option value="2" <c:if test="${param.search_EQ_userType == 2}">selected</c:if>>DC</option>
+                    <option value="3" <c:if test="${param.search_EQ_userType == 3}">selected</c:if>>VoLTE</option>
+                    <option value="4" <c:if test="${param.search_EQ_userType == 4}">selected</c:if>>摄像头</option>
+                    <option value="5" <c:if test="${param.search_EQ_userType == 5}">selected</c:if>>PDT</option>
+                    <option value="6" <c:if test="${param.search_EQ_userType == 6}">selected</c:if>>POC</option>
+                    <option value="7" <c:if test="${param.search_EQ_userType == 7}">selected</c:if>>LTE数据终端</option>
+                    <option value="8" <c:if test="${param.search_EQ_userType == 8}">selected</c:if>>无线集群终端</option>
+                </select>
             </div>
             <div class="col-md-4 col-sm-6">
                 <button type="submit" class="btn btn-default btn-sm doSearch">查询</button>

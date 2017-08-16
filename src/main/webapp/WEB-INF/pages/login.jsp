@@ -1,5 +1,10 @@
 <jsp:directive.page contentType="text/html;charset=UTF-8" />
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp"/>
+<c:if test="${inoms == '1' }">
+<%
+    response.sendRedirect("/tcn2000/security/tologinpage.do?userName=");
+%>
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
   <head>

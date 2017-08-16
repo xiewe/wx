@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="opId" class="col-sm-2 control-label">OP ID *</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="opId" value="${optpl.opId}" placeholder="请输入OP ID" disabled>
+                <input type="text" class="form-control" name="opId" value="${optpl.opId}" placeholder="请输入OP ID" readonly>
             </div>
         </div>
         <div class="form-group">

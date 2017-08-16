@@ -4,7 +4,7 @@
 <div class="divbc">
     <ol class="breadcrumb">
         <li><span class="glyphicon glyphicon-home"></span> 主页</li>
-        <li>模板管理</li>
+        <li>资源管理</li>
         <li>号段管理</li>
     </ol>
 </div>
@@ -31,7 +31,8 @@
             </div>
             <label for="search_EQ_phoneNoType" class="control-label col-md-1 col-sm-6">号码类型:</label>
             <div class="col-md-3 col-sm-6">
-                <select class="form-control" name="userType">
+                <select class="form-control" name="search_EQ_phoneNoType">
+                    <option value=""></option>
                     <option value="1" <c:if test="${param.search_EQ_phoneNoType == 1}">selected</c:if>>用户号码</option>
                     <option value="2" <c:if test="${param.search_EQ_phoneNoType == 2}">selected</c:if>>组号码</option>
                 </select>
@@ -50,12 +51,12 @@
         <shiro:hasPermission name="PhoneNoFInfo:delete">
             <a href="#" class="btn btn-default doDelete">删除</a>
         </shiro:hasPermission>
-        <shiro:hasPermission name="PhoneNoFInfo:update">
+        <%-- <shiro:hasPermission name="PhoneNoFInfo:update">
             <a href="#" class="btn btn-default doUpdate">修改</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="PhoneNoFInfo:view">
             <a href="#" class="btn btn-default doView">查看</a>
-        </shiro:hasPermission>
+        </shiro:hasPermission> --%>
     </p>
 
     <div class="table-responsive">
@@ -71,7 +72,7 @@
             </thead>
             <tbody>
                 <c:forEach var="item" items="${phonenofinfos}">
-                    <tr data-id="${item.createTime.time}">
+                    <tr data-id="${item.createTime.time}" data-startno="${item.phoneNoStart}">
                         <td><c:forEach var="op" items="${resorgs}">
                                 <c:if test="${item.orgId == op.orgId}">${op.orgName }
                                 </c:if>
@@ -99,6 +100,7 @@
             stopDefault(e);
 
             var id = "";
+            var startno = "";
 
             if (!$(this).hasClass('doCreate')) {
                 if ($('table tbody').find('tr.success').length == 0 || $('table tbody').find('tr.success').length > 1) {
@@ -106,6 +108,7 @@
                     return;
                 } else {
                     id = $('table tbody').find('tr.success').data("id");
+                    startno = $('table tbody').find('tr.success').data("startno");
                 }
             }
 
@@ -116,7 +119,7 @@
                 url = "${contextPath }/no/create";
                 action = "create";
             } else if ($(this).hasClass('doDelete')) {
-                url = "${contextPath }/no/delete/" + id;
+                url = "${contextPath }/no/delete/" + id + "/" + startno;
                 type = "post";
                 action = "delete";
             } else if ($(this).hasClass('doUpdate')) {

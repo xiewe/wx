@@ -43,6 +43,10 @@
         </shiro:hasPermission>
     </p>
 
+	<c:if test="${errorMsg != null }">
+	<div class="alert alert-danger">${errorMsg}</div>
+	</c:if>
+
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-condensed" id="tabData">
             <thead>

@@ -5,14 +5,27 @@ body {
     padding-top: 50px;
 }
 
+.navbar {
+    background: url(../img/xw-left.png) 0 0 no-repeat #0e74d8;
+    min-height: 50px;
+}
+
 #navbar a {
     margin: 0px;
     padding: 15px 0px;
 }
 
+.navbar-inverse .navbar-nav>li>a {
+    color: #b8cee3;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+
 #navbar a span {
     padding: 0 5px;
-    border-right: 2px solid gray;
+    border-right: 2px solid #b8cee3;
 }
 
 .index-row {

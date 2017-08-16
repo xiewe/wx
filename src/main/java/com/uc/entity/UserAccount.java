@@ -7,6 +7,7 @@ public class UserAccount implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
     private int orgId;
+    private String orgName;
     private int userType;
     private String subNo;
     private String imsi;
@@ -22,6 +23,7 @@ public class UserAccount implements java.io.Serializable {
     private String ipAllocationType;
     private String ipv4List;
     private String ipv6List;
+    private int roamToTcn1000;
     private String noCondFwdNo;
     private String noReachFwdNo;
     private String noReplyFwdNo;
@@ -303,5 +305,23 @@ public class UserAccount implements java.io.Serializable {
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	public int getRoamToTcn1000() {
+		return roamToTcn1000;
+	}
+
+	public void setRoamToTcn1000(int roamToTcn1000) {
+		this.roamToTcn1000 = roamToTcn1000;
+	}
+    
+    
 
 }

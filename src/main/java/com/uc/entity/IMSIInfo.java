@@ -61,4 +61,13 @@ public class IMSIInfo implements java.io.Serializable {
         this.modifyTime = modifyTime;
     }
 
+	@Override
+	public String toString() {
+		return "IMSIInfo [imsi=" + imsi + ", opId=" + opId + ", k=" + k
+				+ ", status=" + status + ", createTime=" + createTime
+				+ ", modifyTime=" + modifyTime + "]";
+	}
+    
+    
+
 }

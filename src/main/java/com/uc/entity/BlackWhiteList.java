@@ -7,7 +7,7 @@ public class BlackWhiteList implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
     private int listType;
-    private int imeisv;
+    private String imeisv;
     private String imsi;
     private Date createTime;
     private Date modifyTime;
@@ -20,11 +20,11 @@ public class BlackWhiteList implements java.io.Serializable {
         this.listType = listType;
     }
 
-    public int getImeisv() {
+    public String getImeisv() {
         return imeisv;
     }
 
-    public void setImeisv(int imeisv) {
+    public void setImeisv(String imeisv) {
         this.imeisv = imeisv;
     }
 

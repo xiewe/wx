@@ -68,7 +68,6 @@
                 },
                 desc : {
                     validators : {
-                        notEmpty : {},
                         stringLength : {
                             max : 128
                         }

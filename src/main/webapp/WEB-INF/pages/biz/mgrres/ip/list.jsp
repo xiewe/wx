@@ -55,7 +55,7 @@
             </thead>
             <tbody>
                 <c:forEach var="item" items="${ipfinfos}">
-                    <tr data-id="${item.createTime.time}">
+                    <tr data-id="${item.createTime.time}" data-fragment="${item.ipFragment}" data-mask="${item.ipMask}">
                         <td>${item.ipFragment}</td>
                         <td>${item.ipMask}</td>
                         <td>${item.usedCount}</td>
@@ -79,6 +79,8 @@
             stopDefault(e);
 
             var id = "";
+            var fragment = "";
+            var mask = "";
 
             if (!$(this).hasClass('doCreate')) {
                 if ($('table tbody').find('tr.success').length == 0 || $('table tbody').find('tr.success').length > 1) {
@@ -86,6 +88,8 @@
                     return;
                 } else {
                     id = $('table tbody').find('tr.success').data("id");
+                    fragment = $('table tbody').find('tr.success').data("fragment");
+                    mask = $('table tbody').find('tr.success').data("mask");
                 }
             }
 
@@ -96,7 +100,7 @@
                 url = "${contextPath }/ip/create";
                 action = "create";
             } else if ($(this).hasClass('doDelete')) {
-                url = "${contextPath }/ip/delete/" + id;
+                url = "${contextPath }/ip/delete/" + id + "/" + fragment + "/" + mask;
                 type = "post";
                 action = "delete";
             } else if ($(this).hasClass('doUpdate')) {

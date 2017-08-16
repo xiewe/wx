@@ -14,9 +14,9 @@ public class MSysRoleTest extends BaseTest {
 
     @Test
     public void testInsert() throws Exception {
-        SysRole r = new SysRole();
-        r.setName("asdf");
-        r.setDescription("hello");
-        sysRoleService.saveOrUpdate(r);
+//        SysRole r = new SysRole();
+//        r.setName("asdf");
+//        r.setDescription("hello");
+//        sysRoleService.saveOrUpdate(r);
     }
 }

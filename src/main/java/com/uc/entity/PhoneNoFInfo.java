@@ -2,6 +2,8 @@ package com.uc.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class PhoneNoFInfo implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -14,6 +16,7 @@ public class PhoneNoFInfo implements java.io.Serializable {
     private String phoneNoStart;
     private int numbers;
     private int usedCount;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
     private Date createTime;
     private Date modifyTime;
 

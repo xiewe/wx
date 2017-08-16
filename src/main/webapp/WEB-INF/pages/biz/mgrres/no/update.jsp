@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="orgId" class="col-sm-4 control-label">组织名称 *</label>
             <div class="col-sm-8">
-                <input type="hidden" name="createTime" value="${phonenofinfo.createTime}"> 
+                <input type="hidden" name="createTime" value="<fmt:formatDate value="${phonenofinfo.createTime}" pattern="yyyy-MM-dd HH:mm:ss.S" />"> 
                  <select class="form-control" name="orgId">
                     <c:forEach var="item" items="${resorgs}">
                         <c:choose>

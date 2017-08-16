@@ -14,6 +14,7 @@ public interface SysErrorCode {
     public static final String USER_PASSWORD_ERROR = "1007";
     public static final String DATA_INVALID = "1008";
     public static final String FILE_FORMAT_INVALID = "1009";
+    public static final String UNITE_OPEN_ERROR = "1010";
 
     public static final Map<String, String> MAP = new HashMap<String, String>() {
         {
@@ -26,6 +27,7 @@ public interface SysErrorCode {
             put(USER_PASSWORD_ERROR, "用户密码错误");
             put(DATA_INVALID, "数据不合法");
             put(FILE_FORMAT_INVALID, "文件不合法");
+            put(UNITE_OPEN_ERROR, "执行中出错，请检查日志！");
         }
     };
 

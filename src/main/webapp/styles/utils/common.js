@@ -365,6 +365,20 @@ function loadListener() {
 
 }
 
+function loadListenerMulitSelect() {
+
+    $('table tbody tr').on('click', function(e) {
+        // e.preventDefault();
+
+        if ($(this).hasClass('success')) {
+            $(this).removeClass('success');
+        } else {
+            $(this).addClass('success');
+        }
+    })
+
+}
+
 $(function() {
     changeHeight();
 })

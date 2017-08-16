@@ -32,6 +32,7 @@ import com.framework.service.SysMenuService;
 import com.framework.service.SysOrganizationService;
 import com.framework.service.SysRoleService;
 import com.framework.service.SysUserService;
+import com.framework.utils.PropertiesUtil;
 
 @Controller
 @RequestMapping("/")
@@ -73,6 +74,7 @@ public class IndexController extends BaseController {
         });
         map.put("menu", listMenu);
         map.put("date", new Date().getTime());
+        map.put("inoms", PropertiesUtil.getInstance().getKeyValue("inoms"));
 
         return INDEX;
     }
