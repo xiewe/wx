@@ -40,7 +40,7 @@
 <script src="${contextPath}/styles/fileinput/js/fileinput.min.js"></script>
 <script src="${contextPath}/styles/fileinput/js/locales/zh.js"></script>
 <script type="text/javascript">
-    $.getScript("${contextPath}/styles/fileinput/js/locales/zh.js");
+    //$.getScript("${contextPath}/styles/fileinput/js/locales/zh.js");
 
     function doImport(form) {
         var $form = $(form);
@@ -51,8 +51,12 @@
     }
 
     $('#openaccountfilename').fileinput({
+        language : 'zh',
         showUpload : false,
-        showPreview : false
+        showPreview : true,
+        allowedPreviewTypes : [ 'text' ],
+        allowedFileExtensions : [ 'xls', 'xlsx' ],
+        maxFileSize : 10240
     });
 
     $(document).ready(function() {
