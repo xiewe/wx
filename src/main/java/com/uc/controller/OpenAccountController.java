@@ -28,7 +28,9 @@ import com.framework.log4jdbc.LogLevel;
 import com.framework.utils.pager.DynamicSpecifications;
 import com.framework.utils.pager.Pager;
 import com.framework.utils.pager.SearchFilter;
+import com.uc.entity.Organization;
 import com.uc.entity.UserAccount;
+import com.uc.service.OrganizationService;
 import com.uc.service.UserAccountService;
 
 @Controller
@@ -37,6 +39,9 @@ public class OpenAccountController extends BaseController {
 
     @Autowired
     private UserAccountService userAccountService;
+
+    @Autowired
+    private OrganizationService organizationService;
 
     ObjectMapper mapper = new ObjectMapper();
     private static final String CREATE = "biz/mgruser/openaccount/create";
@@ -118,21 +123,13 @@ public class OpenAccountController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
-    @RequiresPermissions(value = { "UserAccount:view", "UserAccount:create", "UserAccount:update", "UserAccount:delete" }, logical = Logical.OR)
+    @RequiresPermissions("UserAccount:create")
     @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
     public String list(ServletRequest request, Pager pager, Map<String, Object> map) {
-        List<UserAccount> useraccounts = new ArrayList<UserAccount>();
-        SearchFilter filter = DynamicSpecifications.genSearchFilter(request);
-        if (filter != null && filter.getRules() != null && filter.getRules().size() > 0) {
-            // hessian call
-        } else {
-            useraccounts = userAccountService.findByPage(pager.getPageSize(), pager.getCurrPage());
-        }
-
-        Long count = userAccountService.findCount();
-        pager.setTotalCount(count);
+        List<Organization> resorgs = organizationService.findAll();
+        map.put("resorgs", resorgs);
+        
         map.put("pager", pager);
-        map.put("useraccounts", useraccounts);
 
         return LIST;
     }

@@ -28,7 +28,9 @@ import com.framework.log4jdbc.LogLevel;
 import com.framework.utils.pager.DynamicSpecifications;
 import com.framework.utils.pager.Pager;
 import com.framework.utils.pager.SearchFilter;
+import com.uc.entity.Organization;
 import com.uc.entity.UserStatusInfo;
+import com.uc.service.OrganizationService;
 import com.uc.service.UserStatusInfoService;
 
 @Controller
@@ -37,6 +39,9 @@ public class UserStatusController extends BaseController {
 
     @Autowired
     private UserStatusInfoService userStatusInfoService;
+
+    @Autowired
+    private OrganizationService organizationService;
 
     ObjectMapper mapper = new ObjectMapper();
     private static final String CREATE = "biz/mgruser/userstatus/create";
@@ -47,6 +52,9 @@ public class UserStatusController extends BaseController {
     @RequiresPermissions("UserStatusInfo:create")
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String preCreate(Map<String, Object> map) {
+        List<Organization> resorgs = organizationService.findAll();
+        map.put("resorgs", resorgs);
+
         return CREATE;
     }
 
@@ -123,17 +131,21 @@ public class UserStatusController extends BaseController {
     @RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
     public String list(ServletRequest request, Pager pager, Map<String, Object> map) {
         List<UserStatusInfo> userstatusinfos = new ArrayList<UserStatusInfo>();
+        long count = 0L;
         SearchFilter filter = DynamicSpecifications.genSearchFilter(request);
         if (filter != null && filter.getRules() != null && filter.getRules().size() > 0) {
             // hessian call
+
         } else {
             userstatusinfos = userStatusInfoService.findByPage(pager.getPageSize(), pager.getCurrPage());
+            count = userStatusInfoService.findCount();
         }
 
-        Long count = userStatusInfoService.findCount();
         pager.setTotalCount(count);
         map.put("pager", pager);
         map.put("userstatusinfos", userstatusinfos);
+        List<Organization> resorgs = organizationService.findAll();
+        map.put("resorgs", resorgs);
 
         return LIST;
     }

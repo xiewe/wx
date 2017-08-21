@@ -19,29 +19,29 @@
         </shiro:hasPermission>
     </div>
     <hr class="clearfix" style="margin-top: 0px;">
-    <form id="saveForm" class="form-horizontal" role="form" enctype="multipart/form-data" method="post" action="${contextPath }/importaccount/import" onsubmit="return doImport(this);">
-        <div class="form-group">
-            <label for="openaccountfilename" class="col-sm-2 control-label">导入文件 *</label>
-            <div class="col-sm-8">
-                <input id="openaccountfilename" type="file" class="file">
-            </div>
+    <%-- <form id="saveForm" class="form-horizontal" role="form" enctype="multipart/form-data" method="post" action="${contextPath }/importaccount/import" onsubmit="return doImport(this);"> --%>
+    <div class="row">
+        <!-- <div class="form-group"> -->
+        <label for="openaccountfilename" class="col-sm-2 control-label text-right">导入文件 *</label>
+        <div class="col-sm-8">
+            <input id="openaccountfilename" name="openaccountfilename" type="file" class="file">
         </div>
+        <!-- </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">
                 <button type="submit" class="btn btn-primary">确定</button>
             </div>
-        </div>
-    </form>
+        </div> -->
+    </div>
+    <!-- </form> -->
 
-    <hr class="clearfix" style="margin-top: 0px;">
+    <hr class="clearfix">
     <div class="form-group" style="display: block;"></div>
 </div>
 
 <script src="${contextPath}/styles/fileinput/js/fileinput.min.js"></script>
 <script src="${contextPath}/styles/fileinput/js/locales/zh.js"></script>
 <script type="text/javascript">
-    //$.getScript("${contextPath}/styles/fileinput/js/locales/zh.js");
-
     function doImport(form) {
         var $form = $(form);
 
@@ -52,14 +52,30 @@
 
     $('#openaccountfilename').fileinput({
         language : 'zh',
-        showUpload : false,
-        showPreview : true,
+        uploadUrl : "${contextPath }/importaccount/import",
+        enctype : 'multipart/form-data',
+        showUpload : true,
+        showPreview : false,
+        uploadAsync: true,
+        //maxFileCount: 1,
+        //showCaption: false,
+        //dropZoneEnabled: false,
         allowedPreviewTypes : [ 'text' ],
         allowedFileExtensions : [ 'xls', 'xlsx' ],
         maxFileSize : 10240
     });
 
+    //异步上传返回结果处理
+    $("#openaccountfilename").on("fileuploaded", function(event, data, previewId, index) {
+        var response = data.response;
+    });
+
+    $('#openaccountfilename').on('filepreupload', function(event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra, response = data.response, reader = data.reader;
+    });
+
     $(document).ready(function() {
 
     })
+    
 </script>

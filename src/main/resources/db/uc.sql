@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `uc`.`sys_log` (
   `user_agent` VARCHAR(200) NULL COMMENT '终端设备信息',
   `category` VARCHAR(50) NULL COMMENT '类别',
   `level` VARCHAR(20) NULL COMMENT '级别',
-  `message` VARCHAR(256) NULL COMMENT '日志信息',
+  `message` VARCHAR(4000) NULL COMMENT '日志信息',
   `create_time` DATETIME NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   INDEX `idx_sys_log_1` (`username` ASC),
