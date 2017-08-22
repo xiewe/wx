@@ -107,9 +107,14 @@
         allowedPreviewTypes : [ 'text' ],
         allowedFileExtensions : [ 'xls', 'xlsx' ],
         maxFileSize : 10240,
-        uploadExtraData : {opId:$('#opId').val()}
+        uploadExtraData : function(previewId, index) {
+            var info = {
+                opId : $('#opId').val()
+            };
+            return info;
+        }
     });
-
+    
     //异步上传返回结果处理
     $("#imsifilename").on("fileuploaded", function(event, data, previewId, index) {
         var response = data.response;
