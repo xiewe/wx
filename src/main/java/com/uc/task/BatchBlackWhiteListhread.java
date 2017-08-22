@@ -28,7 +28,7 @@ public class BatchBlackWhiteListhread implements Runnable {
     }
 
     private void doWork() throws InterruptedException {
-        UCExcelHandler.getInstance().addIMSIFile(filename);
+        UCExcelHandler.getInstance().addBlackWhiteListFile(filename);
         String logfilename = filename + ".log";
 
         int i = 0;

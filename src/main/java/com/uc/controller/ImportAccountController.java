@@ -75,6 +75,20 @@ public class ImportAccountController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
+    @RequiresPermissions("UserAccount:create")
+    @RequestMapping(value = "/import/logs", method = { RequestMethod.POST })
+    public @ResponseBody String importImsiLogs(@RequestParam("filename") String filename)
+            throws JsonProcessingException {
+        GeneralResponseData<String> ret = new GeneralResponseData<String>();
+
+        String logs = UCExcelHandler.getInstance().getParseLogs(filename, 10,
+                "<span class=\"successimport\">{0}</span><br>");
+
+        ret.setStatus(AppConstants.SUCCESS);
+        ret.setData(logs);
+        return mapper.writeValueAsString(ret);
+    }
+
     @Log(message = "批量开户，文件:{0}，结果:{1}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("UserAccount:create")
     @RequestMapping(value = "/import", method = { RequestMethod.POST })
