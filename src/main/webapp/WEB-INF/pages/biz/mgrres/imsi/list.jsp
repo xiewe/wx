@@ -146,8 +146,10 @@
                 url = "${contextPath }/imsi/view/" + id;
                 action = "view";
             } else if ($(this).hasClass('doImport')) {
-                url = "${contextPath }/imsi/import";
+                url = "${contextPath }/imsi/importpage";
                 action = "import";
+                loadContent(url);
+                return;
             } else if ($(this).hasClass('doDownload')) {
                 url = "${contextPath }/imsi/download";
                 action = "download";

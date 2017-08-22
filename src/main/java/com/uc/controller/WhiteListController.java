@@ -204,7 +204,7 @@ public class WhiteListController extends BaseController {
     }
 
     @RequiresPermissions("BlackWhiteList:create")
-    @RequestMapping(value = "/import", method = { RequestMethod.GET })
+    @RequestMapping(value = "/importpage", method = { RequestMethod.GET })
     public String preImportImsi(Map<String, Object> map) {
 
         return IMPORT;
@@ -223,6 +223,20 @@ public class WhiteListController extends BaseController {
         return mapper.writeValueAsString(ret);
     }
 
+    @RequiresPermissions("BlackWhiteList:create")
+    @RequestMapping(value = "/import/logs", method = { RequestMethod.POST })
+    public @ResponseBody String importImsiLogs(@RequestParam("filename") String filename)
+            throws JsonProcessingException {
+        GeneralResponseData<String> ret = new GeneralResponseData<String>();
+
+        String logs = UCExcelHandler.getInstance().getParseLogs(filename, 10,
+                "<span class=\"successimport\">{0}</span><br>");
+
+        ret.setStatus(AppConstants.SUCCESS);
+        ret.setData(logs);
+        return mapper.writeValueAsString(ret);
+    }
+    
     @Log(message = "导入黑白名单，文件:{0}，结果:{1}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("BlackWhiteList:create")
     @RequestMapping(value = "/import", method = { RequestMethod.POST })

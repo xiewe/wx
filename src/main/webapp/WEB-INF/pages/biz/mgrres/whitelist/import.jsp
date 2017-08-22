@@ -1,14 +1,5 @@
 <jsp:directive.page contentType="text/html;charset=UTF-8" trimDirectiveWhitespaces="true" />
 <jsp:directive.include file="/WEB-INF/pages/include.inc.jsp" />
-
-<div class="divbc">
-    <ol class="breadcrumb">
-        <li><span class="glyphicon glyphicon-home"></span> 主页</li>
-        <li>用户管理</li>
-        <li>批量开户</li>
-    </ol>
-</div>
-
 <link href="${contextPath}/styles/fileinput/css/fileinput.min.css" rel="stylesheet">
 <style type="text/css">
 .errorimport {
@@ -20,22 +11,25 @@
     padding-left: 10px;
 }
 </style>
-<div class="row main-content">
-    <div class="row">
-        <shiro:hasPermission name="IMSIInfo:create">
-            <p class="col-md-12 col-sm-12 text-right">
-                <a href="${contextPath }/importaccount/download" class="doDownload">模板下载</a>
-            </p>
-        </shiro:hasPermission>
-    </div>
-    <hr class="clearfix" style="margin-top: 0px;">
-    <div class="row">
-        <label for="openaccountfilename" class="col-sm-2 control-label text-right">导入文件 *</label>
-        <div class="col-sm-8">
-            <input id="openaccountfilename" name="openaccountfilename" type="file" class="file">
-        </div>
-    </div>
 
+<div class="divbc">
+    <ol class="breadcrumb">
+        <li><span class="glyphicon glyphicon-home"></span> 主页</li>
+        <li>资源管理</li>
+        <li>黑白名单管理</li>
+    </ol>
+</div>
+
+<div class="row main-content">
+    <form id="saveForm" class="form-horizontal" role="form" enctype="multipart/form-data" method="post" >
+        <div class="form-group">
+            <label for="blackwhitelistfilename" class="col-sm-4 control-label">上传文件 *</label>
+            <div class="col-sm-8">
+                <input id="blackwhitelistfilename" name="blackwhitelistfilename" type="file" class="file">
+            </div>
+        </div>
+    </form>
+    
     <hr class="clearfix">
     <div class="form-group" id="importresult" style="display: none;">
         <h3>
@@ -46,7 +40,6 @@
         </div>
     </div>
 </div>
-
 <script src="${contextPath}/styles/fileinput/js/fileinput.min.js"></script>
 <script src="${contextPath}/styles/fileinput/js/locales/zh.js"></script>
 <script type="text/javascript">
@@ -56,7 +49,7 @@
     function getParseProgress() {
         $.ajax({
             type : "post",
-            url : "${contextPath }/importaccount/import/progress",
+            url : "${contextPath }/whitelist/import/progress",
             data : {
                 "filename" : filename
             },
@@ -73,7 +66,7 @@
 
         $.ajax({
             type : "post",
-            url : "${contextPath }/importaccount/import/logs",
+            url : "${contextPath }/whitelist/import/logs",
             data : {
                 "filename" : filename
             },
@@ -91,9 +84,9 @@
         }
     }
 
-    $('#openaccountfilename').fileinput({
+    $('#blackwhitelistfilename').fileinput({
         language : 'zh',
-        uploadUrl : "${contextPath }/importaccount/import",
+        uploadUrl : "${contextPath }/whitelist/import",
         enctype : 'multipart/form-data',
         showUpload : true,
         showPreview : false,
@@ -107,7 +100,7 @@
     });
 
     //异步上传返回结果处理
-    $("#openaccountfilename").on("fileuploaded", function(event, data, previewId, index) {
+    $("#blackwhitelistfilename").on("fileuploaded", function(event, data, previewId, index) {
         var response = data.response;
 
         $('#importresult').css('display', 'block');
@@ -118,18 +111,7 @@
             $('#importresult').append('<span class="errorimport">文件导入失败</span><br>');
         }
     });
-
-    $('#openaccountfilename').on('filepreupload', function(event, data, previewId, index) {
-        var form = data.form, files = data.files, extra = data.extra, response = data.response, reader = data.reader;
-    });
-
-    $('#openaccountfilename').on('fileclear', function(event) {
-        console.log("fileclear");
-    });
-    $('#openaccountfilename').on('filereset', function(event) {
-        console.log("filereset");
-    });
-    $('#openaccountfilename').on('filecleared', function(event) {
+    $('#blackwhitelistfilename').on('filecleared', function(event) {
         //console.log("filecleared");
         parseProgress = 0;
         $('#importresult').css('display', 'none');
@@ -141,11 +123,4 @@
                 '</div>');
     });
 
-    $('#openaccountfilename').on('change', function(event) {
-        console.log("change");
-    });
-
-    $('#openaccountfilename').on('fileremoved', function(event, id, index) {
-        console.log('id = ' + id + ', index = ' + index);
-    });
 </script>

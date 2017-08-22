@@ -31,16 +31,25 @@ public class BatchIMSIThread implements Runnable {
         UCExcelHandler.getInstance().addIMSIFile(filename);
         String logfilename = filename + ".log";
 
-        int i = 0;
+        int i = 1;
         FileWriter logout = null;
         try {
             logout = new FileWriter(new File(logfilename));
 
+            // 读取excel，得到行数，每行调用相应的hessian call
             while (i <= 100) {
-                i++;
+                // 更新进度
                 UCExcelHandler.getInstance().setPraseProgress(filename, i);
-                logout.write("Success:" + i);
 
+                // 处理的日志
+                String log = "Success:" + i;
+
+                // 写日志到文件
+                logout.write(log + "\n");
+                // 写日志到缓存
+                UCExcelHandler.getInstance().setParseLog(filename, log);
+
+                i++;
                 Thread.sleep(1000);
             }
 

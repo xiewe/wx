@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -114,7 +113,7 @@ public class UCExcelHandler {
                 if (tmp == null) {
                     break;
                 }
-                ret.append(mFormat.format(tmp));
+                ret.append(mFormat.format(new Object[] { tmp }));
             }
 
         }

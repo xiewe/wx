@@ -106,7 +106,7 @@
 
             var id = "";
 
-            if (!$(this).hasClass('doCreate') && !$(this).hasClass('doDelete')) {
+            if (!$(this).hasClass('doCreate') && !$(this).hasClass('doDelete') && !$(this).hasClass('doImport')) {
                 if ($('table tbody').find('tr.success').length == 0 || $('table tbody').find('tr.success').length > 1) {
                     showAlert('提示', '请选择并仅选择一条记录');
                     return;
@@ -157,6 +157,11 @@
             } else if ($(this).hasClass('doView')) {
                 url = "${contextPath }/whitelist/view/" + id;
                 action = "view";
+            } else if ($(this).hasClass('doImport')) {
+                url = "${contextPath }/whitelist/importpage";
+                action = "import";
+                loadContent(url);
+                return;
             } else {
                 console.log('not supported');
                 return;
