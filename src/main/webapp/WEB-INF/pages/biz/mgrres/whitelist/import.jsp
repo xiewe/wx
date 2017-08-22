@@ -23,7 +23,7 @@
 <div class="row main-content">
     <form id="saveForm" class="form-horizontal" role="form" enctype="multipart/form-data" method="post" >
         <div class="form-group">
-            <label for="blackwhitelistfilename" class="col-sm-4 control-label">上传文件 *</label>
+            <label for="blackwhitelistfilename" class="col-sm-2 control-label">上传文件 *</label>
             <div class="col-sm-8">
                 <input id="blackwhitelistfilename" name="blackwhitelistfilename" type="file" class="file">
             </div>

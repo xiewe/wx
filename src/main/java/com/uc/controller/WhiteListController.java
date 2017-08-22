@@ -64,7 +64,7 @@ public class WhiteListController extends BaseController {
     private static final String UPDATE = "biz/mgrres/whitelist/update";
     private static final String LIST = "biz/mgrres/whitelist/list";
     private static final String VIEW = "biz/mgrres/whitelist/view";
-    private static final String IMPORT = "biz/mgrres/imsi/import";
+    private static final String IMPORT = "biz/mgrres/whitelist/import";
 
     @InitBinder
     public void dataBinder(WebDataBinder dataBinder) {
@@ -240,7 +240,7 @@ public class WhiteListController extends BaseController {
     @Log(message = "导入黑白名单，文件:{0}，结果:{1}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("BlackWhiteList:create")
     @RequestMapping(value = "/import", method = { RequestMethod.POST })
-    public @ResponseBody String importImsi(@RequestParam("blackwhitelist") MultipartFile blackwhitelist)
+    public @ResponseBody String importImsi(@RequestParam("blackwhitelistfilename") MultipartFile blackwhitelist)
             throws JsonProcessingException {
         GeneralResponseData<String> ret = new GeneralResponseData<String>();
 

@@ -226,12 +226,12 @@ public class IMSIInfoController extends BaseController {
         ret.setData(logs);
         return mapper.writeValueAsString(ret);
     }
-    
+
     @Log(message = "导入IMSI，文件:{0}，结果:{1}", level = LogLevel.INFO, catrgory = "uc")
     @RequiresPermissions("IMSIInfo:create")
     @RequestMapping(value = "/import", method = { RequestMethod.POST })
-    public @ResponseBody String importImsi(@RequestParam("imsifile") MultipartFile imsifile)
-            throws JsonProcessingException {
+    public @ResponseBody String importImsi(@RequestParam("imsifilename") MultipartFile imsifile,
+            @RequestParam("opId") int opId) throws JsonProcessingException {
         GeneralResponseData<String> ret = new GeneralResponseData<String>();
 
         String imsifilename = imsifile.getOriginalFilename();
@@ -269,7 +269,7 @@ public class IMSIInfoController extends BaseController {
             out.flush();
 
             // parse excel in thread, notify progress
-            ExecutorServiceManage.execute(new BatchIMSIThread(newfilenameWithPath));
+            ExecutorServiceManage.execute(new BatchIMSIThread(newfilenameWithPath, opId));
 
         } catch (IOException e) {
             e.printStackTrace();

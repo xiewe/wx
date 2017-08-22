@@ -23,9 +23,9 @@
 <div class="row main-content">
     <form id="saveForm" class="form-horizontal" role="form" enctype="multipart/form-data" method="post" >
         <div class="form-group">
-            <label for="opId" class="col-sm-4 control-label">运用商主密钥模板名称 *</label>
+            <label for="opId" class="col-sm-2 control-label">运用商主密钥模板名称 *</label>
             <div class="col-sm-8">
-                <select class="form-control" name="opId">
+                <select class="form-control" name="opId" id="opId">
                     <c:forEach var="item" items="${optpls}">
                         <option value="${item.opId }">${item.opName}</option>
                     </c:forEach>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="imsifilename" class="col-sm-4 control-label">上传文件 *</label>
+            <label for="imsifilename" class="col-sm-2 control-label">上传文件 *</label>
             <div class="col-sm-8">
                 <input id="imsifilename" name="imsifilename" type="file" class="file">
             </div>
@@ -106,7 +106,8 @@
         //dropZoneEnabled: false,
         allowedPreviewTypes : [ 'text' ],
         allowedFileExtensions : [ 'xls', 'xlsx' ],
-        maxFileSize : 10240
+        maxFileSize : 10240,
+        uploadExtraData : {opId:$('#opId').val()}
     });
 
     //异步上传返回结果处理

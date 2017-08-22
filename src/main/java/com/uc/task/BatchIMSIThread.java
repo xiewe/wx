@@ -11,10 +11,12 @@ public class BatchIMSIThread implements Runnable {
     private final static Logger logger = LoggerFactory.getLogger(BatchIMSIThread.class);
 
     private String filename;
+    private int opId;
 
-    public BatchIMSIThread(String filename) {
+    public BatchIMSIThread(String filename, int opId) {
         super();
         this.filename = filename;
+        this.opId = opId;
     }
 
     @Override
@@ -42,7 +44,7 @@ public class BatchIMSIThread implements Runnable {
                 UCExcelHandler.getInstance().setPraseProgress(filename, i);
 
                 // 处理的日志
-                String log = "Success:" + i;
+                String log = opId + "Success:" + i;
 
                 // 写日志到文件
                 logout.write(log + "\n");
