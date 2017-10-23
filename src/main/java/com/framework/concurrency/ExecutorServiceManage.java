@@ -31,4 +31,7 @@ public class ExecutorServiceManage {
 		ExecutorServiceManage.scheduledExecutorService = scheduledExecutorService;
 	}
 
+    public void shutDown(){
+        executeService.shutdown();
+    }
 }
