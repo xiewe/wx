@@ -138,7 +138,7 @@ COMMENT = '用户表';
 
 DROP TABLE IF EXISTS `uc`.`sys_log` ;
 CREATE TABLE IF NOT EXISTS `uc`.`sys_log` (
-  `id` BIGINT NULL AUTO_INCREMENT COMMENT '主键，自动增长',
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键，自动增长',
   `username` VARCHAR(32) NULL COMMENT '操作用户名',
   `ip` VARCHAR(45) NULL COMMENT '操作的IP',
   `user_agent` VARCHAR(200) NULL COMMENT '终端设备信息',
@@ -236,8 +236,8 @@ INSERT INTO `sys_menu_class` (`id`,`menu_id`,`name`,`class_name`,`method`) VALUE
 INSERT INTO `sys_role` (`id`,`name`,`description`) VALUES (1,'Admin','Admin');
 INSERT INTO `sys_role` (`id`,`name`,`description`) VALUES (2,'oms_int','oms integration');
 
---insert into sys_role_permission(role_id, menu_id, menu_class_id)
---(SELECT '1', m.id, c.id FROM sys_menu m left join sys_menu_class c on m.id = c.menu_id);
+-- insert into sys_role_permission(role_id, menu_id, menu_class_id)
+-- (SELECT '1', m.id, c.id FROM sys_menu m left join sys_menu_class c on m.id = c.menu_id);
 insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('1','1','1',NULL);
 insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('2','1','11',NULL);
 insert into `sys_role_permission` (`id`, `role_id`, `menu_id`, `menu_class_id`) values('3','1','21',NULL);
